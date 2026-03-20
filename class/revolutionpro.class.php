@@ -99,7 +99,7 @@ class revolutionpro extends Commonobject{
 				}
 
 				<?php
-					$val4 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : 'show';
+					$val4 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : 'show';
 					if($val4 == 'show' && !$noreqm){
 						?>
 						revolutionproajax2('boxes');
@@ -185,7 +185,7 @@ class revolutionpro extends Commonobject{
 						$societename = $mysoc->name;
 
 					$sociname = $societename;
-					if($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
+					if(!empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
 						$sociname = '<a href="https://www.dolibarrstore.com/themes-et-modeles-dolibarr/73-revolution-pro-theme-dolibarr-n1.html" target="_blank">'.$societename.'</a>';
 					}
 
@@ -348,8 +348,8 @@ class revolutionpro extends Commonobject{
 
 			$(document).ready(function(){
 		        <?php
-	        	$val1 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 : 'light';
-	        	$val3 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : 'teal';
+	        	$val1 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 : 'light';
+	        	$val3 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : 'teal';
 				if($val1 == 'dark'){
 					?>
 						$('body #tmenu_tooltip > .site-menubar').addClass('site-menubar-dark');
@@ -367,7 +367,7 @@ class revolutionpro extends Commonobject{
 					<?php
 				}
 
-				if($user && !$user->admin && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
+				if($user && !$user->admin && !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
 					?>
 
 					var counter = 0;
@@ -463,13 +463,13 @@ class revolutionpro extends Commonobject{
 
 	
 		
-		$val2 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 : 'inverse';
+		$val2 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 : 'inverse';
 		$clss = '';
 		if($val2 == 'inverse')
 			$clss = 'navbar-inverse';
 
 		$cmpstyle = "";
-		$val7 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 : 'show';
+		$val7 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 : 'show';
 		if($val7 == 'hide')
 		$cmpstyle = "display:none;";
 
@@ -794,7 +794,7 @@ class revolutionpro extends Commonobject{
 		$html .= '</ul>';
 		$html .= '</div>';
 
-		$val4 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : 'show';
+		$val4 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : 'show';
 		
 		if($val4 == 'show'){
 			$getDataForBoxes = $this->getDataForBoxes($mainmenu9);
@@ -852,15 +852,15 @@ class revolutionpro extends Commonobject{
     	$boxs 		= array();
     	$returns 	= array();
 
-    	$val8 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : 'tiers'; // First Boxe
-		$val9 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : 'projets'; // Second Boxe
-		$val10 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : 'devis'; // Third Boxe
-		$val11 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : 'factures'; // Fourth Boxe
+    	$val8 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : 'tiers'; // First Boxe
+		$val9 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : 'projets'; // Second Boxe
+		$val10 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : 'devis'; // Third Boxe
+		$val11 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : 'factures'; // Fourth Boxe
 
-		$val8c 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C : 'indigo-400';
-		$val9c 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C : 'green-300';
-		$val10c = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C : 'purple-300';
-		$val11c = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C : 'amber-600';
+		$val8c 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C : 'indigo-400';
+		$val9c 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C : 'green-300';
+		$val10c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C : 'purple-300';
+		$val11c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C : 'amber-600';
     	
     	$boxs['tiers'] = array(
     		'tot' => '00',
