@@ -626,6 +626,100 @@ a, button, input, select, .site-menu-item, .card, .btn,
     display: none !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 2.2: Specificity Hotfixes
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Icon Font Protection (undo Inter override for icon classes) ── */
+.icon, [class*="md-"], [class*="fa-"], .fa, .fas, .far, .fab,
+.zmdi, .site-menu-icon, .glyphicon, .brand-icons,
+.mm-navbar .mm-btn:before, .mm-navbar .mm-btn:after {
+    font-family: "Material Design Iconic Font", "Material Design Icons", "FontAwesome", "Font Awesome 5 Free", "Font Awesome 5 Brands", "Glyphicons Halflings", "brand-icons" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+/* Ensure mmenu title text still uses Inter */
+.mm-navbar .mm-title {
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* ── 2. Topbar Dynamic Colour Override ── */
+nav.site-navbar,
+.site-navbar.navbar-inverse,
+.site-navbar[class*="bg-"],
+nav[class*="bg-teal"],
+nav[class*="bg-primary"],
+nav[class*="bg-blue"],
+nav[class*="bg-green"],
+nav[class*="bg-red"],
+nav[class*="bg-purple"],
+nav[class*="bg-orange"],
+nav[class*="bg-cyan"],
+.navbar-inverse.bg-teal-600,
+.navbar.bg-teal-600 {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--ndx-slate-100) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+}
+/* Logo area stays dark */
+nav.site-navbar .navbar-header,
+.site-navbar.navbar-inverse .navbar-header,
+.site-navbar[class*="bg-"] .navbar-header {
+    background-color: var(--ndx-slate-900) !important;
+}
+/* Topbar text/icons dark on white bg */
+.site-navbar .navbar-nav > li > a,
+.site-navbar .navbar-nav > li > a .icon,
+.site-navbar.navbar-inverse .navbar-nav > li > a {
+    color: var(--ndx-slate-600) !important;
+}
+.site-navbar .navbar-nav > li > a:hover,
+.site-navbar.navbar-inverse .navbar-nav > li > a:hover {
+    color: var(--ndx-primary-500) !important;
+    background-color: var(--ndx-slate-50) !important;
+}
+/* Hamburger bars on white */
+.site-navbar .hamburger .hamburger-bar,
+.site-navbar .hamburger .hamburger-bar:before,
+.site-navbar .hamburger .hamburger-bar:after,
+.site-navbar.navbar-inverse .hamburger .hamburger-bar,
+.site-navbar.navbar-inverse .hamburger .hamburger-bar:before,
+.site-navbar.navbar-inverse .hamburger .hamburger-bar:after {
+    background-color: var(--ndx-slate-600) !important;
+}
+
+/* ── 3. mmenu Selected State (high specificity) ── */
+.mm-listitem.mm-selected > a,
+.mm-listitem.mm-selected > span,
+.mm-listview > li.mm-selected > a,
+.mm-listview > li.mm-selected > .mm-panel,
+.site-menu-item.active > a,
+.site-menu-item.open > a {
+    background-color: rgba(79, 70, 229, 0.1) !important;
+    color: #FFFFFF !important;
+    border-left: 4px solid var(--ndx-primary-500) !important;
+    font-weight: 500 !important;
+}
+
+/* ── 4. Sidebar Footer (Gear / Power icons) ── */
+.site-menubar-footer {
+    background-color: var(--ndx-slate-900) !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+}
+.site-menubar-footer > a {
+    color: var(--ndx-slate-400) !important;
+    background: transparent !important;
+}
+.site-menubar-footer > a:hover {
+    color: #FFFFFF !important;
+    background-color: rgba(255,255,255,0.05) !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';

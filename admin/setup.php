@@ -125,23 +125,23 @@ if ($action == 'update' || $action == 'defaultparameters') {
 $object = new revolutionpro($db);
 
 // Get settings
-$val1 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 : $val1;
-$val2 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 : $val2;
-$val3 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : $val3;
-$val6 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 : $val6;
-$val4 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : $val4;
-$val7 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 : $val7;
-$val5 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5 : $val5;
+$val1 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 : $val1;
+$val2 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 : $val2;
+$val3 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : $val3;
+$val6 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 : $val6;
+$val4 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : $val4;
+$val7 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 : $val7;
+$val5 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5 : $val5;
 
-$val8 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : $val8;
-$val9 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : $val9;
-$val10 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : $val10;
-$val11 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : $val11;
+$val8 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : $val8;
+$val9 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : $val9;
+$val10 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : $val10;
+$val11 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : $val11;
 
-$val8c 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C : $val8c;
-$val9c 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C : $val9c;
-$val10c = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C : $val10c;
-$val11c = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C : $val11c;
+$val8c 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C : $val8c;
+$val9c 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C : $val9c;
+$val10c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C : $val10c;
+$val11c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C : $val11c;
 
 $valcss = $object->parametrevalcss ? $object->parametrevalcss : $valcss;
 
