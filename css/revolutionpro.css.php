@@ -849,6 +849,101 @@ table.liste th, table.noborder th {
     border-bottom: 2px solid var(--ndx-slate-200) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 3.1: NUCLEAR HOTFIX
+   Obliterar as cores nativas do RevolutionPro/Bootstrap
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Destruição do Arco-íris (TODAS as classes bg-*-NNN) ── */
+.bg-red-100, .bg-red-200, .bg-red-300, .bg-red-400, .bg-red-500, .bg-red-600, .bg-red-700, .bg-red-800, .bg-red-900,
+.bg-blue-100, .bg-blue-200, .bg-blue-300, .bg-blue-400, .bg-blue-500, .bg-blue-600, .bg-blue-700, .bg-blue-800, .bg-blue-900,
+.bg-teal-100, .bg-teal-200, .bg-teal-300, .bg-teal-400, .bg-teal-500, .bg-teal-600, .bg-teal-700, .bg-teal-800, .bg-teal-900,
+.bg-green-100, .bg-green-200, .bg-green-300, .bg-green-400, .bg-green-500, .bg-green-600, .bg-green-700, .bg-green-800, .bg-green-900,
+.bg-orange-100, .bg-orange-200, .bg-orange-300, .bg-orange-400, .bg-orange-500, .bg-orange-600, .bg-orange-700, .bg-orange-800, .bg-orange-900,
+.bg-purple-100, .bg-purple-200, .bg-purple-300, .bg-purple-400, .bg-purple-500, .bg-purple-600, .bg-purple-700, .bg-purple-800, .bg-purple-900,
+.bg-cyan-100, .bg-cyan-200, .bg-cyan-300, .bg-cyan-400, .bg-cyan-500, .bg-cyan-600, .bg-cyan-700, .bg-cyan-800, .bg-cyan-900,
+.bg-amber-100, .bg-amber-200, .bg-amber-300, .bg-amber-400, .bg-amber-500, .bg-amber-600, .bg-amber-700, .bg-amber-800, .bg-amber-900,
+.bg-brown-100, .bg-brown-200, .bg-brown-300, .bg-brown-400, .bg-brown-500, .bg-brown-600, .bg-brown-700, .bg-brown-800, .bg-brown-900,
+.bg-pink-100, .bg-pink-200, .bg-pink-300, .bg-pink-400, .bg-pink-500, .bg-pink-600, .bg-pink-700, .bg-pink-800, .bg-pink-900,
+.bg-grey-100, .bg-grey-200, .bg-grey-300, .bg-grey-400, .bg-grey-500, .bg-grey-600, .bg-grey-700, .bg-grey-800, .bg-grey-900,
+.bg-yellow-100, .bg-yellow-200, .bg-yellow-300, .bg-yellow-400, .bg-yellow-500, .bg-yellow-600, .bg-yellow-700, .bg-yellow-800, .bg-yellow-900,
+.bg-indigo-100, .bg-indigo-200, .bg-indigo-300, .bg-indigo-400, .bg-indigo-500, .bg-indigo-600, .bg-indigo-700, .bg-indigo-800, .bg-indigo-900,
+.bg-primary-100, .bg-primary-200, .bg-primary-300, .bg-primary-400, .bg-primary-500, .bg-primary-600, .bg-primary-700, .bg-primary-800, .bg-primary-900,
+.bg-info-100, .bg-info-200, .bg-info-300, .bg-info-400, .bg-info-500, .bg-info-600, .bg-info-700, .bg-info-800, .bg-info-900,
+.bg-success-100, .bg-success-200, .bg-success-300, .bg-success-400, .bg-success-500, .bg-success-600, .bg-success-700, .bg-success-800, .bg-success-900,
+.bg-warning-100, .bg-warning-200, .bg-warning-300, .bg-warning-400, .bg-warning-500, .bg-warning-600, .bg-warning-700, .bg-warning-800, .bg-warning-900,
+.bg-danger-100, .bg-danger-200, .bg-danger-300, .bg-danger-400, .bg-danger-500, .bg-danger-600, .bg-danger-700, .bg-danger-800, .bg-danger-900 {
+    background-color: var(--ndx-slate-50) !important;
+    background-image: none !important;
+    color: var(--ndx-primary-500) !important;
+}
+
+/* Also catch any bg-COLOR without number suffix */
+.bg-red, .bg-blue, .bg-teal, .bg-green, .bg-orange, .bg-purple, .bg-cyan,
+.bg-amber, .bg-brown, .bg-pink, .bg-grey, .bg-yellow, .bg-indigo,
+.bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger {
+    background-color: var(--ndx-slate-50) !important;
+    background-image: none !important;
+    color: var(--ndx-primary-500) !important;
+}
+
+/* EXCEPTION: Keep topbar navbar-header dark */
+nav.site-navbar .navbar-header[class*="bg-"],
+.site-navbar .navbar-header {
+    background-color: var(--ndx-slate-900) !important;
+    color: var(--ndx-white) !important;
+}
+/* EXCEPTION: Keep sidebar dark */
+.site-menubar[class*="bg-"],
+.site-menubar {
+    background-color: var(--ndx-slate-900) !important;
+    color: var(--ndx-slate-100) !important;
+}
+
+/* ── 2. Panel Heading Nuclear Override ── */
+.panel > .panel-heading,
+.panel > .panel-heading[class*="bg-"],
+.panel-heading.bg-teal-600,
+.panel-heading.bg-teal-400,
+.panel-heading.bg-primary-600,
+div.panel > div.panel-heading {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--ndx-slate-100) !important;
+    padding: 16px 20px !important;
+}
+.panel-heading .panel-title,
+.panel-heading h1, .panel-heading h2, .panel-heading h3, .panel-heading h4 {
+    color: var(--ndx-slate-800) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+}
+
+/* ── 3. Web Icons Font Protection (.wb-*) ── */
+[class*="wb-"], .wb-icon {
+    font-family: "Web Icons" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    color: var(--ndx-primary-500) !important;
+    font-size: 2rem !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── 4. Force dark text on light backgrounds ── */
+.white, [class*="color-white"], .text-white {
+    color: var(--ndx-slate-800) !important;
+}
+/* Keep white text for items that need it (navbar-header, sidebar, buttons) */
+.site-navbar .navbar-header .white,
+.site-navbar .navbar-header [class*="color-white"],
+.site-menubar .white,
+.btn-primary .white, .butAction .white,
+.badge .white, .label .white {
+    color: #FFFFFF !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
