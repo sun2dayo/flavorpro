@@ -27,7 +27,7 @@ if($ajxaction == 'notifications'){
 	$_SERVER['PHP_SELF'] 		= urldecode($PHP_SELF);
 
 	$returned = '';
-	if($user && !$user->admin && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
+	if($user && !$user->admin && !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
 		$langs->load('revolutionpro@revolutionpro');
 		print '<li class="nav-item" id="ordernowbuttoninmenu" >';
 	  	print '<a target="_blank"class="butAction hover" href="https://www.dolibarrstore.com/themes-et-modeles-dolibarr/73-revolution-pro-theme-dolibarr-n1.html">'.$langs->trans('OrderNow').'</a>';
@@ -91,8 +91,9 @@ if($ajxaction == 'notifications'){
 	$userImage = '';
 	if (!empty($user->photo))
 	{
-	    $userImage          = Form::showphoto('userphoto', $user, 0, 0, 0, 'photouserphoto userphoto', 'small', 0, 1);
-	    $userDropDownImage  = Form::showphoto('userphoto', $user, 0, 0, 0, 'dropdown-user-image', 'small', 0, 1);
+	    $form_ajax = new Form($db);
+	    $userImage          = $form_ajax->showphoto('userphoto', $user, 0, 0, 0, 'photouserphoto userphoto', 'small', 0, 1);
+	    $userDropDownImage  = $form_ajax->showphoto('userphoto', $user, 0, 0, 0, 'dropdown-user-image', 'small', 0, 1);
 	}
 	else {
 	    $nophoto = '/public/theme/common/user_anonymous.png';
@@ -168,8 +169,8 @@ if($ajxaction == 'notifications'){
 
 								        if (!empty($userstatic->photo))
 									    {
-									        $userImage          = Form::showphoto('userphoto', $userstatic, 0, 0, 0, 'photouserphoto userphoto', 'small', 0, 1);
-									        $userDropDownImage  = Form::showphoto('userphoto', $userstatic, 0, 0, 0, 'dropdown-user-image', 'small', 0, 1);
+									        $userImage          = $form->showphoto('userphoto', $userstatic, 0, 0, 0, 'photouserphoto userphoto', 'small', 0, 1);
+									        $userDropDownImage  = $form->showphoto('userphoto', $userstatic, 0, 0, 0, 'dropdown-user-image', 'small', 0, 1);
 									    }
 									    else {
 									        $nophoto = '/public/theme/common/user_anonymous.png';
@@ -243,10 +244,10 @@ elseif($ajxaction == 'boxes'){
 
 	require_once DOL_DOCUMENT_ROOT.'/core/class/workboardresponse.class.php';
 
-	$val8 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : 'tiers'; // First Boxe
-	$val9 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : 'projets'; // Second Boxe
-	$val10 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : 'devis'; // Third Boxe
-	$val11 	= $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : 'factures'; // Fourth Boxe
+	$val8 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : 'tiers'; // First Boxe
+	$val9 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : 'projets'; // Second Boxe
+	$val10 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : 'devis'; // Third Boxe
+	$val11 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : 'factures'; // Fourth Boxe
 
 	$toget = [$val8 => $val8, $val9 => $val9, $val10 => $val10, $val11 => $val11];
 
