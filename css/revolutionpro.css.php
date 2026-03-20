@@ -442,10 +442,106 @@ a, button, input, select, .site-menu-item, .card, .btn,
 .butAction, .butActionDelete, .badge, .nav-link {
     transition: all var(--ndx-transition-fast) !important;
 }
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Sidebar Modernization (Phase 2)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* 1. Fundo Global do Menu Lateral */
+.mm-menu, .site-menubar {
+    background-color: var(--ndx-slate-900) !important;
+    color: var(--ndx-slate-100) !important;
+    border-right: 1px solid rgba(255,255,255,0.05) !important;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
+}
+
+/* 2. Links e Tipografia */
+.mm-listview > li > a, .site-menu-item > a {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    padding: 12px 20px !important;
+    transition: all 0.2s ease !important;
+    border-bottom: none !important;
+}
+
+/* 3. Ícones do Menu */
+.site-menu-icon, .mm-listview > li > a i {
+    color: var(--ndx-primary-500) !important;
+    font-size: 1.1rem !important;
+    margin-right: 12px !important;
+}
+
+/* 4. Efeito Hover (Premium) */
+.mm-listview > li > a:hover, .site-menu-item > a:hover {
+    color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 5. Item Ativo (O "Toque" NovaDX) */
+.mm-listview > li.mm-selected > a, .site-menu-item.active > a {
+    background-color: var(--ndx-primary-alpha-08) !important;
+    color: #FFFFFF !important;
+    border-left: 4px solid var(--ndx-primary-500) !important;
+    font-weight: 500 !important;
+}
+
+/* 6. Títulos de Categoria (Submenus) */
+.mm-divider, .site-menu-category {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.05em !important;
+    padding: 20px 20px 8px 20px !important;
+    border-bottom: none !important;
+}
+
+/* 7. Submenus */
+.site-menu-sub {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}
+.site-menu-sub .site-menu-item > a {
+    padding-left: 48px !important;
+    font-size: 0.85rem !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+.site-menu-sub .site-menu-item > a:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* 8. Ocultar blocos de perfil/logos antigos na sidebar */
+.site-menubar-header {
+    display: none !important;
+}
+
+/* 9. Scrollbar dark styling */
+.site-menubar::-webkit-scrollbar {
+    width: 4px;
+}
+.site-menubar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.site-menubar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--ndx-radius-full);
+}
+.site-menubar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* 10. Menu arrow indicators (dark theme) */
+.site-menu-arrow {
+    color: rgba(255,255,255,0.3) !important;
+}
+.site-menu-item.active > a .site-menu-arrow,
+.site-menu-item:hover > a .site-menu-arrow {
+    color: rgba(255,255,255,0.6) !important;
+}
 
 <?php
 
-$valcss = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
+$valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
 if($valcss){
     print ($valcss);
 }

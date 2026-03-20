@@ -57,7 +57,7 @@ if(!empty($action) || !empty($sendit)){
 	if (!$user->admin) accessforbidden();
 }
 
-if (!$user->admin && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX != 'demo') accessforbidden();
+if (!$user->admin && (!empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX != 'demo')) accessforbidden();
 
 // Default Values
 $val1 = "light";
@@ -197,7 +197,7 @@ dol_htmloutput_mesg($mesg);
 print '<form id="settingrevopro" method="post" action="setup.php">';
 
 print '<div id="settingrevolutionprotheme">';
-print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
+print '<input type="hidden" name="token" value="'.newToken().'">';
 print '<input type="hidden" name="action" value="update">';
 print '<div class="nav-tabs-horizontal">';
 print '<ul role="tablist" class="nav nav-tabs nav-tabs-line">';
