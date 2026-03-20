@@ -539,6 +539,93 @@ a, button, input, select, .site-menu-item, .card, .btn,
     color: rgba(255,255,255,0.6) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 2.1: mmenu Panels & Topbar Fixes
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. mmenu Sliding Subpanels (dark) ── */
+.mm-panels, .mm-panel {
+    background-color: var(--ndx-slate-900) !important;
+    color: var(--ndx-slate-100) !important;
+}
+
+/* mmenu navbar (back button bar) */
+.mm-navbar {
+    background-color: var(--ndx-slate-900) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+.mm-navbar a, .mm-navbar .mm-title {
+    color: var(--ndx-slate-100) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+}
+
+/* mmenu back arrow (<<<) */
+.mm-btn:before, .mm-btn:after {
+    border-color: rgba(255,255,255,0.7) !important;
+}
+
+/* mmenu list items inside panels */
+.mm-listview > li {
+    border-color: rgba(255,255,255,0.04) !important;
+}
+
+/* ── 2. Topbar — White SaaS Style ── */
+.site-navbar {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid var(--ndx-slate-100) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+}
+
+/* Logo area — keeps dark for sidebar continuity */
+.site-navbar .navbar-header {
+    background-color: var(--ndx-slate-900) !important;
+    border-right: 1px solid rgba(255,255,255,0.05) !important;
+}
+.site-navbar .navbar-header .navbar-brand {
+    color: var(--ndx-white) !important;
+}
+
+/* Topbar icons and links */
+.site-navbar .navbar-nav > li > a {
+    color: var(--ndx-slate-600) !important;
+}
+.site-navbar .navbar-nav > li > a:hover {
+    color: var(--ndx-primary-500) !important;
+    background-color: var(--ndx-slate-50) !important;
+}
+.site-navbar .icon {
+    color: var(--ndx-slate-600) !important;
+}
+.site-navbar .icon:hover {
+    color: var(--ndx-primary-500) !important;
+}
+
+/* Hamburger menu icon on white bar */
+.site-navbar .hamburger .hamburger-bar,
+.site-navbar .hamburger .hamburger-bar:before,
+.site-navbar .hamburger .hamburger-bar:after {
+    background-color: var(--ndx-slate-600) !important;
+}
+
+/* Search icon area on topbar */
+.site-navbar .navbar-form .form-control {
+    background-color: var(--ndx-slate-50) !important;
+    border: 1px solid var(--ndx-slate-200) !important;
+    border-radius: var(--ndx-radius-md) !important;
+    color: var(--ndx-slate-800) !important;
+}
+
+/* Badge notifications (keep vibrant) */
+.site-navbar .badge-danger {
+    background-color: #EF4444 !important;
+}
+
+/* ── 3. Residual Header Blocks Cleanup ── */
+.site-menubar-header, .site-menubar-user {
+    display: none !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
