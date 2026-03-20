@@ -734,11 +734,12 @@ nav.site-navbar .navbar-header,
    NovaDX Pro — Phase 3: Brand Identity & Dashboard Modernization
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Indigo Primary Override ── */
-.text-primary, a:not(.butAction):not(.butActionDelete):not(.dropdown-item) {
+/* ── 1. Indigo Primary Override (exclude sidebar/mmenu) ── */
+.text-primary,
+a:not(.butAction):not(.butActionDelete):not(.dropdown-item):not(.site-menu-item > a):not(.mm-listview > li > a):not(.site-menubar a):not(.mm-navbar a):not(.site-menubar-footer a) {
     color: var(--ndx-primary-500) !important;
 }
-a:not(.butAction):not(.butActionDelete):not(.dropdown-item):hover {
+a:not(.butAction):not(.butActionDelete):not(.dropdown-item):not(.site-menu-item > a):not(.mm-listview > li > a):not(.site-menubar a):not(.mm-navbar a):not(.site-menubar-footer a):hover {
     color: var(--ndx-primary-600) !important;
     text-decoration: none !important;
 }
@@ -951,6 +952,33 @@ div.panel > div.panel-heading {
 .site-menubar .white,
 .btn-primary .white, .butAction .white,
 .badge .white, .label .white {
+    color: #FFFFFF !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — NUCLEAR: Sidebar Text WHITE (last = wins cascade)
+   ══════════════════════════════════════════════════════════════════ */
+.site-menubar a,
+.site-menubar .site-menu-title,
+.site-menubar .site-menu-item > a,
+.site-menubar .site-menu-item > a span,
+.mm-menu a,
+.mm-listview > li > a,
+.mm-listview > li > a span,
+.mm-navbar a,
+.mm-navbar .mm-title,
+.site-menubar-footer > a {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.site-menubar a:hover,
+.site-menubar .site-menu-item > a:hover,
+.mm-listview > li > a:hover {
+    color: #FFFFFF !important;
+}
+/* Active item stays white */
+.site-menubar .site-menu-item.active > a,
+.site-menubar .site-menu-item.active > a span,
+.mm-listview > li.mm-selected > a {
     color: #FFFFFF !important;
 }
 
