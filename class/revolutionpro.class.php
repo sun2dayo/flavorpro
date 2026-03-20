@@ -1028,6 +1028,7 @@ class revolutionpro extends Commonobject{
     	global $user, $hookmanager, $conf, $langs, $db;
 
 		$toprightmenu = '';
+		$form = new Form($db);
 
 		// Link to module builder
 		if (!empty($conf->modulebuilder->enabled))
@@ -1037,7 +1038,7 @@ class revolutionpro extends Commonobject{
 			$text .= '<span class="fa fa-bug atoplogin valignmiddle"></span>';
 			$text .= '</a>';
 			$toprightmenu .= '<span class="dropdown-item othersmenus righttopmenu2">';
-			$toprightmenu .= @Form::textwithtooltip('', $langs->trans("ModuleBuilder"), 2, 1, $text, 'login_block_elem', 2);
+			$toprightmenu .= $form->textwithtooltip('', $langs->trans("ModuleBuilder"), 2, 1, $text, 'login_block_elem', 2);
 			$toprightmenu .= '</span>';
 		}
 
@@ -1060,7 +1061,7 @@ class revolutionpro extends Commonobject{
 			$text .= '<span class="fa fa-print atoplogin valignmiddle"></span>';
 			$text .= '</a>';
 			$toprightmenu .= '<span class="dropdown-item othersmenus righttopmenu3">';
-			$toprightmenu .= @Form::textwithtooltip('', $langs->trans("PrintContentArea"), 2, 1, $text, 'login_block_elem', 2);
+			$toprightmenu .= $form->textwithtooltip('', $langs->trans("PrintContentArea"), 2, 1, $text, 'login_block_elem', 2);
 			$toprightmenu .= '</span>';
 		}
 
@@ -1094,7 +1095,7 @@ class revolutionpro extends Commonobject{
 				$text .= '<span class="fa fa-question-circle atoplogin valignmiddle"></span>';
 				$text .= '</a>';
 				$toprightmenu .= '<span class="dropdown-item othersmenus righttopmenu4">';
-				$toprightmenu .= @Form::textwithtooltip('', $title, 2, 1, $text, 'login_block_elem', 2);
+				$toprightmenu .= $form->textwithtooltip('', $title, 2, 1, $text, 'login_block_elem', 2);
 				$toprightmenu .= '</span>';
 			}
 
@@ -1143,7 +1144,7 @@ class revolutionpro extends Commonobject{
 
 		$text = '<span href="#" class="aversion"><span class="hideonsmartphone small">'.DOL_VERSION.'</span></span>';
 		$toprightmenu .= '<span class="dropdown-item othersmenus righttopmenu5">';
-		$toprightmenu .= @Form::textwithtooltip('', $appli, 2, 1, $text, 'login_block_elem', 2);
+		$toprightmenu .= $form->textwithtooltip('', $appli, 2, 1, $text, 'login_block_elem', 2);
 		$toprightmenu .= '</span>';
 			
 		return $toprightmenu;
