@@ -371,6 +371,10 @@ body table[summary="list_of_modules"] .ds_url_module_name
     --ndx-slate-900: #0F172A;
     --ndx-white:     #FFFFFF;
 
+    /* ── Sidebar (Indigo dark) ── */
+    --ndx-sidebar-bg: #312E81;      /* Indigo 900 */
+    --ndx-sidebar-bg-dark: #272462; /* Deeper Indigo */
+
     /* ── Spacing & Borders ── */
     --ndx-radius-xs: 4px;
     --ndx-radius-sm: 6px;
@@ -452,19 +456,19 @@ a, button, input, select, .site-menu-item, .card, .btn,
    NovaDX Pro — Sidebar Modernization (Phase 2)
    ══════════════════════════════════════════════════════════════════ */
 
-/* 1. Fundo Global do Menu Lateral */
+/* 1. Fundo Global do Menu Lateral — INDIGO */
 .mm-menu, .site-menubar {
-    background-color: var(--ndx-slate-900) !important;
-    color: var(--ndx-slate-100) !important;
-    border-right: 1px solid rgba(255,255,255,0.05) !important;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
+    color: #FFFFFF !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.15) !important;
 }
 
 /* 2. Links e Tipografia */
 .mm-listview > li > a, .site-menu-item > a {
     font-family: 'Inter', sans-serif !important;
     font-size: 0.9rem !important;
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(255, 255, 255, 0.85) !important;
     padding: 12px 20px !important;
     transition: all 0.2s ease !important;
     border-bottom: none !important;
@@ -472,7 +476,7 @@ a, button, input, select, .site-menu-item, .card, .btn,
 
 /* 3. Ícones do Menu */
 .site-menu-icon, .mm-listview > li > a i {
-    color: var(--ndx-primary-500) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
     font-size: 1.1rem !important;
     margin-right: 12px !important;
 }
@@ -549,15 +553,15 @@ a, button, input, select, .site-menu-item, .card, .btn,
    NovaDX Pro — Phase 2.1: mmenu Panels & Topbar Fixes
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── 1. mmenu Sliding Subpanels (dark) ── */
+/* ── 1. mmenu Sliding Subpanels (Indigo) ── */
 .mm-panels, .mm-panel {
-    background-color: var(--ndx-slate-900) !important;
-    color: var(--ndx-slate-100) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
+    color: #FFFFFF !important;
 }
 
 /* mmenu navbar (back button bar) */
 .mm-navbar {
-    background-color: var(--ndx-slate-900) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
     border-bottom: 1px solid rgba(255,255,255,0.05) !important;
 }
 .mm-navbar a, .mm-navbar .mm-title {
@@ -585,7 +589,7 @@ a, button, input, select, .site-menu-item, .card, .btn,
 
 /* Logo area — keeps dark for sidebar continuity */
 .site-navbar .navbar-header {
-    background-color: var(--ndx-slate-900) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
     border-right: 1px solid rgba(255,255,255,0.05) !important;
 }
 .site-navbar .navbar-header .navbar-brand {
@@ -676,7 +680,7 @@ nav[class*="bg-cyan"],
 nav.site-navbar .navbar-header,
 .site-navbar.navbar-inverse .navbar-header,
 .site-navbar[class*="bg-"] .navbar-header {
-    background-color: var(--ndx-slate-900) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
 }
 /* Topbar text/icons dark on white bg */
 .site-navbar .navbar-nav > li > a,
@@ -714,7 +718,7 @@ nav.site-navbar .navbar-header,
 
 /* ── 4. Sidebar Footer (Gear / Power icons) ── */
 .site-menubar-footer {
-    background-color: var(--ndx-slate-900) !important;
+    background-color: var(--ndx-sidebar-bg-dark) !important;
     border-top: 1px solid rgba(255,255,255,0.05) !important;
 }
 .site-menubar-footer > a {
@@ -896,14 +900,14 @@ table.liste th, table.noborder th {
 /* EXCEPTION: Keep topbar navbar-header dark */
 nav.site-navbar .navbar-header[class*="bg-"],
 .site-navbar .navbar-header {
-    background-color: var(--ndx-slate-900) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
     color: var(--ndx-white) !important;
 }
-/* EXCEPTION: Keep sidebar dark */
+/* EXCEPTION: Keep sidebar Indigo */
 .site-menubar[class*="bg-"],
 .site-menubar {
-    background-color: var(--ndx-slate-900) !important;
-    color: var(--ndx-slate-100) !important;
+    background-color: var(--ndx-sidebar-bg) !important;
+    color: #FFFFFF !important;
 }
 
 /* ── 2. Panel Heading Nuclear Override ── */
