@@ -151,11 +151,11 @@ foreach ($mainmenuusedarray as $val)
 
 global $conf;
 
-$val3 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : 'teal';
-$val6 = $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 : 'primary';
+$val3 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : 'teal';
+$val6 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 : 'primary';
 
-// ── NovaDX Pro: Modern colour palette (replaces old Material colours) ──
-$colorsarr['primary']  = '4F46E5';
+// ── NovaDX Pro: Flavor-aligned colour palette ──
+$colorsarr['primary']  = '6366F1'; // Indigo 500 (Flavor primary)
 $colorsarr['blue']     = '3B82F6';
 $colorsarr['brown']    = '78716C';
 $colorsarr['cyan']     = '06B6D4';
@@ -186,6 +186,12 @@ if(isset($colorsarr[$val6])){
     $butglobcol = $colorsarr[$val6];
 }
 $butglobcolDark = isset($colorsDark[$val6]) ? $colorsDark[$val6] : '059669';
+
+// ── NovaDX Pro: FORCE Flavor Indigo (override DB-stored teal/green) ──
+$globcol = '6366F1';        // Flavor Indigo 500
+$globcolDark = '4F46E5';    // Flavor Indigo 600
+$butglobcol = '6366F1';     // Buttons: Flavor Indigo 500
+$butglobcolDark = '4F46E5'; // Buttons hover: Indigo 600
 
 
 
