@@ -720,6 +720,135 @@ nav.site-navbar .navbar-header,
     background-color: rgba(255,255,255,0.05) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 3: Brand Identity & Dashboard Modernization
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Indigo Primary Override ── */
+.text-primary, a:not(.butAction):not(.butActionDelete):not(.dropdown-item) {
+    color: var(--ndx-primary-500) !important;
+}
+a:not(.butAction):not(.butActionDelete):not(.dropdown-item):hover {
+    color: var(--ndx-primary-600) !important;
+    text-decoration: none !important;
+}
+.bg-primary, .btn-primary, .label-primary, .badge-primary {
+    background-color: var(--ndx-primary-500) !important;
+    border-color: var(--ndx-primary-500) !important;
+    color: #FFFFFF !important;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: var(--ndx-primary-600) !important;
+    border-color: var(--ndx-primary-600) !important;
+}
+
+/* Dolibarr action buttons */
+.butAction {
+    background-color: var(--ndx-primary-500) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: var(--ndx-radius-sm) !important;
+    padding: 8px 20px !important;
+    font-weight: 500 !important;
+}
+.butAction:hover {
+    background-color: var(--ndx-primary-600) !important;
+    box-shadow: var(--ndx-shadow-md) !important;
+}
+.butActionDelete {
+    background-color: #EF4444 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: var(--ndx-radius-sm) !important;
+    padding: 8px 20px !important;
+    font-weight: 500 !important;
+}
+.butActionDelete:hover {
+    background-color: #DC2626 !important;
+}
+
+/* ── 2. Dashboard Widgets (Clean White Cards) ── */
+.widget {
+    background-color: #FFFFFF !important;
+    border-radius: var(--ndx-radius-md) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+    border: 1px solid var(--ndx-slate-100) !important;
+    margin-bottom: 20px !important;
+    overflow: hidden !important;
+}
+/* Remove rainbow bg-* from icon blocks */
+.widget [class*="bg-"] {
+    background-color: var(--ndx-slate-50) !important;
+    color: var(--ndx-primary-500) !important;
+    border-right: 1px solid var(--ndx-slate-100) !important;
+}
+/* Force dark text inside widgets */
+.widget .white, .widget [class*="white"] {
+    color: var(--ndx-slate-800) !important;
+}
+.widget .counter-number {
+    font-weight: 700 !important;
+    color: var(--ndx-slate-900) !important;
+}
+.widget .counter-label {
+    color: var(--ndx-slate-500) !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+}
+/* Widget icon size */
+.widget .widget-icon i, .widget .icon {
+    font-size: 2rem !important;
+}
+
+/* ── 3. Panels & Tables ── */
+.panel {
+    background-color: #FFFFFF !important;
+    border: none !important;
+    border-radius: var(--ndx-radius-md) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+    margin-bottom: 24px !important;
+}
+/* Panel heading (remove coloured backgrounds) */
+.panel-heading, .panel-title,
+.panel-heading[class*="bg-"],
+.panel-heading.bg-teal-600,
+.panel-heading.bg-primary {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    color: var(--ndx-slate-800) !important;
+    border-bottom: 1px solid var(--ndx-slate-100) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 16px 20px !important;
+}
+.panel-title .icon {
+    color: var(--ndx-primary-500) !important;
+    margin-right: 8px !important;
+}
+.panel-body {
+    padding: 20px !important;
+}
+
+/* ── 4. Dolibarr Tabs & Tables ── */
+div.tabs, div.tabBar {
+    background-color: #FFFFFF !important;
+    border-radius: var(--ndx-radius-md) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+}
+.oddeven:hover td {
+    background-color: var(--ndx-primary-alpha-08) !important;
+}
+table.liste th, table.noborder th {
+    background-color: var(--ndx-slate-50) !important;
+    color: var(--ndx-slate-700) !important;
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    border-bottom: 2px solid var(--ndx-slate-200) !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
