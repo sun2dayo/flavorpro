@@ -982,6 +982,144 @@ div.panel > div.panel-heading {
     color: #FFFFFF !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 4: Widget Sweep & Login Modernization
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Widget Inline Style Override ── */
+.widget [style*="background-color"],
+.widget [style*="background"] {
+    background-color: var(--ndx-slate-50) !important;
+    background: var(--ndx-slate-50) !important;
+}
+
+/* Rescue icons inside color blocks */
+.widget .icon, .widget i, .widget [class*="wb-"], .widget [class*="md-"],
+.widget [class*="fa-"], .widget .fa {
+    color: var(--ndx-primary-500) !important;
+    background: transparent !important;
+    text-shadow: none !important;
+    font-size: 2.2rem !important;
+}
+
+/* Force dark text on now-light widgets */
+.widget-title, .widget-content [class*="white"],
+.widget-content [style*="color"],
+.widget [style*="color: white"], .widget [style*="color:#fff"],
+.widget [style*="color: #fff"], .widget [style*="color:white"] {
+    color: var(--ndx-slate-800) !important;
+}
+
+/* Widget links — Indigo on white */
+.widget a {
+    color: var(--ndx-primary-500) !important;
+}
+.widget a:hover {
+    color: var(--ndx-primary-600) !important;
+}
+
+/* Widget counter styling */
+.widget .counter, .widget .counter-number {
+    color: var(--ndx-slate-900) !important;
+    font-weight: 700 !important;
+}
+
+/* ── 2. Login Screen (page-login-v2) ── */
+
+/* Base page */
+body.page-login-v2, body.bodylogin {
+    background-color: var(--ndx-slate-50) !important;
+}
+
+/* Left panel — dark branding */
+.page-login-v2 .page-brand-info,
+body.bodylogin.page-login-v2:before {
+    background-color: var(--ndx-sidebar-bg) !important;
+    background-blend-mode: multiply;
+}
+
+/* Right panel — white form card */
+.page-login-v2 .page-login-main {
+    background: #FFFFFF !important;
+    border-radius: var(--ndx-radius-lg) !important;
+    box-shadow: var(--ndx-shadow-xl) !important;
+    padding: 40px !important;
+    margin: auto !important;
+}
+
+/* Login form inputs */
+.page-login-v2 input.form-control,
+body.bodylogin input.form-control,
+body.bodylogin .login_table input[type="text"],
+body.bodylogin .login_table input[type="password"] {
+    border-radius: var(--ndx-radius-sm) !important;
+    border: 1px solid var(--ndx-slate-200) !important;
+    padding: 12px 16px !important;
+    height: auto !important;
+    background-color: var(--ndx-slate-50) !important;
+    box-shadow: none !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    transition: all var(--ndx-transition-fast) !important;
+}
+.page-login-v2 input.form-control:focus,
+body.bodylogin input.form-control:focus,
+body.bodylogin .login_table input:focus {
+    border-color: var(--ndx-primary-500) !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+    outline: none !important;
+}
+
+/* Login button */
+.page-login-v2 .btn-primary,
+body.bodylogin .login_table input[type="submit"],
+body.bodylogin input.button {
+    background-color: var(--ndx-primary-500) !important;
+    border-color: var(--ndx-primary-500) !important;
+    border-radius: var(--ndx-radius-sm) !important;
+    padding: 12px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #FFFFFF !important;
+    cursor: pointer !important;
+    transition: all var(--ndx-transition-fast) !important;
+    width: 100% !important;
+}
+.page-login-v2 .btn-primary:hover,
+body.bodylogin .login_table input[type="submit"]:hover,
+body.bodylogin input.button:hover {
+    background-color: var(--ndx-primary-600) !important;
+    border-color: var(--ndx-primary-600) !important;
+    box-shadow: var(--ndx-shadow-md) !important;
+}
+
+/* Login logo area */
+.page-login-v2 .brand-text,
+body.bodylogin .login-logo {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+}
+
+/* Login form labels */
+.page-login-v2 label,
+body.bodylogin label {
+    color: var(--ndx-slate-600) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 0.85rem !important;
+}
+
+/* Login footer links */
+.page-login-v2 a,
+body.bodylogin .login-forgot a {
+    color: var(--ndx-primary-500) !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
