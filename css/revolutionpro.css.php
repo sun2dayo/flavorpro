@@ -1881,6 +1881,67 @@ span.badge.badge-info,
     color: #FFFFFF !important;
 }
 
+/* ── Modern Dashboard Charts ── */
+/* Chart container cards */
+.dolgraphchart {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 12px rgba(79, 70, 229, 0.08) !important;
+    padding: 20px !important;
+    margin: 8px 4px !important;
+    border: 1px solid rgba(79, 70, 229, 0.06) !important;
+    transition: box-shadow 0.3s ease, transform 0.2s ease !important;
+}
+.dolgraphchart:hover {
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.14) !important;
+    transform: translateY(-1px);
+}
+/* Chart title styling */
+.dolgraphtitle {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #4338CA !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 2px solid rgba(79, 70, 229, 0.1) !important;
+}
+/* Canvas responsive */
+.dolgraphchart canvas {
+    border-radius: 8px !important;
+}
+/* No-data placeholder */
+.nographyet {
+    background: linear-gradient(135deg, #f0f0ff 0%, #e8e8ff 100%) !important;
+    border-radius: 12px !important;
+    border: 2px dashed rgba(79, 70, 229, 0.2) !important;
+}
+.nographyettext {
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    color: #6366F1 !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+}
+/* Graph tooltip */
+.graph-tooltip-inner {
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    background: #1E1B4B !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+/* Chart legend refinement */
+.dolgraph .chart-legend,
+.dolgraphchart .chart-legend {
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 11px !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';

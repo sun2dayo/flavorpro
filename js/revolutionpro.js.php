@@ -58,6 +58,126 @@ $(window).on('load',function(){
 	$('#loader-overlay').hide();
 });
 
+/* ── Modernize Dashboard Charts (Chart.js v3+ global defaults) ── */
+/* Set immediately so defaults apply to any chart created after this script loads */
+(function rpModernCharts() {
+	if (typeof Chart === 'undefined') return;
+
+	/* Modern font */
+	Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+	Chart.defaults.font.size = 12;
+	Chart.defaults.font.weight = '500';
+	Chart.defaults.color = '#64748B';
+
+	/* Bar chart defaults */
+	Chart.defaults.elements.bar.borderRadius = 8;
+	Chart.defaults.elements.bar.borderSkipped = false;
+	Chart.defaults.elements.bar.borderWidth = 0;
+
+	/* Line chart defaults */
+	Chart.defaults.elements.line.tension = 0.4;
+	Chart.defaults.elements.line.borderWidth = 2.5;
+	Chart.defaults.elements.point.radius = 4;
+	Chart.defaults.elements.point.hoverRadius = 7;
+	Chart.defaults.elements.point.backgroundColor = '#4F46E5';
+
+	/* Arc (doughnut/pie) defaults */
+	Chart.defaults.elements.arc.borderWidth = 2;
+	Chart.defaults.elements.arc.borderColor = '#ffffff';
+	Chart.defaults.elements.arc.hoverOffset = 8;
+
+	/* Grid and scale defaults */
+	if (Chart.defaults.scale) {
+		Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
+		Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
+		Chart.defaults.scale.grid.drawBorder = false;
+		Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
+		Chart.defaults.scale.ticks.padding = 8;
+	}
+
+	/* Animation */
+	Chart.defaults.animation = Chart.defaults.animation || {};
+	Chart.defaults.animation.duration = 1200;
+	Chart.defaults.animation.easing = 'easeOutQuart';
+
+	/* Legend */
+	if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
+		Chart.defaults.plugins.legend.labels.padding = 16;
+		Chart.defaults.plugins.legend.labels.usePointStyle = true;
+		Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
+	}
+
+	/* Tooltip */
+	if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
+		Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
+		Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", size: 13, weight: '600' };
+		Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif", size: 12 };
+		Chart.defaults.plugins.tooltip.padding = 12;
+		Chart.defaults.plugins.tooltip.cornerRadius = 10;
+		Chart.defaults.plugins.tooltip.displayColors = true;
+		Chart.defaults.plugins.tooltip.boxPadding = 4;
+	}
+
+	/* Deferred: update charts that were already created before this script ran */
+	function rpUpdateExistingCharts() {
+		var chartInstances = Chart.instances;
+		if (!chartInstances || Object.keys(chartInstances).length === 0) return;
+
+		Object.keys(chartInstances).forEach(function(key) {
+			var chart = chartInstances[key];
+			if (!chart || !chart.config || chart._rpModernized) return;
+
+			/* Doughnut / Pie */
+			if (chart.config.type === 'doughnut' || chart.config.type === 'pie') {
+				chart.options.cutout = '70%';
+				chart.options.spacing = 3;
+				if (chart.data && chart.data.datasets) {
+					chart.data.datasets.forEach(function(ds) {
+						ds.borderWidth = 2;
+						ds.borderColor = '#ffffff';
+						ds.hoverOffset = 8;
+					});
+				}
+			}
+
+			/* Bar */
+			if (chart.config.type === 'bar') {
+				if (chart.data && chart.data.datasets) {
+					chart.data.datasets.forEach(function(ds) {
+						ds.borderRadius = 8;
+						ds.borderSkipped = false;
+						ds.borderWidth = 0;
+						ds.maxBarThickness = 32;
+					});
+				}
+				if (chart.options.scales) {
+					Object.keys(chart.options.scales).forEach(function(scaleKey) {
+						var scale = chart.options.scales[scaleKey];
+						if (scale) {
+							scale.grid = scale.grid || {};
+							scale.grid.color = 'rgba(148, 163, 184, 0.12)';
+							scale.grid.drawBorder = false;
+							scale.ticks = scale.ticks || {};
+							scale.ticks.padding = 8;
+						}
+					});
+				}
+			}
+
+			chart._rpModernized = true;
+			chart.update('none');
+		});
+	}
+
+	/* Poll for chart instances (they may load after this script) */
+	var rpAttempts = 0;
+	var rpInterval = setInterval(function() {
+		rpAttempts++;
+		rpUpdateExistingCharts();
+		if (rpAttempts >= 10) clearInterval(rpInterval);
+	}, 500);
+})();
+
 <?php
 
 
