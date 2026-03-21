@@ -1697,10 +1697,6 @@ a.btnTitle.btnTitleSelected {
 #id-top.side-nav-vert {
     border: none !important;
     background: transparent !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-    line-height: 0 !important;
 }
 .page {
     border-top: none !important;
