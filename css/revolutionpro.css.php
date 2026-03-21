@@ -611,11 +611,16 @@ a, button, input, select, .site-menu-item, .card, .btn,
     color: var(--ndx-primary-500) !important;
 }
 
-/* Hamburger menu icon on white bar */
+/* Hamburger menu icon on white bar — Indigo */
 .site-navbar .hamburger .hamburger-bar,
 .site-navbar .hamburger .hamburger-bar:before,
 .site-navbar .hamburger .hamburger-bar:after {
-    background-color: var(--ndx-slate-600) !important;
+    background-color: var(--ndx-primary-500) !important;
+}
+.site-navbar .hamburger:hover .hamburger-bar,
+.site-navbar .hamburger:hover .hamburger-bar:before,
+.site-navbar .hamburger:hover .hamburger-bar:after {
+    background-color: var(--ndx-primary-600) !important;
 }
 
 /* Search icon area on topbar */
@@ -693,14 +698,22 @@ nav.site-navbar .navbar-header,
     color: var(--ndx-primary-500) !important;
     background-color: var(--ndx-slate-50) !important;
 }
-/* Hamburger bars on white */
+/* Hamburger bars on white — Indigo */
 .site-navbar .hamburger .hamburger-bar,
 .site-navbar .hamburger .hamburger-bar:before,
 .site-navbar .hamburger .hamburger-bar:after,
 .site-navbar.navbar-inverse .hamburger .hamburger-bar,
 .site-navbar.navbar-inverse .hamburger .hamburger-bar:before,
 .site-navbar.navbar-inverse .hamburger .hamburger-bar:after {
-    background-color: var(--ndx-slate-600) !important;
+    background-color: var(--ndx-primary-500) !important;
+}
+.site-navbar .hamburger:hover .hamburger-bar,
+.site-navbar .hamburger:hover .hamburger-bar:before,
+.site-navbar .hamburger:hover .hamburger-bar:after,
+.site-navbar.navbar-inverse .hamburger:hover .hamburger-bar,
+.site-navbar.navbar-inverse .hamburger:hover .hamburger-bar:before,
+.site-navbar.navbar-inverse .hamburger:hover .hamburger-bar:after {
+    background-color: var(--ndx-primary-600) !important;
 }
 
 /* ── 3. mmenu Selected State (high specificity) ── */
@@ -1599,22 +1612,7 @@ html body .site-menubar-dark li.site-menu-item.metrovmenu a.rpfirstmenuglobal {
     color: #FFFFFF !important;
 }
 
-/* ── Topbar hamburger toggle: Indigo with hover ── */
-[data-toggle="menubar"] .hamburger-bar,
-.navbar-toggler .hamburger-bar,
-.hamburger .hamburger-bar {
-    background-color: var(--ndx-primary-500) !important;
-}
-[data-toggle="menubar"]:hover .hamburger-bar,
-.navbar-toggler:hover .hamburger-bar,
-.hamburger:hover .hamburger-bar {
-    background-color: var(--ndx-primary-600) !important;
-}
-[data-toggle="menubar"],
-.navbar-toggler {
-    opacity: 1 !important;
-    visibility: visible !important;
-}
+/* (hamburger-bar Indigo — handled in main theme block above) */
 
 /* ── Sidebar arrow: fix □ glyph → FA chevron ── */
 .site-menu-arrow {
