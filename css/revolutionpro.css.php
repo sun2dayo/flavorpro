@@ -1611,7 +1611,24 @@ html body .site-menu-icon::before {
     display: inline-block !important;
 }
 
-/* ── Fixed/unfold sidebar: compact menu spacing ── */
+/* ── Back arrow << to return to main menu ── */
+html body .site-menubar .mm-navbar .mm-prev::before {
+    content: "\f100" !important; /* fa-angle-double-left (<<) */
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 20px !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    display: inline-block !important;
+    animation: none !important;
+}
+html body .site-menubar .mm-navbar .mm-prev {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ── Fixed/unfold sidebar: compact MAIN menu spacing ── */
 body.site-menubar-unfold .site-menu > .site-menu-item > a {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
@@ -1623,6 +1640,27 @@ body.site-menubar-unfold .site-menu > .site-menu-item {
 body.site-menubar-unfold li.site-menu-item.metrovmenu a {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
+}
+
+/* ── Submenu panel: compact secondary items ── */
+.mm-panel .site-menu-sub .site-menu-item > a,
+.mm-panel li.site-menu-item.vmenu > a,
+.mm-panel .site-menu-item:not(.metrovmenu) > a {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    line-height: 1.4 !important;
+    font-size: 13px !important;
+}
+/* Submenu section headers (bold group labels) */
+.mm-panel .site-menu-item.vmenu > a {
+    padding-top: 8px !important;
+    padding-bottom: 4px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+/* Nav bar in submenu panel */
+.mm-panels .mm-panel.mm-hasnavbar .mm-navbar {
+    margin-bottom: 4px !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════
