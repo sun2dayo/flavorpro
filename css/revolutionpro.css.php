@@ -611,12 +611,37 @@ a, button, input, select, .site-menu-item, .card, .btn,
     color: var(--ndx-primary-500) !important;
 }
 
-/* Hamburger menu icon on white bar — Indigo */
+/* Hamburger menu icon on white bar — Indigo + restore 3 bars */
 .site-navbar .hamburger .hamburger-bar,
 .site-navbar .hamburger .hamburger-bar:before,
 .site-navbar .hamburger .hamburger-bar:after {
     background-color: var(--ndx-primary-500) !important;
+    height: 2px !important;
 }
+/* Restore the top and bottom bars (hamburger-close sets content:none) */
+.site-navbar .hamburger .hamburger-bar:before,
+.site-navbar .hamburger .hamburger-bar:after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    width: 100% !important;
+    background-color: var(--ndx-primary-500) !important;
+    height: 2px !important;
+    left: 0 !important;
+}
+.site-navbar .hamburger .hamburger-bar:before {
+    top: -6px !important;
+}
+.site-navbar .hamburger .hamburger-bar:after {
+    bottom: -6px !important;
+    top: auto !important;
+}
+/* Ensure the bar container has relative positioning */
+.site-navbar .hamburger .hamburger-bar {
+    position: relative !important;
+    display: block !important;
+}
+/* Hover */
 .site-navbar .hamburger:hover .hamburger-bar,
 .site-navbar .hamburger:hover .hamburger-bar:before,
 .site-navbar .hamburger:hover .hamburger-bar:after {
