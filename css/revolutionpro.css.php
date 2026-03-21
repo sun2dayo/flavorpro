@@ -1592,6 +1592,39 @@ html body .site-menu-icon::before {
     -webkit-text-fill-color: #FFFFFF !important;
 }
 
+/* ── Sidebar arrow: fix □ glyph → FA chevron ── */
+.site-menu-arrow {
+    font-size: 0 !important; /* hide the broken glyph */
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.site-menu-arrow::before {
+    content: "\f054" !important; /* fa-chevron-right */
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 10px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+    display: inline-block !important;
+}
+
+/* ── Fixed/unfold sidebar: compact menu spacing ── */
+body.site-menubar-unfold .site-menu > .site-menu-item > a {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    line-height: 1.4 !important;
+}
+body.site-menubar-unfold .site-menu > .site-menu-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+body.site-menubar-unfold li.site-menu-item.metrovmenu a {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    NovaDX Pro — Phase 4.6: RIGHT BORDER, GLOBAL VIEW, BADGE FIX
    ══════════════════════════════════════════════════════════════════ */
