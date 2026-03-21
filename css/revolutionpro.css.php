@@ -696,6 +696,18 @@ body.site-menubar-unfold .site-navbar .hamburger-arrow-left::after,
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+/* FA5 Solid needs weight 900 to render glyphs */
+.fas, .fa-solid {
+    font-weight: 900 !important;
+}
+/* FA5 Regular needs weight 400 */
+.far, .fa-regular {
+    font-weight: 400 !important;
+}
+/* FA5 Brands needs weight 400 */
+.fab, .fa-brands {
+    font-weight: 400 !important;
+}
 /* Material Design icons — keep Material Design font first for md- classes */
 [class*="md-"], .zmdi,
 .mm-navbar .mm-btn:before, .mm-navbar .mm-btn:after {
