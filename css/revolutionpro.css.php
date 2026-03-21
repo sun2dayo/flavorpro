@@ -1704,21 +1704,33 @@ body.site-menubar-unfold li.site-menu-item.metrovmenu a {
     padding-bottom: 10px !important;
 }
 
-/* ── Submenu panel: compact secondary items ── */
-.mm-panel .site-menu-sub .site-menu-item > a,
-.mm-panel li.site-menu-item.vmenu > a,
-.mm-panel .site-menu-item:not(.metrovmenu) > a {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-    line-height: 1.4 !important;
-    font-size: 13px !important;
+/* ── Submenu panel: alignment matching original demo ── */
+/* All submenu items — base reset */
+.mm-panel li.site-menu-item a {
+    padding-left: 15px !important;
 }
-/* Submenu section headers (bold group labels) */
-.mm-panel .site-menu-item.vmenu > a {
+/* Section headers (bold groups: "Commercial proposals", "Sales Orders") */
+.mm-panel li.site-menu-item.vmenu > a,
+.mm-panel li.site-menu-item.metrovmenu > a {
+    padding-left: 15px !important;
     padding-top: 8px !important;
     padding-bottom: 4px !important;
     font-weight: 600 !important;
     font-size: 13px !important;
+}
+/* Sub-items ("New proposal", "List", "Statistics") */
+.mm-panel li.site-menu-item.metrovsmenu > a,
+.mm-panel .site-menu-sub li.site-menu-item > a {
+    padding-left: 30px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+/* Reset span margin-left to prevent double-indent */
+.mm-panel li.site-menu-item a .site-menu-title {
+    margin-left: 0 !important;
 }
 /* Nav bar in submenu panel */
 .mm-panels .mm-panel.mm-hasnavbar .mm-navbar {
