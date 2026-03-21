@@ -2,14 +2,14 @@
 # Generic
 #
 
-Module940326081Name=<a class='ds_url_module_name' target='_blank' href='https://www.dolibarrstore.com'>Revolution Pro Theme Dolibarr</a>
-Module940326081Desc=<a class='ds_url_module_desc' target='_blank' href='https://www.dolibarrstore.com'>Revolution Pro Theme Dolibarr - Dolibarr Theme - https://www.dolibarrstore.com <i style='font-size: 12px;' class='fa fa-external-link'></i></a> 
+Module940326081Name=<a class='ds_url_module_name' target='_blank' href='https://www.novadx.pt'>Flavor Pro</a>
+Module940326081Desc=<a class='ds_url_module_desc' target='_blank' href='https://www.novadx.pt'>Flavor Pro Theme Dolisys - Dolisys Theme - https://www.novadx.pt <i style='font-size: 12px;' class='fa fa-external-link'></i></a> 
 
 #
 # Admin page
 #
 SetupSaved=Setup saved
-RevolutionproSetup=Revolution Pro Theme Dolibarr Module setup
+RevolutionproSetup=Flavor Pro Module setup
 RevolutionproSettings=Settings
 Colors=Colors
 PrimaryColor=Primary Color
@@ -31,7 +31,7 @@ CustomJS=Custom JS
 CustomJSDescr=Load /revolutionpro/js/as_code_custom.js file
 AS_SettingsFontSizes=Font sizes
 HeaderFontSize=Horizontal Menu (icons)
-revolutionpromodeditor=dolibarrstore.com
+revolutionpromodeditor=novadx.pt
 VmenuFontSize=Vertical menu (text)
 Element=Elément
 Validation=Validation
@@ -42,10 +42,10 @@ Desktop=Desktops
 # About page
 #
 RevolutionproAbout=About
-RevolutionproAboutPage=Revolution Pro Theme Dolibarr about page
+RevolutionproAboutPage=Flavor Pro about page
 
 revolutionprochangelanguage=Change own language from the menu
-ContactAdministratorToGiveVersionCompatible=Contact us "contact@dolibarrstore.com" to provide you a version of theme compatible with your Dolibarr version
+ContactAdministratorToGiveVersionCompatible=Contact us "contact@novadx.pt" to provide you a version of theme compatible with your Dolisys version
 
 #RevolutionProFourBoxes=4 Boxes
 RevolutionProFourBoxes=Hide / Show

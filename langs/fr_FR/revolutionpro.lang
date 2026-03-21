@@ -1,14 +1,14 @@
-#
+﻿#
 # Générique
 #
-Module940326081Name=<a class='ds_url_module_name' target='_blank' href='https://www.dolibarrstore.com'>Révolution Pro Thème Dolibarr</a>
-Module940326081Desc=<a class='ds_url_module_desc' target='_blank' href='https://www.dolibarrstore.com'>Révolution Pro Thème Dolibarr - Thème de Dolibarr - https://www.dolibarrstore.com <i style='font-size: 12px;' class='fa fa-external-link'></i></a> 
+Module940326081Name=<a class='ds_url_module_name' target='_blank' href='https://www.novadx.pt'>Flavor Pro</a>
+Module940326081Desc=<a class='ds_url_module_desc' target='_blank' href='https://www.novadx.pt'>Flavor Pro - Theme Dolisys - https://www.novadx.pt <i style='font-size: 12px;' class='fa fa-external-link'></i></a> 
 
 #
 # Page d'administration
 #
 SetupSaved=Configuration enregistrée
-RevolutionproSetup=Configuration du Révolution Pro Thème Dolibarr
+RevolutionproSetup=Configuration du Flavor Pro
 RevolutionproSettings=Paramètres
 Colors=Couleurs
 PrimaryColor=Couleur primaire
@@ -40,10 +40,10 @@ Desktop=PC de bureau
 # Page À propos
 #
 RevolutionproAbout=À propos
-RevolutionproAboutPage=À propos du module Révolution Pro Thème Dolibarr
+RevolutionproAboutPage=À propos du module Flavor Pro
 
 revolutionprochangelanguage=Changer sa propre langue dans le menu
-ContactAdministratorToGiveVersionCompatible=Contactez-nous "contact@dolibarrstore.com" pour vous fournir une version de theme compatible avec votre version Dolibarr
+ContactAdministratorToGiveVersionCompatible=Contactez-nous "contact@novadx.pt" pour vous fournir une version de theme compatible avec votre version Dolisys
 
 #RevolutionProFourBoxes=4 Boxes
 RevolutionProFourBoxes=Cacher / Afficher

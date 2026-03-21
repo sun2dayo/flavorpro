@@ -1,6 +1,6 @@
-<?php
-/* Dolibarr Theme
- * Copyright (C) 2020  DolibarrStore.com
+﻿<?php
+/* Dolisys Theme
+ * Copyright (C) 2020  novadx.pt
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,12 +47,12 @@ class modRevolutionpro extends DolibarrModules
 		$this->numero = 940326081;
 		$this->rights_class = 'revolutionpro';
 
-		$this->family = "DolibarrStore Themes";
-		$this->editor_name = 'Dolibarr Store';
-		$this->editor_url = 'https://www.dolibarrstore.com';
+		$this->family = "NovaDX Themes";
+		$this->editor_name = 'NovaDX';
+		$this->editor_url = 'https://www.novadx.pt';
 		$this->module_position = '100';
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
-		$this->description = "Thème de Dolibarr - Affichage responsive";
+		$this->description = "Theme Dolisys - Affichage responsive";
 		$this->version = '18.9';
 		$this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
 		$this->special = 0;
@@ -159,7 +159,7 @@ class modRevolutionpro extends DolibarrModules
 		$this->const [$r] [0] = "DOL_VERSION";
 		$this->const [$r] [1] = "chaine";
 		$this->const [$r] [2] = '';
-		$this->const [$r] [3] = 'Dolibarr version';
+		$this->const [$r] [3] = 'Dolisys version';
 		$this->const [$r] [4] = 0;
 		$this->const [$r] [5] = $conf->entity;
 

@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
 include_once DOL_DOCUMENT_ROOT.'/core/class/html.formactions.class.php';
@@ -68,7 +68,7 @@ class revolutionpro extends Commonobject{
 				}
 
 
-				$('#mainbody > * ').not('.side-nav-vert').wrapAll($('<div class="page"> <div class="page-content container-fluid dolibarrstorecontainter"> </div> </div>'));
+				$('#mainbody > * ').not('.side-nav-vert').wrapAll($('<div class="page"> <div class="page-content container-fluid NovaDXcontainter"> </div> </div>'));
 				// $('#mainbody > .fiche ').wrap($('<div class="page"> <div class="page-content container-fluid"> </div> </div>'));
 				if(txtbox !== '')
 					$('#mainbody > .page > .page-content').prepend(txtbox);
@@ -179,14 +179,14 @@ class revolutionpro extends Commonobject{
 		        print '<div class="page-brand-info">';
 		          print '<div class="brand">';
 		            print '<img class="brand-img" style="height:26px;" src="'.$urllogo.'" alt="...">';
-		            $societename = 'Dolibarr Store';
+		            $societename = 'NovaDX';
 					
 					if(!empty($mysoc->name))
 						$societename = $mysoc->name;
 
 					$sociname = $societename;
 					if(!empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
-						$sociname = '<a href="https://www.dolibarrstore.com/themes-et-modeles-dolibarr/73-revolution-pro-theme-dolibarr-n1.html" target="_blank">'.$societename.'</a>';
+						$sociname = '<a href="https://www.novadx.pt/themes-et-modeles-dolibarr/73-revolution-pro-theme-dolibarr-n1.html" target="_blank">'.$societename.'</a>';
 					}
 
 		            print '<h2 class="brand-text font-size-40">'.$sociname.'</h2>';
@@ -205,10 +205,10 @@ class revolutionpro extends Commonobject{
 		    
 		}
 
-	    $societename = 'Dolibarr Store'; if(!empty($mysoc->name)) $societename = $mysoc->name;
+	    $societename = 'NovaDX'; if(!empty($mysoc->name)) $societename = $mysoc->name;
     	// $footertxt = '<span class="revolutionscrollinpage md-long-arrow-down bottom" onclick="scrollrevolutionprobottom()"></span>';
     	$footertxt ="";
-    	$footertxt .= '<div class="site-footer-legal">© '.date('Y').' '.$societename.'</div><div class="site-footer-right">  Crafted with <i class="red-600 icon md-favorite"></i> by <a class="ds_url_module_name" target="_blank" href="https://www.dolibarrstore.com">DolibarrStore</a>	</div>';
+    	$footertxt .= '<div class="site-footer-legal">© '.date('Y').' '.$societename.'</div><div class="site-footer-right">  Crafted with <i class="red-600 icon md-favorite"></i> by <a class="ds_url_module_name" target="_blank" href="https://www.novadx.pt">NovaDX</a>	</div>';
 
     	$linkajax = dol_buildpath('/revolutionpro/js/ajax.php',1);
 		// $curr = parse_url($linkajax);
@@ -399,7 +399,7 @@ class revolutionpro extends Commonobject{
 			if(!empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
 			?>
 				$(window).on('load',function(){
-					var txtcomm = '<a target="_blank" id="ordernowbutton" class="butAction" href="https://www.dolibarrstore.com/themes-et-modeles-dolibarr/73-revolution-pro-theme-dolibarr-n1.html">Order Now!</a>';
+					var txtcomm = '<a target="_blank" id="ordernowbutton" class="butAction" href="https://www.novadx.pt/themes-et-modeles-dolibarr/73-revolution-pro-theme-dolibarr-n1.html">Order Now!</a>';
 					$('.bodylogin #pagelogindivcontent #logindivcontent>.login_vertical_align>form').after(txtcomm); 
 					
 					$('li#ordernowbuttoninmenu>a').on("mouseover", function () {
@@ -456,7 +456,7 @@ class revolutionpro extends Commonobject{
 		$toprightmenu ="";
 		$urllogo = $this->getLogoCompanyUrl();
 
-		$societename = 'DolibarrStore';
+		$societename = 'NovaDX';
 		global $mysoc;
 		if(!empty($mysoc->name))
 			$societename = $mysoc->name;
@@ -639,14 +639,14 @@ class revolutionpro extends Commonobject{
 
 	   	$html .= $this->printLeftMenu($menu,$tabMenu,$showmode);
 
-	   	$societename = 'Dolibarr Store';
+	   	$societename = 'NovaDX';
 		
 		if(!empty($mysoc->name))
 			$societename = $mysoc->name;
 
 	    $html .= '<footer id="site-footer-hideen" class="site-footer">';
 	    	$html .= '<span class="revolutionscrollinpage md-long-arrow-down bottom" onclick="scrollrevolutionprobottom()"></span>';
-	    	$html .= '<div class="site-footer-legal">© '.date('Y').' '.$societename.'</div><div class="site-footer-right">  Crafted with <i class="red-600 icon md-favorite"></i> by <a class="ds_url_module_name" target="_blank" href="https://www.dolibarrstore.com">DolibarrStore</a>	</div>';
+	    	$html .= '<div class="site-footer-legal">© '.date('Y').' '.$societename.'</div><div class="site-footer-right">  Crafted with <i class="red-600 icon md-favorite"></i> by <a class="ds_url_module_name" target="_blank" href="https://www.novadx.pt">NovaDX</a>	</div>';
 	    $html .= '</footer>';
 		
 		return $html;

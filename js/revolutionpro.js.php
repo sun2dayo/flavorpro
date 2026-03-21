@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (!defined('NOREQUIRESOC'))    define('NOREQUIRESOC', 1);
 if (!defined('NOCSRFCHECK'))     define('NOCSRFCHECK', 1);
 if (!defined('NOTOKENRENEWAL'))  define('NOTOKENRENEWAL', 1);
@@ -27,7 +27,7 @@ $(document).ready(function(){
 		$.each(arrmodl, function(index, value) {
 			var img = $('.info-box-module-external .info-box-module .info-box-icon img[src*="/'+value+'/"]');
 			if(!img.hasClass('ds_imgmodl')){
-				img.wrap('<a class="ds_image_module_logo" target="_blank" href="https://www.dolibarrstore.com"></a>');
+				img.wrap('<a class="ds_image_module_logo" target="_blank" href="https://www.novadx.pt"></a>');
 				img.addClass('ds_imgmodl');
 			}
 		});
@@ -232,7 +232,7 @@ if($main_home)
 $pagecnx = dol_escape_htmltag($pagecnx);
 
 global $mysoc;
-$societename = 'Dolibarr Store';
+$societename = 'NovaDX';
 if(!empty($mysoc->name))
 	$societename = $mysoc->name;
 elseif(!empty($conf->global->MAIN_INFO_SOCIETE_NOM))
