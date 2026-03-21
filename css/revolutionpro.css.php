@@ -1694,6 +1694,12 @@ a.btnTitle.btnTitleSelected {
     border-bottom: none !important;
     box-shadow: none !important;
 }
+#id-top.side-nav-vert {
+    display: none !important;
+}
+.page {
+    border-top: none !important;
+}
 
 /* (hamburger-bar Indigo — handled in main theme block above) */
 
