@@ -685,11 +685,21 @@ body.site-menubar-unfold .site-navbar .hamburger-arrow-left::after,
    NovaDX Pro — Phase 2.2: Specificity Hotfixes
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Icon Font Protection (undo Inter override for icon classes) ── */
-.icon, [class*="md-"], [class*="fa-"], .fa, .fas, .far, .fab,
-.zmdi, .site-menu-icon, .glyphicon, .brand-icons,
+/* ── 1. Icon Font Protection (FontAwesome first, Material Design for md- classes) ── */
+[class*="fa-"], .fa, .fas, .far, .fab,
+.icon, .glyphicon, .brand-icons,
+.site-menu-icon {
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "Font Awesome 5 Brands", "FontAwesome", "Material Design Iconic Font", "Glyphicons Halflings", "brand-icons" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+/* Material Design icons — keep Material Design font first for md- classes */
+[class*="md-"], .zmdi,
 .mm-navbar .mm-btn:before, .mm-navbar .mm-btn:after {
-    font-family: "Material Design Iconic Font", "Material Design Icons", "FontAwesome", "Font Awesome 5 Free", "Font Awesome 5 Brands", "Glyphicons Halflings", "brand-icons" !important;
+    font-family: "Material Design Iconic Font", "Material Design Icons", "FontAwesome", "Font Awesome 5 Free" !important;
     font-style: normal !important;
     font-weight: normal !important;
     font-variant: normal !important;
