@@ -288,6 +288,18 @@ $(document).ready(function(){
 			$('.bodylogin div.login_center').remove();
 			// Flavor Pro: add Welcome heading
 			$('.bodylogin #logindivcontent .login_table').before('<h2 class="flavor-welcome">Welcome back</h2>');
+
+			// Flavor Pro: force layout via inline styles (overrides all CSS)
+			var brandPanel = document.querySelector('.page-brand-info');
+			var loginMain = document.querySelector('.page-login-main');
+			if (brandPanel) {
+				brandPanel.style.cssText = 'position:fixed!important;left:0!important;top:0!important;bottom:0!important;right:470px!important;width:auto!important;margin:0!important;padding:0!important;background:linear-gradient(160deg,#7C3AED 0%,#8B5CF6 30%,#A78BFA 70%,#C4B5FD 100%)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;z-index:1!important;overflow:hidden!important;';
+			}
+			if (loginMain) {
+				loginMain.style.cssText = 'position:fixed!important;right:0!important;top:0!important;bottom:0!important;width:470px!important;background-image:none!important;background-color:#FFFFFF!important;padding:0 50px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;z-index:2!important;overflow-y:auto!important;';
+			}
+			// Remove ::before and ::after overlays via injected style
+			$('<style>').html('body.bodylogin.page-login-v2::before,body.bodylogin.page-login-v2:before{display:none!important;content:none!important;background:none!important}body.bodylogin.page-login-v2::after,body.bodylogin.page-login-v2:after,.page-login-v2.page-dark.layout-full:after{display:none!important;content:none!important;background:none!important;opacity:0!important}').appendTo('head');
 		}
 	}
 	$('body .site-menu>.site-menu-item>a ').on('click', function(e) {
