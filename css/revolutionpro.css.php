@@ -2073,23 +2073,26 @@ body.bodylogin {
 }
 
 /* Override the Revolution Pro login-v2 layout — go centered card instead of split panel */
-body.bodylogin .page-login-v2 {
+body.bodylogin.page-login-v2 {
     background: transparent !important;
 }
-body.bodylogin .page-login-v2 .page-brand-info {
+body.bodylogin.page-login-v2 .page-brand-info {
     display: none !important;
 }
-body.bodylogin .page-login-v2 .page-login-main {
+body.bodylogin.page-login-v2 .page-login-main {
     position: static !important;
     background: transparent !important;
     padding: 0 !important;
     min-height: unset !important;
     height: auto !important;
+    width: 100% !important;
 }
-body.bodylogin .page-login-v2::after {
+body.bodylogin.page-login-v2::after,
+body.bodylogin.page-dark.layout-full::after {
     display: none !important;
+    background: none !important;
 }
-body.bodylogin .page-content {
+body.bodylogin.page-login-v2 .page-content {
     padding-right: 0 !important;
 }
 
