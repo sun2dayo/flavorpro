@@ -1695,7 +1695,12 @@ a.btnTitle.btnTitleSelected {
     box-shadow: none !important;
 }
 #id-top.side-nav-vert {
-    display: none !important;
+    border: none !important;
+    background: transparent !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    line-height: 0 !important;
 }
 .page {
     border-top: none !important;
