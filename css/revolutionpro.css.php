@@ -1524,6 +1524,64 @@ span.info-box-icon .fa {
     border: none !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 4.5: FA-DOL ICON DEFINITIONS
+   Dolibarr uses fa-dol-{key} classes with NO CSS → empty icons
+   Map each to a standard FontAwesome glyph
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Base: ensure FA font */
+.info-box-icon i[class*="fa-dol-"],
+i.fa[class*="fa-dol-"] {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    line-height: 1 !important;
+}
+
+/* Individual icon mappings */
+i.fa.fa-dol-action::before,
+.info-box-icon i.fa-dol-action::before       { content: "\f073" !important; } /* calendar */
+i.fa.fa-dol-project::before,
+.info-box-icon i.fa-dol-project::before       { content: "\f0e8" !important; } /* sitemap */
+i.fa.fa-dol-propal::before,
+.info-box-icon i.fa-dol-propal::before        { content: "\f15c" !important; } /* file-alt */
+i.fa.fa-dol-commande::before,
+.info-box-icon i.fa-dol-commande::before      { content: "\f07a" !important; } /* shopping-cart */
+i.fa.fa-dol-facture::before,
+.info-box-icon i.fa-dol-facture::before       { content: "\f570" !important; } /* file-invoice */
+i.fa.fa-dol-supplier_proposal::before,
+.info-box-icon i.fa-dol-supplier_proposal::before { content: "\f022" !important; } /* list-alt */
+i.fa.fa-dol-order_supplier::before,
+.info-box-icon i.fa-dol-order_supplier::before { content: "\f466" !important; } /* dolly */
+i.fa.fa-dol-invoice_supplier::before,
+.info-box-icon i.fa-dol-invoice_supplier::before { content: "\f571" !important; } /* file-invoice-dollar */
+i.fa.fa-dol-contrat::before,
+.info-box-icon i.fa-dol-contrat::before       { content: "\f328" !important; } /* file-signature */
+i.fa.fa-dol-ticket::before,
+.info-box-icon i.fa-dol-ticket::before        { content: "\f3ff" !important; } /* ticket */
+i.fa.fa-dol-bank_account::before,
+.info-box-icon i.fa-dol-bank_account::before  { content: "\f19c" !important; } /* university/bank */
+i.fa.fa-dol-member::before,
+.info-box-icon i.fa-dol-member::before        { content: "\f0c0" !important; } /* users */
+i.fa.fa-dol-expensereport::before,
+.info-box-icon i.fa-dol-expensereport::before { content: "\f4c0" !important; } /* money-check-alt */
+i.fa.fa-dol-holiday::before,
+.info-box-icon i.fa-dol-holiday::before       { content: "\f5ca" !important; } /* umbrella-beach */
+i.fa.fa-dol-cubes::before,
+.info-box-icon i.fa-dol-cubes::before         { content: "\f1b3" !important; } /* cubes */
+
+/* ── Kill the right-side coloured borders from custom.css ── */
+[class*="bg-infobox-"] ~ .info-box-content {
+    border-right: none !important;
+    border-right-color: transparent !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
