@@ -2058,6 +2058,260 @@ span.badge.badge-info,
     font-size: 11px !important;
 }
 
+/* ═════════════════════════════════════════════════════════════════
+   Flavor Pro — Login Page
+   ═════════════════════════════════════════════════════════════════ */
+
+/* ── Background & Body ── */
+body.bodylogin {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 30%, #4338CA 60%, #6366F1 100%) !important;
+    background-attachment: fixed !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Override the Revolution Pro login-v2 layout — go centered card instead of split panel */
+body.bodylogin .page-login-v2 {
+    background: transparent !important;
+}
+body.bodylogin .page-login-v2 .page-brand-info {
+    display: none !important;
+}
+body.bodylogin .page-login-v2 .page-login-main {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    min-height: unset !important;
+    height: auto !important;
+}
+body.bodylogin .page-login-v2::after {
+    display: none !important;
+}
+body.bodylogin .page-content {
+    padding-right: 0 !important;
+}
+
+/* ── Centered container ── */
+body.bodylogin .login_center {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    background: transparent !important;
+    padding: 20px !important;
+}
+body.bodylogin .login_vertical_align {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ── Login card ── */
+body.bodylogin .login_table {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1) !important;
+    padding: 40px 36px 32px !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+}
+
+/* ── Title (version) — hide or subtly show ── */
+body.bodylogin .login_table_title {
+    display: block !important;
+    font-size: 11px !important;
+    color: #94A3B8 !important;
+    text-align: right !important;
+    margin-bottom: 12px !important;
+    font-weight: 400 !important;
+    text-decoration: none !important;
+}
+body.bodylogin a.login_table_title {
+    color: #94A3B8 !important;
+    text-decoration: none !important;
+}
+
+/* ── Logo area ── */
+body.bodylogin #login_left {
+    text-align: center !important;
+    float: none !important;
+    width: 100% !important;
+    margin-bottom: 8px !important;
+}
+body.bodylogin #img_logo {
+    max-height: 56px !important;
+    max-width: 200px !important;
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+body.bodylogin #login_line1 {
+    display: block !important;
+}
+
+/* ── Form area ── */
+body.bodylogin #login_right {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+body.bodylogin .tagtable {
+    display: block !important;
+    width: 100% !important;
+}
+
+/* ── Input rows ── */
+body.bodylogin .trinputlogin {
+    display: block !important;
+    margin-bottom: 16px !important;
+    position: relative !important;
+}
+body.bodylogin .tdinputlogin {
+    display: flex !important;
+    align-items: center !important;
+    background: #F8FAFC !important;
+    border: 2px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    padding: 0 16px !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+body.bodylogin .tdinputlogin:focus-within {
+    border-color: #6366F1 !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* ── Input icons ── */
+body.bodylogin .tdinputlogin > .fa,
+body.bodylogin .tdinputlogin > span.fa {
+    color: #94A3B8 !important;
+    font-size: 15px !important;
+    margin-right: 12px !important;
+    flex-shrink: 0 !important;
+    width: 18px !important;
+    text-align: center !important;
+}
+
+/* ── Input fields ── */
+body.bodylogin .tdinputlogin input[type="text"],
+body.bodylogin .tdinputlogin input[type="password"] {
+    flex: 1 !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 14px 0 !important;
+    font-size: 14px !important;
+    font-family: 'Inter', sans-serif !important;
+    color: #1E293B !important;
+    outline: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+}
+body.bodylogin .tdinputlogin input::placeholder {
+    color: #94A3B8 !important;
+    font-weight: 400 !important;
+}
+
+/* ── Show/hide password eye ── */
+body.bodylogin .tdinputlogin .fa-eye,
+body.bodylogin .tdinputlogin .fa-eye-slash {
+    color: #94A3B8 !important;
+    cursor: pointer !important;
+    margin-left: 8px !important;
+}
+
+/* ── Submit button ── */
+body.bodylogin #login_line2 {
+    clear: both !important;
+}
+body.bodylogin #login-submit-wrapper {
+    margin-top: 8px !important;
+}
+body.bodylogin #login-submit-wrapper input[type="submit"],
+body.bodylogin .login_table input.button {
+    width: 100% !important;
+    padding: 14px 24px !important;
+    background: linear-gradient(135deg, #4F46E5, #6366F1) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: 0.5px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+    text-transform: uppercase !important;
+}
+body.bodylogin #login-submit-wrapper input[type="submit"]:hover,
+body.bodylogin .login_table input.button:hover {
+    background: linear-gradient(135deg, #4338CA, #4F46E5) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ── Forgot password link ── */
+body.bodylogin a.alogin {
+    color: #6366F1 !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: color 0.2s ease !important;
+}
+body.bodylogin a.alogin:hover {
+    color: #4338CA !important;
+    text-decoration: underline !important;
+}
+
+/* ── Error / warning messages ── */
+body.bodylogin .jnotify-container-login {
+    max-width: 420px !important;
+    margin: 16px auto !important;
+}
+body.bodylogin .login_main_message {
+    max-width: 420px !important;
+    margin: 16px auto !important;
+}
+body.bodylogin .login_main_message .error,
+body.bodylogin .login_main_message .warning {
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    font-size: 13px !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Main home content area ── */
+body.bodylogin .login_main_home {
+    color: rgba(255,255,255,0.8) !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Hide the BR between logo and form ── */
+body.bodylogin #login_line1 > br {
+    display: none !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    body.bodylogin .login_table {
+        padding: 28px 24px 24px !important;
+        border-radius: 16px !important;
+        margin: 0 8px !important;
+    }
+    body.bodylogin .login_vertical_align {
+        max-width: 100%;
+    }
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
