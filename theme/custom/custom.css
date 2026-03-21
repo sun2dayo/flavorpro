@@ -1739,7 +1739,6 @@ body.bodylogin.page-login-v2:before,
 body.bodylogin .page-brand-info,
 .page-login-v2 .page-brand-info {
     background: linear-gradient(160deg, #7C3AED 0%, #8B5CF6 30%, #A78BFA 70%, #C4B5FD 100%) !important;
-    background-image: none !important;
 }
 
 /* Right panel — no pattern */

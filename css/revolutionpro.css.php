@@ -2096,7 +2096,6 @@ body.bodylogin.page-login-v2 .page-login-main {
 /* ── Left panel: clean purple gradient (NO background image) ── */
 body.bodylogin .page-brand-info {
     background: linear-gradient(160deg, #7C3AED 0%, #8B5CF6 30%, #A78BFA 70%, #C4B5FD 100%) !important;
-    background-image: none !important;
     position: relative;
     overflow: hidden;
 }
