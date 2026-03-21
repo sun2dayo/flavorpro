@@ -1660,14 +1660,22 @@ html body .site-menubar-dark li.site-menu-item.metrovmenu a.rpfirstmenuglobal {
 }
 
 /* ── Fix invisible view toggle icons (List, Kanban, +) ── */
+.btnTitle-icon,
 .btnTitle-icon .fas,
 .btnTitle-icon .fa,
 .btnTitle-icon .far,
-.btnTitle-icon [class^="fa-"],
-.btnTitle-icon {
+.btnTitle-icon [class^="fa-"] {
     font-family: "Font Awesome 5 Free", FontAwesome, sans-serif !important;
+    font-weight: 900 !important;
     color: var(--ndx-primary-500) !important;
     -webkit-text-fill-color: var(--ndx-primary-500) !important;
+}
+/* Fix forced 50px dimensions — let icons size naturally */
+span.btnTitle-icon {
+    width: auto !important;
+    height: auto !important;
+    display: inline-block !important;
+    font-size: 14px !important;
 }
 a.btnTitle:hover .btnTitle-icon,
 a.btnTitle:hover .btnTitle-icon .fas,
