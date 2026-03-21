@@ -1553,21 +1553,30 @@ span.info-box-icon .fa {
 }
 
 /* ── 4. Info-box text: enforce dark readable colors ── */
+/* Title: override core opacity: 0.6 with max specificity */
+.info-box-title,
 .info-box-content .info-box-title,
 .info-box-module .info-box-content .info-box-title,
-body .info-box .info-box-content .info-box-title {
+body .info-box .info-box-content .info-box-title,
+body .box-flex-item .info-box .info-box-content .info-box-title,
+body div.info-box-content span.info-box-title {
     color: #1E293B !important;
     font-weight: 600 !important;
     font-family: 'Inter', -apple-system, sans-serif !important;
     opacity: 1 !important;
+    -webkit-opacity: 1 !important;
+    filter: none !important;
 }
+/* Description text */
+.info-box-text,
 .info-box-content .info-box-text,
 .info-box-content .info-box-line,
 .info-box-module .info-box-content .info-box-text,
-body .info-box .info-box-content .info-box-text {
-    color: #475569 !important;
+body .info-box .info-box-content .info-box-text,
+body div.info-box-content span.info-box-text {
+    color: #334155 !important;
     opacity: 1 !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
 }
 .info-box-content a,
 .info-box-content a.info-box-text-a {
@@ -1578,20 +1587,31 @@ body .info-box .info-box-content .info-box-text {
 }
 
 /* ── Module page cards fix ── */
+.info-box-content,
 .info-box-module .info-box-content,
 body .box-flex-item .info-box-content {
     opacity: 1 !important;
 }
+/* Icon container */
+.info-box-icon,
 .info-box-module .info-box-icon,
-body .box-flex-item .info-box-icon {
+body .box-flex-item .info-box-icon,
+span.info-box-icon {
     opacity: 1 !important;
     background-color: #EEF2FF !important;
 }
-.info-box-module .info-box-icon i,
-.info-box-module .info-box-icon .fa {
+/* Icon font — ensure FontAwesome takes priority */
+.info-box-icon i,
+.info-box-icon .fa,
+.info-box-icon [class*="fa-"],
+span.info-box-icon i,
+span.info-box-icon .fa,
+body .info-box .info-box-icon i {
     color: #4F46E5 !important;
     -webkit-text-fill-color: #4F46E5 !important;
     opacity: 1 !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome", "Material Design Iconic Font" !important;
+    font-size: 1.8rem !important;
 }
 
 /* ── 5. Box flex items: clean wrapper ── */
