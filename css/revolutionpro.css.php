@@ -1592,6 +1592,13 @@ html body .site-menu-icon::before {
     -webkit-text-fill-color: #FFFFFF !important;
 }
 
+/* ── Submenu header: kill grey background → subtle Indigo highlight ── */
+html body li.site-menu-item.metrovmenu a.rpfirstmenuglobal,
+html body .site-menubar-dark li.site-menu-item.metrovmenu a.rpfirstmenuglobal {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #FFFFFF !important;
+}
+
 /* ── Sidebar arrow: fix □ glyph → FA chevron ── */
 .site-menu-arrow {
     font-size: 0 !important; /* hide the broken glyph */
