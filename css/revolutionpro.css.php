@@ -1577,7 +1577,8 @@ i.fa.fa-dol-cubes::before,
 .info-box-icon i.fa-dol-cubes::before         { content: "\f1b3" !important; } /* cubes */
 
 /* ── Override right-side coloured borders → Indigo uniform ── */
-[class*="bg-infobox-"] ~ .info-box-content {
+html body [class*="bg-infobox-"] ~ .info-box-content,
+html body [class*="bg-infoxbox-"] ~ .info-box-content {
     border-right: 2px solid var(--ndx-primary-500) !important;
     border-right-color: var(--ndx-primary-500) !important;
 }
@@ -1621,38 +1622,38 @@ i.fa.fa-dol-cubes::before,
     border-left: 1px solid var(--ndx-slate-100) !important;
 }
 
-/* ── 3. Uniform Indigo RIGHT border on ALL badges ── */
-[class*="bg-infobox-"] ~ .info-box-content,
-.bg-infobox-action ~ .info-box-content,
-.bg-infobox-project ~ .info-box-content,
-.bg-infobox-propal ~ .info-box-content,
-.bg-infobox-commande ~ .info-box-content,
-.bg-infobox-facture ~ .info-box-content,
-.bg-infobox-contrat ~ .info-box-content,
-.bg-infobox-ticket ~ .info-box-content,
-.bg-infobox-bank_account ~ .info-box-content,
-.bg-infobox-member ~ .info-box-content,
-.bg-infobox-expensereport ~ .info-box-content,
-.bg-infobox-holiday ~ .info-box-content,
-.bg-infobox-invoice_supplier ~ .info-box-content,
-.bg-infobox-order_supplier ~ .info-box-content,
-.bg-infobox-supplier_proposal ~ .info-box-content,
-.bg-infobox-adherent ~ .info-box-content,
-body .bg-infobox-action ~ .info-box-content,
-body .bg-infobox-project ~ .info-box-content,
-body .bg-infobox-propal ~ .info-box-content,
-body .bg-infobox-commande ~ .info-box-content,
-body .bg-infobox-facture ~ .info-box-content,
-body .bg-infobox-contrat ~ .info-box-content,
-body .bg-infobox-ticket ~ .info-box-content,
-body .bg-infobox-bank_account ~ .info-box-content,
-body .bg-infobox-member ~ .info-box-content,
-body .bg-infobox-expensereport ~ .info-box-content,
-body .bg-infobox-holiday ~ .info-box-content,
-body .bg-infobox-invoice_supplier ~ .info-box-content,
-body .bg-infobox-order_supplier ~ .info-box-content,
-body .bg-infobox-supplier_proposal ~ .info-box-content,
-body .bg-infobox-adherent ~ .info-box-content {
+/* ── 3. Uniform Indigo RIGHT border on ALL badges (html body for max specificity over custom.css) ── */
+html body [class*="bg-infobox-"] ~ .info-box-content,
+html body .bg-infobox-action ~ .info-box-content,
+html body .bg-infobox-project ~ .info-box-content,
+html body .bg-infobox-propal ~ .info-box-content,
+html body .bg-infobox-commande ~ .info-box-content,
+html body .bg-infobox-facture ~ .info-box-content,
+html body .bg-infobox-contrat ~ .info-box-content,
+html body .bg-infobox-ticket ~ .info-box-content,
+html body .bg-infobox-bank_account ~ .info-box-content,
+html body .bg-infobox-member ~ .info-box-content,
+html body .bg-infobox-adherent ~ .info-box-content,
+html body .bg-infobox-expensereport ~ .info-box-content,
+html body .bg-infobox-holiday ~ .info-box-content,
+html body .bg-infobox-invoice_supplier ~ .info-box-content,
+html body .bg-infobox-order_supplier ~ .info-box-content,
+html body .bg-infobox-supplier_proposal ~ .info-box-content,
+html body .bg-infoxbox-action ~ .info-box-content,
+html body .bg-infoxbox-project ~ .info-box-content,
+html body .bg-infoxbox-propal ~ .info-box-content,
+html body .bg-infoxbox-commande ~ .info-box-content,
+html body .bg-infoxbox-facture ~ .info-box-content,
+html body .bg-infoxbox-contrat ~ .info-box-content,
+html body .bg-infoxbox-ticket ~ .info-box-content,
+html body .bg-infoxbox-bank_account ~ .info-box-content,
+html body .bg-infoxbox-member ~ .info-box-content,
+html body .bg-infoxbox-adherent ~ .info-box-content,
+html body .bg-infoxbox-expensereport ~ .info-box-content,
+html body .bg-infoxbox-holiday ~ .info-box-content,
+html body .bg-infoxbox-invoice_supplier ~ .info-box-content,
+html body .bg-infoxbox-order_supplier ~ .info-box-content,
+html body .bg-infoxbox-supplier_proposal ~ .info-box-content {
     border-right: 2px solid var(--ndx-primary-500) !important;
     border-right-color: var(--ndx-primary-500) !important;
 }
