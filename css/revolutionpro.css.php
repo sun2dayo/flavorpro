@@ -1645,6 +1645,13 @@ html body .site-menu-icon::before {
     -webkit-text-fill-color: #FFFFFF !important;
 }
 
+/* ── Company name next to logo: white ── */
+html body .navbar-brand-text,
+html body .site-navbar .navbar-brand-text {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
 /* ── Submenu header: kill grey background → subtle Indigo highlight ── */
 html body li.site-menu-item.metrovmenu a.rpfirstmenuglobal,
 html body .site-menubar-dark li.site-menu-item.metrovmenu a.rpfirstmenuglobal {
