@@ -648,6 +648,13 @@ a, button, input, select, .site-menu-item, .card, .btn,
     background-color: var(--ndx-primary-600) !important;
 }
 
+/* When sidebar is OPEN/unfold → revert to arrow (hide extra bars) */
+body.site-menubar-unfold .site-navbar .hamburger .hamburger-bar:before,
+body.site-menubar-unfold .site-navbar .hamburger .hamburger-bar:after {
+    content: none !important;
+    display: none !important;
+}
+
 /* Search icon area on topbar */
 .site-navbar .navbar-form .form-control {
     background-color: var(--ndx-slate-50) !important;
