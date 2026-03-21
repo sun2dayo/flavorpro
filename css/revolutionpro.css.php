@@ -1582,6 +1582,90 @@ i.fa.fa-dol-cubes::before,
     border-right-color: transparent !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 4.6: BADGE BAR, WEATHER ICON, INDICATOR FIX
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Global View (Weather) icon fix ── */
+.info-box-weather .info-box-icon,
+.info-box-weather span.info-box-icon {
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    background: rgba(99, 102, 241, 0.1) !important;
+}
+.info-box-weather .info-box-icon img {
+    filter: hue-rotate(220deg) saturate(1.5) !important;
+    opacity: 0.9 !important;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+/* Ensure weather icon container is visible */
+.info-box-weather .info-box-icon i,
+.info-box-weather .info-box-icon img,
+.info-box-weather .info-box-icon * {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ── 2. Uniform Indigo left border on ALL badges ── */
+.info-box,
+.info-box.info-box-sm {
+    border-left: 3px solid var(--ndx-primary-500) !important;
+}
+/* Kill the per-group right borders from custom.css */
+[class*="bg-infobox-"] ~ .info-box-content,
+.bg-infobox-action ~ .info-box-content,
+.bg-infobox-project ~ .info-box-content,
+.bg-infobox-propal ~ .info-box-content,
+.bg-infobox-commande ~ .info-box-content,
+.bg-infobox-facture ~ .info-box-content,
+.bg-infobox-contrat ~ .info-box-content,
+.bg-infobox-ticket ~ .info-box-content,
+.bg-infobox-bank_account ~ .info-box-content,
+.bg-infobox-member ~ .info-box-content,
+.bg-infobox-expensereport ~ .info-box-content,
+.bg-infobox-holiday ~ .info-box-content,
+.bg-infobox-invoice_supplier ~ .info-box-content,
+.bg-infobox-order_supplier ~ .info-box-content,
+.bg-infobox-supplier_proposal ~ .info-box-content,
+.bg-infobox-adherent ~ .info-box-content,
+body .bg-infobox-action ~ .info-box-content,
+body .bg-infobox-project ~ .info-box-content,
+body .bg-infobox-propal ~ .info-box-content,
+body .bg-infobox-commande ~ .info-box-content,
+body .bg-infobox-facture ~ .info-box-content,
+body .bg-infobox-contrat ~ .info-box-content,
+body .bg-infobox-ticket ~ .info-box-content,
+body .bg-infobox-bank_account ~ .info-box-content,
+body .bg-infobox-member ~ .info-box-content,
+body .bg-infobox-expensereport ~ .info-box-content,
+body .bg-infobox-holiday ~ .info-box-content,
+body .bg-infobox-invoice_supplier ~ .info-box-content,
+body .bg-infobox-order_supplier ~ .info-box-content,
+body .bg-infobox-supplier_proposal ~ .info-box-content,
+body .bg-infobox-adherent ~ .info-box-content {
+    border-right: none !important;
+    border-right-color: transparent !important;
+}
+
+/* ── 3. Badge-info numeric indicator → Indigo ── */
+.badge-info,
+.badge.badge-info,
+span.badge.badge-info,
+.info-box .badge-info,
+.info-box-content .badge-info {
+    background-color: var(--ndx-primary-500) !important;
+    border-color: var(--ndx-primary-500) !important;
+    color: #FFFFFF !important;
+}
+/* Also fix badge-warning (orange late indicators) — keep as-is but cleaner */
+.badge-warning,
+.badge.badge-warning {
+    background-color: #F59E0B !important;
+    border-color: #F59E0B !important;
+    color: #FFFFFF !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
