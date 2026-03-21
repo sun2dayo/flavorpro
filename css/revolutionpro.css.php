@@ -1599,6 +1599,23 @@ html body .site-menubar-dark li.site-menu-item.metrovmenu a.rpfirstmenuglobal {
     color: #FFFFFF !important;
 }
 
+/* ── Topbar hamburger toggle: Indigo with hover ── */
+[data-toggle="menubar"] .hamburger-bar,
+.navbar-toggler .hamburger-bar,
+.hamburger .hamburger-bar {
+    background-color: var(--ndx-primary-500) !important;
+}
+[data-toggle="menubar"]:hover .hamburger-bar,
+.navbar-toggler:hover .hamburger-bar,
+.hamburger:hover .hamburger-bar {
+    background-color: var(--ndx-primary-600) !important;
+}
+[data-toggle="menubar"],
+.navbar-toggler {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
 /* ── Sidebar arrow: fix □ glyph → FA chevron ── */
 .site-menu-arrow {
     font-size: 0 !important; /* hide the broken glyph */
