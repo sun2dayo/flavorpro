@@ -118,6 +118,31 @@ $(window).on('load',function(){
 		Chart.defaults.plugins.tooltip.boxPadding = 4;
 	}
 
+	/* Indigo-cohesive color palette for chart recoloring */
+	var rpPalette = [
+		'rgba(79, 70, 229, 0.85)',    // Indigo 600
+		'rgba(99, 102, 241, 0.85)',   // Indigo 500
+		'rgba(129, 140, 248, 0.85)',  // Indigo 400
+		'rgba(139, 92, 246, 0.85)',   // Violet 500
+		'rgba(59, 130, 246, 0.85)',   // Blue 500
+		'rgba(109, 118, 209, 0.85)',  // Slate Blue
+		'rgba(14, 165, 233, 0.85)',   // Sky 500
+		'rgba(245, 158, 11, 0.85)',   // Amber 500
+		'rgba(244, 63, 94, 0.80)',    // Rose 500
+		'rgba(16, 185, 129, 0.85)',   // Emerald 500
+		'rgba(168, 162, 255, 0.80)',  // Lavender
+		'rgba(6, 182, 212, 0.85)',    // Cyan 500
+		'rgba(165, 180, 252, 0.80)',  // Indigo 300
+		'rgba(34, 197, 94, 0.85)'    // Green 500
+	];
+	var rpPaletteSolid = [
+		'rgb(79, 70, 229)',    'rgb(99, 102, 241)',   'rgb(129, 140, 248)',
+		'rgb(139, 92, 246)',   'rgb(59, 130, 246)',   'rgb(109, 118, 209)',
+		'rgb(14, 165, 233)',   'rgb(245, 158, 11)',   'rgb(244, 63, 94)',
+		'rgb(16, 185, 129)',   'rgb(168, 162, 255)',  'rgb(6, 182, 212)',
+		'rgb(165, 180, 252)',  'rgb(34, 197, 94)'
+	];
+
 	/* Deferred: update charts that were already created before this script ran */
 	function rpUpdateExistingCharts() {
 		var chartInstances = Chart.instances;
@@ -136,6 +161,12 @@ $(window).on('load',function(){
 						ds.borderWidth = 2;
 						ds.borderColor = '#ffffff';
 						ds.hoverOffset = 8;
+						/* Recolor arc segments with Indigo palette */
+						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
+							for (var c = 0; c < ds.backgroundColor.length; c++) {
+								ds.backgroundColor[c] = rpPalette[c % rpPalette.length];
+							}
+						}
 					});
 				}
 			}
@@ -143,11 +174,14 @@ $(window).on('load',function(){
 			/* Bar */
 			if (chart.config.type === 'bar') {
 				if (chart.data && chart.data.datasets) {
-					chart.data.datasets.forEach(function(ds) {
+					chart.data.datasets.forEach(function(ds, idx) {
 						ds.borderRadius = 8;
 						ds.borderSkipped = false;
 						ds.borderWidth = 0;
 						ds.maxBarThickness = 32;
+						/* Recolor bar series with Indigo palette */
+						ds.backgroundColor = rpPalette[idx % rpPalette.length];
+						ds.borderColor = rpPaletteSolid[idx % rpPaletteSolid.length];
 					});
 				}
 				if (chart.options.scales) {
