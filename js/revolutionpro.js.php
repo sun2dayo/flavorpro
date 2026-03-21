@@ -194,8 +194,8 @@ $(window).on('load',function(){
 		var rpChartInterval = setInterval(function() {
 			rpChartAttempts++;
 			rpUpdateCharts();
-			if (rpChartAttempts >= 15) clearInterval(rpChartInterval);
-		}, 400);
+			if (rpChartAttempts >= 25) clearInterval(rpChartInterval);
+		}, 600);
 	}, 300);
 })();
 
