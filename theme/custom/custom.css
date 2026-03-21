@@ -1711,3 +1711,58 @@ html[lang="ar"] span.revolutionscrollinpage {
     }
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   FLAVOR PRO — Login Page Overrides (MUST be last for priority)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Remove dark overlay */
+body.bodylogin.page-login-v2.page-dark.layout-full::after,
+.page-login-v2.page-dark.layout-full:after {
+    display: none !important;
+    background: none !important;
+    background-color: transparent !important;
+    content: none !important;
+    opacity: 0 !important;
+}
+
+/* Remove background photo */
+body.bodylogin.page-login-v2::before,
+body.bodylogin.page-login-v2:before,
+.page-login-v2:before {
+    display: none !important;
+    background-image: none !important;
+    background: none !important;
+    content: none !important;
+}
+
+/* Left panel — clean purple gradient */
+body.bodylogin .page-brand-info,
+.page-login-v2 .page-brand-info {
+    background: linear-gradient(160deg, #7C3AED 0%, #8B5CF6 30%, #A78BFA 70%, #C4B5FD 100%) !important;
+    background-image: none !important;
+}
+
+/* Right panel — no pattern */
+body.bodylogin .page-login-main,
+body.bodylogin.page-login-v2 .page-login-main,
+.page-login-v2 .page-login-main {
+    background-image: none !important;
+    background-color: #FFFFFF !important;
+    background-size: auto !important;
+}
+
+/* Show FA icons on login inputs (override display:none above) */
+body.bodylogin .login_table .tdinputlogin .fa.fa-user,
+body.bodylogin .login_table .tdinputlogin .fa.fa-key,
+body.bodylogin .login_table .tdinputlogin .fa.fa-unlock,
+body.bodylogin .login_table .tdinputlogin .fal.fa-user,
+body.bodylogin .login_table .tdinputlogin .fal.fa-key,
+body.bodylogin .login_table .fa.fa-user:before,
+body.bodylogin .login_table .fa.fa-key:before,
+body.bodylogin .login_table .fal.fa-user:before,
+body.bodylogin .login_table .fal.fa-key:before,
+body.bodylogin .login_table .fa.fa-unlock:before {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
