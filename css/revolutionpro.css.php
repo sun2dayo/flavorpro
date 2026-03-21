@@ -1253,6 +1253,94 @@ body.page-login-v2 {
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 4.2: MAX SPECIFICITY (body #mainbody #id-right)
+   Esmagar estilos inline injetados via AJAX no Dashboard
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Destruir fundos coloridos inline ── */
+body #mainbody #id-right div[style*="background-color"],
+body #mainbody #id-right div[style*="background:"],
+body #mainbody #id-right div[class*="bg-"],
+body #mainbody #id-right td[style*="background-color"],
+body #mainbody #id-right td[style*="background:"],
+body #mainbody #id-right span[style*="background-color"],
+body #mainbody #id-right span[style*="background:"] {
+    background-color: var(--ndx-slate-50) !important;
+    background-image: none !important;
+    background: var(--ndx-slate-50) !important;
+}
+
+/* ── 2. Matar bordas coloridas inline ── */
+body #mainbody #id-right div[style*="border-color"],
+body #mainbody #id-right div[style*="borderLeftColor"],
+body #mainbody #id-right div[style*="border-left-color"],
+body #mainbody #id-right div[style*="border-left:"],
+body #mainbody #id-right div[style*="border-right-color"],
+body #mainbody #id-right div[style*="border-right:"] {
+    border-color: var(--ndx-slate-200) !important;
+    border-left-color: var(--ndx-slate-200) !important;
+    border-right-color: var(--ndx-slate-200) !important;
+}
+
+/* ── 3. Resgatar ícones (Indigo) ── */
+body #mainbody #id-right div[style*="background"] > i,
+body #mainbody #id-right div[style*="background"] > span.icon,
+body #mainbody #id-right div[style*="background"] > [class*="wb-"],
+body #mainbody #id-right div[style*="background"] > [class*="md-"],
+body #mainbody #id-right div[style*="background"] > [class*="fa-"],
+body #mainbody #id-right div[class*="bg-"] > i,
+body #mainbody #id-right div[class*="bg-"] > [class*="wb-"],
+body #mainbody #id-right div[class*="bg-"] > [class*="md-"],
+body #mainbody #id-right div[class*="bg-"] > [class*="fa-"],
+body #mainbody #id-right span[style*="background"] > i {
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+    font-size: 2rem !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+}
+
+/* ── 4. Círculos dos ícones nos 4 cartões de topo ── */
+body #mainbody #id-right .align-items-center > div[style*="background"],
+body #mainbody #id-right .d-flex > div[style*="background"],
+body #mainbody #id-right .card > div[style*="background"],
+body #mainbody #id-right .row > div > div[style*="background"] {
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    background: rgba(99, 102, 241, 0.1) !important;
+    border-radius: 50% !important;
+}
+body #mainbody #id-right .align-items-center > div[style*="background"] i,
+body #mainbody #id-right .d-flex > div[style*="background"] i,
+body #mainbody #id-right .card > div[style*="background"] i,
+body #mainbody #id-right .row > div > div[style*="background"] i {
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+    font-size: 1.5rem !important;
+    background: transparent !important;
+}
+
+/* ── 5. Texto branco forçado escuro ── */
+body #mainbody #id-right [style*="color: white"],
+body #mainbody #id-right [style*="color:#fff"],
+body #mainbody #id-right [style*="color: #fff"],
+body #mainbody #id-right [style*="color:white"],
+body #mainbody #id-right [style*="color: rgb(255, 255, 255)"] {
+    color: var(--ndx-slate-800) !important;
+    -webkit-text-fill-color: var(--ndx-slate-800) !important;
+}
+
+/* ── 6. Links dentro dos blocos limpos ── */
+body #mainbody #id-right div[style*="background"] a,
+body #mainbody #id-right div[class*="bg-"] a {
+    color: var(--ndx-primary-500) !important;
+}
+body #mainbody #id-right div[style*="background"] a:hover,
+body #mainbody #id-right div[class*="bg-"] a:hover {
+    color: var(--ndx-primary-600) !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
