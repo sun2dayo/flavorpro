@@ -648,11 +648,19 @@ a, button, input, select, .site-menu-item, .card, .btn,
     background-color: var(--ndx-primary-600) !important;
 }
 
-/* When sidebar is OPEN/unfold → revert to arrow (hide extra bars) */
+/* When sidebar is OPEN/unfold → revert to arrow (hide extra hamburger bars) */
 body.site-menubar-unfold .site-navbar .hamburger .hamburger-bar:before,
 body.site-menubar-unfold .site-navbar .hamburger .hamburger-bar:after {
     content: none !important;
     display: none !important;
+}
+/* Arrow tip (chevron) on unfold — force Indigo */
+body.site-menubar-unfold .site-navbar .hamburger-arrow-left::before,
+body.site-menubar-unfold .site-navbar .hamburger-arrow-left::after,
+.site-menubar-unfold [data-toggle="menubar"] .hamburger-arrow-left::before,
+.site-menubar-unfold [data-toggle="menubar"] .hamburger-arrow-left::after {
+    background-color: var(--ndx-primary-500) !important;
+    height: 2px !important;
 }
 
 /* Search icon area on topbar */
