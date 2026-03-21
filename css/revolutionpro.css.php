@@ -1447,6 +1447,83 @@ body #mainbody .box-flex-item-with-icon .info-box-content {
     color: var(--ndx-slate-700) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 4.4: DOLIBARR INFO-BOX OVERRIDE
+   Target: span.info-box-icon.bg-infobox-{key} (from core index.php)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Kill ALL bg-infobox-* coloured icon squares ── */
+.info-box-icon,
+span.info-box-icon,
+.info-box-icon[class*="bg-infobox-"],
+.info-box-icon.bg-infobox-action,
+.info-box-icon.bg-infobox-project,
+.info-box-icon.bg-infobox-propal,
+.info-box-icon.bg-infobox-commande,
+.info-box-icon.bg-infobox-facture,
+.info-box-icon.bg-infobox-supplier_proposal,
+.info-box-icon.bg-infobox-order_supplier,
+.info-box-icon.bg-infobox-invoice_supplier,
+.info-box-icon.bg-infobox-contrat,
+.info-box-icon.bg-infobox-ticket,
+.info-box-icon.bg-infobox-bank_account,
+.info-box-icon.bg-infobox-member,
+.info-box-icon.bg-infobox-expensereport,
+.info-box-icon.bg-infobox-holiday,
+.info-box-icon.bg-infobox-cubes {
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    background: rgba(99, 102, 241, 0.1) !important;
+    background-image: none !important;
+    border-radius: var(--ndx-radius-md) !important;
+}
+
+/* ── 2. Icons inside info-box-icon → Indigo ── */
+.info-box-icon i,
+.info-box-icon .fa,
+.info-box-icon [class*="fa-"],
+span.info-box-icon i,
+span.info-box-icon .fa {
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+    font-size: 1.8rem !important;
+}
+
+/* ── 3. Info-box container: white card ── */
+.info-box,
+.info-box.info-box-sm {
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--ndx-slate-100) !important;
+    border-radius: var(--ndx-radius-md) !important;
+    box-shadow: var(--ndx-shadow-xs) !important;
+    overflow: hidden !important;
+}
+
+/* ── 4. Info-box text: dark ── */
+.info-box-content .info-box-title {
+    color: var(--ndx-slate-800) !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+.info-box-content .info-box-text,
+.info-box-content .info-box-line {
+    color: var(--ndx-slate-600) !important;
+}
+.info-box-content a,
+.info-box-content a.info-box-text-a {
+    color: var(--ndx-primary-500) !important;
+}
+.info-box-content a:hover {
+    color: var(--ndx-primary-600) !important;
+}
+
+/* ── 5. Box flex items: clean wrapper ── */
+.box-flex-item,
+.box-flex-item-with-margin {
+    background: transparent !important;
+    border: none !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
