@@ -1576,43 +1576,52 @@ i.fa.fa-dol-holiday::before,
 i.fa.fa-dol-cubes::before,
 .info-box-icon i.fa-dol-cubes::before         { content: "\f1b3" !important; } /* cubes */
 
-/* ── Kill the right-side coloured borders from custom.css ── */
+/* ── Override right-side coloured borders → Indigo uniform ── */
 [class*="bg-infobox-"] ~ .info-box-content {
-    border-right: none !important;
-    border-right-color: transparent !important;
+    border-right: 2px solid var(--ndx-primary-500) !important;
+    border-right-color: var(--ndx-primary-500) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   NovaDX Pro — Phase 4.6: BADGE BAR, WEATHER ICON, INDICATOR FIX
+   NovaDX Pro — Phase 4.6: RIGHT BORDER, GLOBAL VIEW, BADGE FIX
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Global View (Weather) icon fix ── */
+/* ── 1. Global View (Weather) — FA icon via ::before ── */
 .info-box-weather .info-box-icon,
 .info-box-weather span.info-box-icon {
     background-color: rgba(99, 102, 241, 0.1) !important;
     background: rgba(99, 102, 241, 0.1) !important;
+    position: relative !important;
 }
+/* Hide the weather img that doesn't render properly */
 .info-box-weather .info-box-icon img {
-    filter: hue-rotate(220deg) saturate(1.5) !important;
-    opacity: 0.9 !important;
-    display: inline-block !important;
-    visibility: visible !important;
+    display: none !important;
 }
-/* Ensure weather icon container is visible */
-.info-box-weather .info-box-icon i,
-.info-box-weather .info-box-icon img,
-.info-box-weather .info-box-icon * {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+/* Inject a FA icon via pseudo-element */
+.info-box-weather .info-box-icon::before {
+    content: "\f200" !important; /* fa-chart-pie */
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 1.8rem !important;
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
 }
 
-/* ── 2. Uniform Indigo left border on ALL badges ── */
+/* ── 2. Remove wrong left border, keep original ── */
 .info-box,
 .info-box.info-box-sm {
-    border-left: 3px solid var(--ndx-primary-500) !important;
+    border-left: 1px solid var(--ndx-slate-100) !important;
 }
-/* Kill the per-group right borders from custom.css */
+
+/* ── 3. Uniform Indigo RIGHT border on ALL badges ── */
 [class*="bg-infobox-"] ~ .info-box-content,
 .bg-infobox-action ~ .info-box-content,
 .bg-infobox-project ~ .info-box-content,
@@ -1644,11 +1653,11 @@ body .bg-infobox-invoice_supplier ~ .info-box-content,
 body .bg-infobox-order_supplier ~ .info-box-content,
 body .bg-infobox-supplier_proposal ~ .info-box-content,
 body .bg-infobox-adherent ~ .info-box-content {
-    border-right: none !important;
-    border-right-color: transparent !important;
+    border-right: 2px solid var(--ndx-primary-500) !important;
+    border-right-color: var(--ndx-primary-500) !important;
 }
 
-/* ── 3. Badge-info numeric indicator → Indigo ── */
+/* ── 4. Badge-info numeric indicator → Indigo ── */
 .badge-info,
 .badge.badge-info,
 span.badge.badge-info,
@@ -1658,7 +1667,6 @@ span.badge.badge-info,
     border-color: var(--ndx-primary-500) !important;
     color: #FFFFFF !important;
 }
-/* Also fix badge-warning (orange late indicators) — keep as-is but cleaner */
 .badge-warning,
 .badge.badge-warning {
     background-color: #F59E0B !important;
