@@ -218,12 +218,14 @@ if($val5 == 'revolutionprologin1.jpg' || $val5 == 'revolutionprologin2.jpg'){
 .site-navbar{background-color:#<?php echo trim($globcol); ?>}
 
 
+/* Flavor Pro: disabled background images for clean login design
 .bodylogin.page-login-v2 .page-login-main{
     background-image: url(<?php echo dol_buildpath('/revolutionpro/img/login/revolutionprologindesign.png', 1); ?>) !important;
 }
 .bodylogin.page-login-v2:before {
     background-image: url(<?php echo $urlf; ?>) !important;
 }
+*/
 body .liste_titre .badge:not(.nochangebackground) {
     background-color: #<?php echo trim($globcol); ?>;
 }
@@ -2077,6 +2079,18 @@ body.bodylogin.page-login-v2.page-dark.layout-full::after {
     display: none !important;
     background: none !important;
     content: none !important;
+}
+/* ── Remove the background photo pseudo-element ── */
+body.bodylogin.page-login-v2::before,
+body.bodylogin.page-login-v2.page-dark.layout-full::before {
+    background-image: none !important;
+    background: none !important;
+    display: none !important;
+    content: none !important;
+}
+/* ── Remove diagonal shapes from right panel ── */
+body.bodylogin.page-login-v2 .page-login-main {
+    background-image: none !important;
 }
 
 /* ── Left panel: clean purple gradient (NO background image) ── */
