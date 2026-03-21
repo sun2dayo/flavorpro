@@ -1546,28 +1546,52 @@ span.info-box-icon .fa {
 .info-box.info-box-sm {
     background: #FFFFFF !important;
     background-color: #FFFFFF !important;
-    border: 1px solid var(--ndx-slate-100) !important;
-    border-radius: var(--ndx-radius-md) !important;
-    box-shadow: var(--ndx-shadow-xs) !important;
+    border: 1px solid #F1F5F9 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
     overflow: hidden !important;
 }
 
-/* ── 4. Info-box text: dark ── */
-.info-box-content .info-box-title {
-    color: var(--ndx-slate-800) !important;
+/* ── 4. Info-box text: enforce dark readable colors ── */
+.info-box-content .info-box-title,
+.info-box-module .info-box-content .info-box-title,
+body .info-box .info-box-content .info-box-title {
+    color: #1E293B !important;
     font-weight: 600 !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    opacity: 1 !important;
 }
 .info-box-content .info-box-text,
-.info-box-content .info-box-line {
-    color: var(--ndx-slate-600) !important;
+.info-box-content .info-box-line,
+.info-box-module .info-box-content .info-box-text,
+body .info-box .info-box-content .info-box-text {
+    color: #475569 !important;
+    opacity: 1 !important;
+    font-weight: 400 !important;
 }
 .info-box-content a,
 .info-box-content a.info-box-text-a {
-    color: var(--ndx-primary-500) !important;
+    color: #4F46E5 !important;
 }
 .info-box-content a:hover {
-    color: var(--ndx-primary-600) !important;
+    color: #4338CA !important;
+}
+
+/* ── Module page cards fix ── */
+.info-box-module .info-box-content,
+body .box-flex-item .info-box-content {
+    opacity: 1 !important;
+}
+.info-box-module .info-box-icon,
+body .box-flex-item .info-box-icon {
+    opacity: 1 !important;
+    background-color: #EEF2FF !important;
+}
+.info-box-module .info-box-icon i,
+.info-box-module .info-box-icon .fa {
+    color: #4F46E5 !important;
+    -webkit-text-fill-color: #4F46E5 !important;
+    opacity: 1 !important;
 }
 
 /* ── 5. Box flex items: clean wrapper ── */
