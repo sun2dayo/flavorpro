@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (!defined('NOREQUIRESOC'))    define('NOREQUIRESOC', 1);
 if (!defined('NOCSRFCHECK'))     define('NOCSRFCHECK', 1);
 if (!defined('NOTOKENRENEWAL'))  define('NOTOKENRENEWAL', 1);
@@ -278,15 +278,8 @@ $(document).ready(function(){
 	$('body').addClass('animsition site-navbar-small dashboard site-menubar-'+foldorunfold);
 	$('html').addClass('css-menubar');
 	if($('body').hasClass('bodylogin')){
-		var txtlogin = $('.bodylogin div.login_center').html();
-		if(txtlogin !== ''){
-			$('.bodylogin div.login_center').hide();
-			$('.bodylogin').prepend('<?php echo dol_escape_js($htmllogin); ?>');
-			$('.bodylogin #pagelogindivcontent #logindivcontent').html(txtlogin);
-			$('.bodylogin').addClass('page-login-v2 page-dark layout-full');
-			$('.bodylogin #pagelogindivcontent').show();
-			$('.bodylogin div.login_center').remove();
-		}
+		// Flavor Pro: keep the core login HTML intact — CSS handles the styling
+		$('body').addClass('flavor-pro-login');
 	}
 	$('body .site-menu>.site-menu-item>a ').on('click', function(e) {
 	     $(this).parent('li').find('a.mm-next').click();
