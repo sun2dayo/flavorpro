@@ -1120,6 +1120,139 @@ body.bodylogin .login-forgot a {
     color: var(--ndx-primary-500) !important;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   NovaDX Pro — Phase 4.1: WIDGET WIPE (scoped to .page-content)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Kill widget background (class + inline) ── */
+.page-content .widget [class*="bg-"],
+.page-content .widget [style*="background"],
+.page-content .widget [style*="background-color"],
+.page-content .panel [class*="bg-"],
+.page-content .panel [style*="background"] {
+    background-color: var(--ndx-slate-50) !important;
+    background-image: none !important;
+    background: var(--ndx-slate-50) !important;
+}
+
+/* ── 2. Kill swoosh curves on top 4 cards ── */
+.page-content .widget::before,
+.page-content .widget::after,
+.page-content .widget .overlay,
+.page-content .widget .widget-header::before,
+.page-content .widget .widget-header::after {
+    display: none !important;
+    background-image: none !important;
+    background: none !important;
+    content: none !important;
+}
+
+/* ── 3. Force white card base ── */
+.page-content .widget {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--ndx-slate-100) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+    border-radius: var(--ndx-radius-md) !important;
+    overflow: hidden !important;
+}
+
+/* ── 4. Rescue icons — Indigo on transparent ── */
+.page-content .widget .icon,
+.page-content .widget i,
+.page-content .widget [class*="wb-"],
+.page-content .widget [class*="md-"],
+.page-content .widget [class*="fa-"] {
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+    background: transparent !important;
+    text-shadow: none !important;
+    font-size: 2.2rem !important;
+    opacity: 1 !important;
+}
+
+/* ── 5. Force dark text (was white on coloured bg) ── */
+.page-content .widget .white,
+.page-content .widget [class*="color-white"],
+.page-content .widget [style*="color: white"],
+.page-content .widget [style*="color:#fff"],
+.page-content .widget [style*="color: #fff"],
+.page-content .widget [style*="color:white"],
+.page-content .widget [style*="color: rgb(255"] {
+    color: var(--ndx-slate-800) !important;
+    -webkit-text-fill-color: var(--ndx-slate-800) !important;
+}
+
+/* Widget link text — Indigo */
+.page-content .widget a:not(.site-menubar a) {
+    color: var(--ndx-primary-500) !important;
+}
+.page-content .widget a:hover {
+    color: var(--ndx-primary-600) !important;
+}
+
+/* Counter numbers */
+.page-content .widget .counter,
+.page-content .widget .counter-number,
+.page-content .widget h2,
+.page-content .widget h3,
+.page-content .widget h4 {
+    color: var(--ndx-slate-900) !important;
+    -webkit-text-fill-color: var(--ndx-slate-900) !important;
+    font-weight: 700 !important;
+}
+
+/* ── 6. Top 4 summary cards (.thefourboxes) ── */
+.thefourboxes .card,
+.thefourboxes .card [class*="bg-"],
+.thefourboxes .card [style*="background"] {
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border: 1px solid var(--ndx-slate-100) !important;
+    border-radius: var(--ndx-radius-md) !important;
+    box-shadow: var(--ndx-shadow-sm) !important;
+}
+.thefourboxes .card::before,
+.thefourboxes .card::after {
+    display: none !important;
+    content: none !important;
+}
+.thefourboxes .card .icon,
+.thefourboxes .card i {
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+    background: transparent !important;
+}
+.thefourboxes .card .white,
+.thefourboxes .card [style*="color"] {
+    color: var(--ndx-slate-800) !important;
+    -webkit-text-fill-color: var(--ndx-slate-800) !important;
+}
+
+/* ── 7. Login refinements ── */
+body.page-login-v2 {
+    background-color: var(--ndx-slate-50) !important;
+}
+.page-login-v2 .page-brand-info {
+    background-color: var(--ndx-sidebar-bg) !important;
+    background-blend-mode: multiply;
+}
+.page-login-v2 .page-login-main {
+    background: #FFFFFF !important;
+    border-radius: var(--ndx-radius-lg) !important;
+    box-shadow: var(--ndx-shadow-xl) !important;
+}
+.page-login-v2 input.form-control {
+    border-radius: var(--ndx-radius-sm) !important;
+    border: 1px solid var(--ndx-slate-200) !important;
+    background-color: var(--ndx-slate-50) !important;
+}
+.page-login-v2 input.form-control:focus {
+    border-color: var(--ndx-primary-500) !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+}
+
 <?php
 
 $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS : '';
