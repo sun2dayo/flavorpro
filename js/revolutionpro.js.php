@@ -59,157 +59,144 @@ $(window).on('load',function(){
 });
 
 /* ── Modernize Dashboard Charts (Chart.js v3+ global defaults) ── */
-/* Set immediately so defaults apply to any chart created after this script loads */
-(function rpModernCharts() {
-	if (typeof Chart === 'undefined') return;
+/* Poll for Chart.js availability since it may load after this script */
+(function() {
+	var rpWaitAttempts = 0;
+	var rpWaitInterval = setInterval(function() {
+		rpWaitAttempts++;
+		if (typeof Chart === 'undefined') {
+			if (rpWaitAttempts >= 30) clearInterval(rpWaitInterval);
+			return;
+		}
+		clearInterval(rpWaitInterval);
 
-	/* Modern font */
-	Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-	Chart.defaults.font.size = 12;
-	Chart.defaults.font.weight = '500';
-	Chart.defaults.color = '#64748B';
+		/* ── Chart.js detected — apply global defaults ── */
+		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+		Chart.defaults.font.size = 12;
+		Chart.defaults.font.weight = '500';
+		Chart.defaults.color = '#64748B';
 
-	/* Bar chart defaults */
-	Chart.defaults.elements.bar.borderRadius = 8;
-	Chart.defaults.elements.bar.borderSkipped = false;
-	Chart.defaults.elements.bar.borderWidth = 0;
+		Chart.defaults.elements.bar.borderRadius = 8;
+		Chart.defaults.elements.bar.borderSkipped = false;
+		Chart.defaults.elements.bar.borderWidth = 0;
 
-	/* Line chart defaults */
-	Chart.defaults.elements.line.tension = 0.4;
-	Chart.defaults.elements.line.borderWidth = 2.5;
-	Chart.defaults.elements.point.radius = 4;
-	Chart.defaults.elements.point.hoverRadius = 7;
-	Chart.defaults.elements.point.backgroundColor = '#4F46E5';
+		Chart.defaults.elements.line.tension = 0.4;
+		Chart.defaults.elements.line.borderWidth = 2.5;
+		Chart.defaults.elements.point.radius = 4;
+		Chart.defaults.elements.point.hoverRadius = 7;
+		Chart.defaults.elements.point.backgroundColor = '#4F46E5';
 
-	/* Arc (doughnut/pie) defaults */
-	Chart.defaults.elements.arc.borderWidth = 2;
-	Chart.defaults.elements.arc.borderColor = '#ffffff';
-	Chart.defaults.elements.arc.hoverOffset = 8;
+		Chart.defaults.elements.arc.borderWidth = 2;
+		Chart.defaults.elements.arc.borderColor = '#ffffff';
+		Chart.defaults.elements.arc.hoverOffset = 8;
 
-	/* Grid and scale defaults */
-	if (Chart.defaults.scale) {
-		Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
-		Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
-		Chart.defaults.scale.grid.drawBorder = false;
-		Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
-		Chart.defaults.scale.ticks.padding = 8;
-	}
+		if (Chart.defaults.scale) {
+			Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
+			Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
+			Chart.defaults.scale.grid.drawBorder = false;
+			Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
+			Chart.defaults.scale.ticks.padding = 8;
+		}
 
-	/* Animation */
-	Chart.defaults.animation = Chart.defaults.animation || {};
-	Chart.defaults.animation.duration = 1200;
-	Chart.defaults.animation.easing = 'easeOutQuart';
+		Chart.defaults.animation = Chart.defaults.animation || {};
+		Chart.defaults.animation.duration = 1200;
+		Chart.defaults.animation.easing = 'easeOutQuart';
 
-	/* Legend */
-	if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
-		Chart.defaults.plugins.legend.labels.padding = 16;
-		Chart.defaults.plugins.legend.labels.usePointStyle = true;
-		Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
-	}
+		if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
+			Chart.defaults.plugins.legend.labels.padding = 16;
+			Chart.defaults.plugins.legend.labels.usePointStyle = true;
+			Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
+		}
 
-	/* Tooltip */
-	if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
-		Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
-		Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", size: 13, weight: '600' };
-		Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif", size: 12 };
-		Chart.defaults.plugins.tooltip.padding = 12;
-		Chart.defaults.plugins.tooltip.cornerRadius = 10;
-		Chart.defaults.plugins.tooltip.displayColors = true;
-		Chart.defaults.plugins.tooltip.boxPadding = 4;
-	}
+		if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
+			Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
+			Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", size: 13, weight: '600' };
+			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif", size: 12 };
+			Chart.defaults.plugins.tooltip.padding = 12;
+			Chart.defaults.plugins.tooltip.cornerRadius = 10;
+			Chart.defaults.plugins.tooltip.displayColors = true;
+			Chart.defaults.plugins.tooltip.boxPadding = 4;
+		}
 
-	/* Indigo-cohesive color palette for chart recoloring */
-	var rpPalette = [
-		'rgba(79, 70, 229, 0.85)',    // Indigo 600
-		'rgba(99, 102, 241, 0.85)',   // Indigo 500
-		'rgba(129, 140, 248, 0.85)',  // Indigo 400
-		'rgba(139, 92, 246, 0.85)',   // Violet 500
-		'rgba(59, 130, 246, 0.85)',   // Blue 500
-		'rgba(109, 118, 209, 0.85)',  // Slate Blue
-		'rgba(14, 165, 233, 0.85)',   // Sky 500
-		'rgba(245, 158, 11, 0.85)',   // Amber 500
-		'rgba(244, 63, 94, 0.80)',    // Rose 500
-		'rgba(16, 185, 129, 0.85)',   // Emerald 500
-		'rgba(168, 162, 255, 0.80)',  // Lavender
-		'rgba(6, 182, 212, 0.85)',    // Cyan 500
-		'rgba(165, 180, 252, 0.80)',  // Indigo 300
-		'rgba(34, 197, 94, 0.85)'    // Green 500
-	];
-	var rpPaletteSolid = [
-		'rgb(79, 70, 229)',    'rgb(99, 102, 241)',   'rgb(129, 140, 248)',
-		'rgb(139, 92, 246)',   'rgb(59, 130, 246)',   'rgb(109, 118, 209)',
-		'rgb(14, 165, 233)',   'rgb(245, 158, 11)',   'rgb(244, 63, 94)',
-		'rgb(16, 185, 129)',   'rgb(168, 162, 255)',  'rgb(6, 182, 212)',
-		'rgb(165, 180, 252)',  'rgb(34, 197, 94)'
-	];
+		/* Indigo-cohesive color palette */
+		var rpPalette = [
+			'rgba(79, 70, 229, 0.85)',  'rgba(99, 102, 241, 0.85)',  'rgba(129, 140, 248, 0.85)',
+			'rgba(139, 92, 246, 0.85)', 'rgba(59, 130, 246, 0.85)',  'rgba(109, 118, 209, 0.85)',
+			'rgba(14, 165, 233, 0.85)', 'rgba(245, 158, 11, 0.85)',  'rgba(244, 63, 94, 0.80)',
+			'rgba(16, 185, 129, 0.85)', 'rgba(168, 162, 255, 0.80)', 'rgba(6, 182, 212, 0.85)',
+			'rgba(165, 180, 252, 0.80)','rgba(34, 197, 94, 0.85)'
+		];
+		var rpPaletteSolid = [
+			'rgb(79, 70, 229)',  'rgb(99, 102, 241)',  'rgb(129, 140, 248)',
+			'rgb(139, 92, 246)', 'rgb(59, 130, 246)',  'rgb(109, 118, 209)',
+			'rgb(14, 165, 233)', 'rgb(245, 158, 11)',  'rgb(244, 63, 94)',
+			'rgb(16, 185, 129)', 'rgb(168, 162, 255)', 'rgb(6, 182, 212)',
+			'rgb(165, 180, 252)','rgb(34, 197, 94)'
+		];
 
-	/* Deferred: update charts that were already created before this script ran */
-	function rpUpdateExistingCharts() {
-		var chartInstances = Chart.instances;
-		if (!chartInstances || Object.keys(chartInstances).length === 0) return;
+		/* Update existing chart instances */
+		function rpUpdateCharts() {
+			var ci = Chart.instances;
+			if (!ci || Object.keys(ci).length === 0) return;
+			Object.keys(ci).forEach(function(key) {
+				var ch = ci[key];
+				if (!ch || !ch.config || ch._rpModernized) return;
 
-		Object.keys(chartInstances).forEach(function(key) {
-			var chart = chartInstances[key];
-			if (!chart || !chart.config || chart._rpModernized) return;
-
-			/* Doughnut / Pie */
-			if (chart.config.type === 'doughnut' || chart.config.type === 'pie') {
-				chart.options.cutout = '70%';
-				chart.options.spacing = 3;
-				if (chart.data && chart.data.datasets) {
-					chart.data.datasets.forEach(function(ds) {
-						ds.borderWidth = 2;
-						ds.borderColor = '#ffffff';
-						ds.hoverOffset = 8;
-						/* Recolor arc segments with Indigo palette */
-						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
-							for (var c = 0; c < ds.backgroundColor.length; c++) {
-								ds.backgroundColor[c] = rpPalette[c % rpPalette.length];
+				if (ch.config.type === 'doughnut' || ch.config.type === 'pie') {
+					ch.options.cutout = '70%';
+					ch.options.spacing = 3;
+					if (ch.data && ch.data.datasets) {
+						ch.data.datasets.forEach(function(ds) {
+							ds.borderWidth = 2;
+							ds.borderColor = '#ffffff';
+							ds.hoverOffset = 8;
+							if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
+								for (var c = 0; c < ds.backgroundColor.length; c++) {
+									ds.backgroundColor[c] = rpPalette[c % rpPalette.length];
+								}
 							}
-						}
-					});
+						});
+					}
 				}
-			}
 
-			/* Bar */
-			if (chart.config.type === 'bar') {
-				if (chart.data && chart.data.datasets) {
-					chart.data.datasets.forEach(function(ds, idx) {
-						ds.borderRadius = 8;
-						ds.borderSkipped = false;
-						ds.borderWidth = 0;
-						ds.maxBarThickness = 32;
-						/* Recolor bar series with Indigo palette */
-						ds.backgroundColor = rpPalette[idx % rpPalette.length];
-						ds.borderColor = rpPaletteSolid[idx % rpPaletteSolid.length];
-					});
+				if (ch.config.type === 'bar') {
+					if (ch.data && ch.data.datasets) {
+						ch.data.datasets.forEach(function(ds, idx) {
+							ds.borderRadius = 8;
+							ds.borderSkipped = false;
+							ds.borderWidth = 0;
+							ds.maxBarThickness = 32;
+							ds.backgroundColor = rpPalette[idx % rpPalette.length];
+							ds.borderColor = rpPaletteSolid[idx % rpPaletteSolid.length];
+						});
+					}
+					if (ch.options.scales) {
+						Object.keys(ch.options.scales).forEach(function(sk) {
+							var sc = ch.options.scales[sk];
+							if (sc) {
+								sc.grid = sc.grid || {};
+								sc.grid.color = 'rgba(148, 163, 184, 0.12)';
+								sc.grid.drawBorder = false;
+								sc.ticks = sc.ticks || {};
+								sc.ticks.padding = 8;
+							}
+						});
+					}
 				}
-				if (chart.options.scales) {
-					Object.keys(chart.options.scales).forEach(function(scaleKey) {
-						var scale = chart.options.scales[scaleKey];
-						if (scale) {
-							scale.grid = scale.grid || {};
-							scale.grid.color = 'rgba(148, 163, 184, 0.12)';
-							scale.grid.drawBorder = false;
-							scale.ticks = scale.ticks || {};
-							scale.ticks.padding = 8;
-						}
-					});
-				}
-			}
 
-			chart._rpModernized = true;
-			chart.update('none');
-		});
-	}
+				ch._rpModernized = true;
+				ch.update('none');
+			});
+		}
 
-	/* Poll for chart instances (they may load after this script) */
-	var rpAttempts = 0;
-	var rpInterval = setInterval(function() {
-		rpAttempts++;
-		rpUpdateExistingCharts();
-		if (rpAttempts >= 10) clearInterval(rpInterval);
-	}, 500);
+		/* Poll for chart instances */
+		var rpChartAttempts = 0;
+		var rpChartInterval = setInterval(function() {
+			rpChartAttempts++;
+			rpUpdateCharts();
+			if (rpChartAttempts >= 15) clearInterval(rpChartInterval);
+		}, 400);
+	}, 300);
 })();
 
 <?php
