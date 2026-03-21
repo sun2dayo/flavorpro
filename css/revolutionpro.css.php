@@ -1616,10 +1616,12 @@ html body [class*="bg-infoxbox-"] ~ .info-box-content {
     left: 0 !important;
 }
 
-/* ── 2. Remove wrong left border, keep original ── */
+/* ── 2. Left side shadow for contour depth ── */
 .info-box,
 .info-box.info-box-sm {
     border-left: 1px solid var(--ndx-slate-100) !important;
+    box-shadow: -3px 0 8px -2px rgba(99, 102, 241, 0.2),
+                0 1px 3px 0 rgba(0, 0, 0, 0.04) !important;
 }
 
 /* ── 3. Uniform Indigo RIGHT border on ALL badges (html body for max specificity over custom.css) ── */
