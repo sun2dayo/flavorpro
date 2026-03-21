@@ -1659,6 +1659,28 @@ html body .site-menubar-dark li.site-menu-item.metrovmenu a.rpfirstmenuglobal {
     color: #FFFFFF !important;
 }
 
+/* ── Fix invisible view toggle icons (List, Kanban, +) ── */
+.btnTitle-icon .fas,
+.btnTitle-icon .fa,
+.btnTitle-icon .far,
+.btnTitle-icon [class^="fa-"],
+.btnTitle-icon {
+    font-family: "Font Awesome 5 Free", FontAwesome, sans-serif !important;
+    color: var(--ndx-primary-500) !important;
+    -webkit-text-fill-color: var(--ndx-primary-500) !important;
+}
+a.btnTitle:hover .btnTitle-icon,
+a.btnTitle:hover .btnTitle-icon .fas,
+a.btnTitle:hover .btnTitle-icon .fa {
+    color: var(--ndx-primary-600) !important;
+    -webkit-text-fill-color: var(--ndx-primary-600) !important;
+}
+a.btnTitle.btnTitleSelected {
+    border: 1px solid var(--ndx-primary-500) !important;
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    border-radius: 4px !important;
+}
+
 /* (hamburger-bar Indigo — handled in main theme block above) */
 
 /* ── Sidebar arrow: fix □ glyph → FA chevron ── */
