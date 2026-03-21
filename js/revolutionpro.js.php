@@ -278,8 +278,17 @@ $(document).ready(function(){
 	$('body').addClass('animsition site-navbar-small dashboard site-menubar-'+foldorunfold);
 	$('html').addClass('css-menubar');
 	if($('body').hasClass('bodylogin')){
-		// Flavor Pro: keep the core login HTML intact — CSS handles the styling
-		$('body').addClass('flavor-pro-login');
+		var txtlogin = $('.bodylogin div.login_center').html();
+		if(txtlogin !== ''){
+			$('.bodylogin div.login_center').hide();
+			$('.bodylogin').prepend('<?php echo dol_escape_js($htmllogin); ?>');
+			$('.bodylogin #pagelogindivcontent #logindivcontent').html(txtlogin);
+			$('.bodylogin').addClass('page-login-v2 page-dark layout-full flavor-pro-login');
+			$('.bodylogin #pagelogindivcontent').show();
+			$('.bodylogin div.login_center').remove();
+			// Flavor Pro: add Welcome heading
+			$('.bodylogin #logindivcontent .login_table').before('<h2 class="flavor-welcome">Welcome back</h2>');
+		}
 	}
 	$('body .site-menu>.site-menu-item>a ').on('click', function(e) {
 	     $(this).parent('li').find('a.mm-next').click();
