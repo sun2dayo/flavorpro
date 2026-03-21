@@ -1549,7 +1549,8 @@ span.info-box-icon .fa {
     border: 1px solid #F1F5F9 !important;
     border-radius: 12px !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
-    overflow: hidden !important;
+    overflow: visible !important;
+    position: relative !important;
 }
 
 /* ── 4. Info-box text: enforce dark readable colors ── */
@@ -1612,6 +1613,55 @@ body .info-box .info-box-icon i {
     opacity: 1 !important;
     font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome", "Material Design Iconic Font" !important;
     font-size: 1.8rem !important;
+}
+
+/* ── Module action buttons: toggle, gear, info ── */
+.info-box-actions,
+.info-box .info-box-actions {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 6px !important;
+    z-index: 10 !important;
+    gap: 4px !important;
+}
+.info-box-actions a,
+.info-box-actions span,
+.info-box .info-box-actions a {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #64748B !important;
+    font-size: 1.1em !important;
+}
+.info-box-actions a:hover {
+    color: #4F46E5 !important;
+}
+/* Toggle icons */
+.info-box-actions .fa-toggle-on,
+.info-box-actions .fa-toggle-off,
+.info-box-actions .fas,
+.info-box-actions .far,
+.info-box-actions .fa {
+    font-family: "Font Awesome 5 Free" !important;
+    -webkit-text-fill-color: unset !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+.info-box-actions .fa-toggle-on {
+    color: #16A34A !important;
+}
+.info-box-actions .fa-toggle-off {
+    color: #94A3B8 !important;
+}
+.info-box-actions .fa-cog,
+.info-box-actions .fa-gear {
+    color: #64748B !important;
+}
+.info-box-actions .fa-info-circle {
+    color: #4F46E5 !important;
 }
 
 /* ── 5. Box flex items: clean wrapper ── */
