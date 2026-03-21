@@ -1583,6 +1583,15 @@ html body [class*="bg-infoxbox-"] ~ .info-box-content {
     border-right-color: var(--ndx-primary-500) !important;
 }
 
+/* ── Sidebar FA icons: white (override grey #838383 from custom.css) ── */
+html body .site-menu-icon.mainmenu::before,
+html body .site-menubar .site-menu-icon.mainmenu::before,
+html body .site-menubar .mainmenu::before,
+html body .site-menu-icon::before {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    NovaDX Pro — Phase 4.6: RIGHT BORDER, GLOBAL VIEW, BADGE FIX
    ══════════════════════════════════════════════════════════════════ */
