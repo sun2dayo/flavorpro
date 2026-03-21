@@ -1689,6 +1689,12 @@ a.btnTitle.btnTitleSelected {
     border-radius: 4px !important;
 }
 
+/* ── Remove dark line below topbar ── */
+.site-navbar {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
 /* (hamburger-bar Indigo — handled in main theme block above) */
 
 /* ── Sidebar arrow: fix □ glyph → FA chevron ── */
