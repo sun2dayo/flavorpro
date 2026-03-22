@@ -19,3 +19,13 @@ body.bodylogin.page-login-v2 .page-content{padding-right:470px!important;min-hei
 /* DASHBOARD ICON CENTERING FIX */
 .info-box-icon{display:flex!important;align-items:center!important;justify-content:center!important}
 .box-flex-item .info-box-icon{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+/* DASHBOARD TABLE BORDER FIX - lighten dark borders */
+table.noborder td,table.noborder th,table.noborder tr{border-color:#e5e7eb!important}
+table.boxtable td,table.boxtable th,table.boxtable tr{border-color:#e5e7eb!important}
+table.noborder,table.boxtable{border-color:#e5e7eb!important}
+.boxtable td,.boxtable th{border-bottom:1px solid #e5e7eb!important}
+table.noborder td,table.noborder th{border-bottom:1px solid #e5e7eb!important}
+.liste_titre td,.liste_titre th,.liste_titre_bydiv{border-bottom:2px solid var(--ndx-primary,#4F46E5)!important;border-top:none!important}
+tr.liste_titre{border-bottom:2px solid var(--ndx-primary,#4F46E5)!important}
+.div-table-responsive{border:none!important}
+.fichehalfleft .boxstatsindicator,.fichehalfright .boxstatsindicator{border-color:#e5e7eb!important}
