@@ -16,3 +16,6 @@ body.bodylogin .page-brand-info .brand-text{color:#FFFFFF!important;font-family:
 body.bodylogin .page-brand-info p{color:rgba(255,255,255,0.85)!important;font-family:'Inter',sans-serif!important;opacity:1!important}
 body.bodylogin.page-login-v2 .page-content{padding-right:470px!important;min-height:100vh!important}
 @media(max-width:991px){body.bodylogin .page-brand-info{position:relative!important;right:auto!important;bottom:auto!important;height:200px!important;width:100%!important}body.bodylogin .page-login-main{position:relative!important;width:100%!important;padding:30px!important}body.bodylogin.page-login-v2 .page-content{padding-right:0!important}}
+/* DASHBOARD ICON CENTERING FIX */
+.info-box-icon{display:flex!important;align-items:center!important;justify-content:center!important}
+.box-flex-item .info-box-icon{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}

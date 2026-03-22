@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
 include_once DOL_DOCUMENT_ROOT.'/core/class/html.formactions.class.php';

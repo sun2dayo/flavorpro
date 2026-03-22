@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* Dolisys Theme
  * Copyright (C) 2020  novadx.pt
  *
