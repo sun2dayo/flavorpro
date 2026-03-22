@@ -1,0 +1,20 @@
+# Deny directory listing and direct access to PHP includes
+Options -Indexes
+
+# Block direct access to include files
+<FilesMatch "^setup_tab_.*\.php$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Block access to lock file
+<FilesMatch "^flavorpro\.lock$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Block access to generated CSS
+<FilesMatch "^flavorpro_hidden\.css$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
