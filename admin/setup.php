@@ -80,6 +80,24 @@ $adminToolsSubmenus = array(
     'vat_update'       => array('label' => 'Global VAT Update',  'icon' => '💱', 'css' => 'a[href*="product_tools.php"]'),
 );
 
+$setupSubmenus = array(
+    'company'       => array('label' => 'Company/Organization',      'icon' => '🏢', 'css' => 'a[href*="admin/company.php"]'),
+    'modules'       => array('label' => 'Modules/Applications',      'icon' => '📦', 'css' => 'a[href*="admin/modules.php"]'),
+    'display'       => array('label' => 'Display',                   'icon' => '🖥️',  'css' => 'a[href*="admin/ihm.php"]'),
+    'menus_setup'   => array('label' => 'Menus',                     'icon' => '📋', 'css' => 'a[href*="admin/menus.php"]'),
+    'translation'   => array('label' => 'Translation',               'icon' => '🌐', 'css' => 'a[href*="admin/translation.php"]'),
+    'defaultvalues' => array('label' => 'Default values/filters',    'icon' => '⚙️',  'css' => 'a[href*="admin/defaultvalues.php"]'),
+    'widgets'       => array('label' => 'Widgets',                   'icon' => '🧩', 'css' => 'a[href*="admin/boxes.php"]'),
+    'alerts'        => array('label' => 'Alerts',                    'icon' => '🔔', 'css' => 'a[href*="admin/delais.php"]'),
+    'security'      => array('label' => 'Security',                  'icon' => '🛡️',  'css' => 'a[href*="security_other.php"]'),
+    'limits'        => array('label' => 'Limits and accuracy',       'icon' => '📐', 'css' => 'a[href*="admin/limits.php"]'),
+    'pdf'           => array('label' => 'PDF',                       'icon' => '📄', 'css' => 'a[href*="admin/pdf.php"]'),
+    'emails'        => array('label' => 'Emails',                    'icon' => '📧', 'css' => 'a[href*="admin/mails.php"]'),
+    'sms'           => array('label' => 'SMS',                       'icon' => '💬', 'css' => 'a[href*="admin/sms.php"]'),
+    'dictionaries'  => array('label' => 'Dictionaries',              'icon' => '📚', 'css' => 'a[href*="admin/dict.php"]'),
+    'othersetup'    => array('label' => 'Other Setup',               'icon' => '🔧', 'css' => 'a[href*="admin/const.php"]'),
+);
+
 $moduleTabs = array(
     'marketplace' => array('label' => 'Find external modules', 'icon' => '🔍', 'css' => 'a[href*="mode=marketplace"]'),
     'deploy'      => array('label' => 'Deploy/install module',  'icon' => '📤', 'css' => 'a[href*="mode=deploy"]'),
@@ -183,13 +201,14 @@ if ($action === 'saveicons') {
 }
 
 // ── Action: Save visibility (menus, admin tools, module tabs) ──
-if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
+if (in_array($action, array('savemenus','saveadmintools','savesetupmenu','savemoduletabs'))) {
     $cssFile = __DIR__ . '/flavorpro_hidden.css';
     $existingContent = file_exists($cssFile) ? file_get_contents($cssFile) : '';
 
-    $sections = array('menus' => '', 'admintools' => '', 'moduletabs' => '');
+    $sections = array('menus' => '', 'admintools' => '', 'setupmenus' => '', 'moduletabs' => '');
     if (preg_match('/\/\* SECTION: MENUS \*\/(.*?)\/\* END: MENUS \*\//s', $existingContent, $m)) $sections['menus'] = $m[1];
     if (preg_match('/\/\* SECTION: ADMINTOOLS \*\/(.*?)\/\* END: ADMINTOOLS \*\//s', $existingContent, $m)) $sections['admintools'] = $m[1];
+    if (preg_match('/\/\* SECTION: SETUPMENUS \*\/(.*?)\/\* END: SETUPMENUS \*\//s', $existingContent, $m)) $sections['setupmenus'] = $m[1];
     if (preg_match('/\/\* SECTION: MODULETABS \*\/(.*?)\/\* END: MODULETABS \*\//s', $existingContent, $m)) $sections['moduletabs'] = $m[1];
 
     if ($action === 'savemenus') {
@@ -197,7 +216,6 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
         foreach ($availableMenus as $key => $menu) {
             if (GETPOST('hide_'.$key, 'alpha')) {
                 // Revolution Pro sidebar uses: <li class="site-menu-item {mainmenu} ...">
-                // Also hide from Dolibarr's native top menu if present
                 $sections['menus'] .= "li.site-menu-item.{$key}, #mainmenutd_{$key}, li.tmenu[data-mainmenu=\"{$key}\"] { display: none !important; }\n";
             }
         }
@@ -206,8 +224,15 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
         $sections['admintools'] = "\n";
         foreach ($adminToolsSubmenus as $key => $item) {
             if (GETPOST('hide_at_'.$key, 'alpha')) {
-                // Use :has() to hide parent <li> + fallback to hide <a> directly
                 $sections['admintools'] .= "li.site-menu-item:has({$item['css']}), {$item['css']} { display: none !important; }\n";
+            }
+        }
+    }
+    if ($action === 'savesetupmenu') {
+        $sections['setupmenus'] = "\n";
+        foreach ($setupSubmenus as $key => $item) {
+            if (GETPOST('hide_sm_'.$key, 'alpha')) {
+                $sections['setupmenus'] .= "li.site-menu-item:has({$item['css']}), {$item['css']} { display: none !important; }\n";
             }
         }
     }
@@ -215,7 +240,6 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
         $sections['moduletabs'] = "\n";
         foreach ($moduleTabs as $key => $tab) {
             if (GETPOST('hide_mt_'.$key, 'alpha')) {
-                // Hide tab links (and their parent containers) on the modules page
                 $sections['moduletabs'] .= "li:has({$tab['css']}), {$tab['css']} { display: none !important; }\n";
             }
         }
@@ -224,6 +248,7 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
     $cssContent  = "/* Auto-generated by Flavor Pro Setup — ".date('Y-m-d H:i:s')." */\n\n";
     $cssContent .= "/* SECTION: MENUS */".$sections['menus']."/* END: MENUS */\n\n";
     $cssContent .= "/* SECTION: ADMINTOOLS */".$sections['admintools']."/* END: ADMINTOOLS */\n\n";
+    $cssContent .= "/* SECTION: SETUPMENUS */".$sections['setupmenus']."/* END: SETUPMENUS */\n\n";
     $cssContent .= "/* SECTION: MODULETABS */".$sections['moduletabs']."/* END: MODULETABS */\n";
 
     if (file_put_contents($cssFile, $cssContent) !== false) {
@@ -329,15 +354,19 @@ if ($resql) {
 // ── Read hidden items from CSS file ──
 $currentlyHidden = array();
 $currentlyHiddenAT = array();
+$currentlyHiddenSM = array();
 $currentlyHiddenMT = array();
 $cssFile = __DIR__ . '/flavorpro_hidden.css';
 if (file_exists($cssFile)) {
     $content = file_get_contents($cssFile);
     foreach ($availableMenus as $key => $menu) {
-        if (strpos($content, '#mainmenutd_'.$key) !== false) $currentlyHidden[$key] = true;
+        if (strpos($content, 'li.site-menu-item.'.$key) !== false) $currentlyHidden[$key] = true;
     }
     foreach ($adminToolsSubmenus as $key => $item) {
         if (strpos($content, $item['css']) !== false) $currentlyHiddenAT[$key] = true;
+    }
+    foreach ($setupSubmenus as $key => $item) {
+        if (strpos($content, $item['css']) !== false) $currentlyHiddenSM[$key] = true;
     }
     foreach ($moduleTabs as $key => $tab) {
         if (strpos($content, $tab['css']) !== false) $currentlyHiddenMT[$key] = true;
