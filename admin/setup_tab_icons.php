@@ -1,6 +1,6 @@
 <?php
 // TAB: Icon Manager (NEW)
-$nativeKeys = array('home','companies','products','commercial','compta','accountancy','bank','project','hrm','ticket','tools','members');
+$nativeKeys = array_keys($availableMenus);
 
 print '<div role="tabpanel" id="revoproIcons" class="tab-pane">';
 print '<div class="flavorpro-card">';

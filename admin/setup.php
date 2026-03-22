@@ -183,21 +183,30 @@ if ($action == 'update' || $action == 'defaultparameters') {
 
 // ── Action: Save Icons ──
 if ($action === 'saveicons') {
-    $iconKeys = GETPOST('icon_keys', 'array');
+    // Dolibarr's GETPOST doesn't handle PHP array inputs (icon_keys[]) properly
+    $iconKeys = isset($_POST['icon_keys']) ? $_POST['icon_keys'] : array();
     $errCount = 0;
-    if (is_array($iconKeys)) {
-        foreach ($iconKeys as $key) {
-            $key = $db->escape($key);
-            $faIcon      = $db->escape(GETPOST('fa_'.$key, 'alphanohtml'));
-            $customLabel = $db->escape(GETPOST('label_'.$key, 'alphanohtml'));
-            $isHidden    = GETPOST('hidden_'.$key, 'int') ? 1 : 0;
-            $sql_upd = "UPDATE ".MAIN_DB_PREFIX."revolutionpro_config SET fa_icon='".$faIcon."', custom_label='".$customLabel."', is_hidden=".$isHidden." WHERE menu_key='".$key."' AND entity=1";
+    if (is_array($iconKeys) && count($iconKeys) > 0) {
+        foreach ($iconKeys as $rawKey) {
+            $rawKey = trim($rawKey);
+            if (empty($rawKey)) continue;
+            // Get POST values using the raw key BEFORE escaping
+            $faIcon      = GETPOST('fa_'.$rawKey, 'alphanohtml');
+            $customLabel = GETPOST('label_'.$rawKey, 'alphanohtml');
+            $isHidden    = GETPOST('hidden_'.$rawKey, 'int') ? 1 : 0;
+            // Now escape for SQL
+            $safeKey   = $db->escape($rawKey);
+            $safeIcon  = $db->escape($faIcon);
+            $safeLabel = $db->escape($customLabel);
+            $sql_upd = "UPDATE ".MAIN_DB_PREFIX."revolutionpro_config SET fa_icon='".$safeIcon."', custom_label='".$safeLabel."', is_hidden=".$isHidden." WHERE menu_key='".$safeKey."' AND entity=1";
             if (!$db->query($sql_upd)) { $errCount++; }
         }
+    } else {
+        $errCount = -1; // No keys received
     }
     $mesg = $errCount === 0
         ? '<div class="ok">✅ Icons saved! Reload the app (Ctrl+Shift+R) to see changes.</div>'
-        : '<div class="error">❌ '.$errCount.' icon(s) could not be saved.</div>';
+        : '<div class="error">❌ '.($errCount == -1 ? 'No icon data received. Check form.' : $errCount.' icon(s) could not be saved.').'</div>';
 }
 
 // ── Action: Save visibility (menus, admin tools, module tabs) ──
@@ -323,13 +332,13 @@ foreach ($availableMenus as $nativeKey => $nativeMenu) {
 
 // ── Auto-detect module menus from llx_menu ──
 $moduleIconDefaults = array(
-    'agenda' => array('fas fa-calendar-check', 'Agenda'), 'billing' => array('fas fa-file-invoice', 'Billing'),
-    'ecm' => array('fas fa-folder-open', 'Documents'), 'mrp' => array('fas fa-industry', 'Manufacturing'),
-    'takepos' => array('fas fa-cash-register', 'TakePOS'), 'website' => array('fas fa-globe-americas', 'Website'),
-    'recruitment' => array('fas fa-user-plus', 'Recruitment'), 'holiday' => array('fas fa-umbrella-beach', 'Holidays'),
-    'expensereport' => array('fas fa-money-check-alt', 'Expenses'), 'don' => array('fas fa-hand-holding-heart', 'Donations'),
-    'loan' => array('fas fa-piggy-bank', 'Loans'), 'contracts' => array('fas fa-file-signature', 'Contracts'),
-    'shipping' => array('fas fa-shipping-fast', 'Shipments'), 'stock' => array('fas fa-warehouse', 'Stock'),
+    'agenda' => array('fa fa-calendar-check', 'Agenda'), 'billing' => array('fa fa-file-invoice', 'Billing'),
+    'ecm' => array('fa fa-folder-open', 'Documents'), 'mrp' => array('fa fa-industry', 'Manufacturing'),
+    'takepos' => array('fa fa-cash-register', 'TakePOS'), 'website' => array('fa fa-globe', 'Website'),
+    'recruitment' => array('fa fa-user-plus', 'Recruitment'), 'holiday' => array('fa fa-umbrella-beach', 'Holidays'),
+    'expensereport' => array('fa fa-money-check-alt', 'Expenses'), 'don' => array('fa fa-hand-holding-heart', 'Donations'),
+    'loan' => array('fa fa-piggy-bank', 'Loans'), 'contracts' => array('fa fa-file-signature', 'Contracts'),
+    'shipping' => array('fa fa-shipping-fast', 'Shipments'), 'stock' => array('fa fa-warehouse', 'Stock'),
 );
 
 $sql_menus = "SELECT DISTINCT mainmenu FROM ".MAIN_DB_PREFIX."menu WHERE mainmenu != '' AND entity IN (0,1) ORDER BY mainmenu";
