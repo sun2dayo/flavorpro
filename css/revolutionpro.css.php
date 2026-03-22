@@ -2355,4 +2355,12 @@ if (is_object($db)) {
         }
     }
 }
+
+// ── Flavor Pro: Include visibility rules (flavorpro_hidden.css) ──
+$hiddenCssFile = dirname(__DIR__).'/admin/flavorpro_hidden.css';
+if (file_exists($hiddenCssFile)) {
+    print "\n/* Flavor Pro visibility rules */\n";
+    print file_get_contents($hiddenCssFile);
+    print "\n";
+}
 
