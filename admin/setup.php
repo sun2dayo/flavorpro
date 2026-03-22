@@ -458,6 +458,15 @@ require __DIR__.'/setup_tab_login.php';
 // ═══════════════════════════════════════════════════════════════════════════════
 require __DIR__.'/setup_tab_css.php';
 
+// ── Close the parent form BEFORE the new tabs that have their own forms ──
+// (HTML spec prohibits nested forms; browser ignores inner forms otherwise)
+print '<div class="divrevolutionprobuttonadmin">';
+print '<div style="clear:both;"></div>';
+print '<input type="submit" id="submitbutton" class="butAction" value="'.$langs->trans('Validate').'" style="float: left;">';
+print '<a class="butActionDelete" style="float: right;" href="'.dol_buildpath('/revolutionpro/admin/setup.php', 2).'?action=defaultparameters">'.$langs->trans('RevoProDefaultsParamets').'</a>';
+print '</div>';
+print '</form>'; // Close settingrevopro form
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // NEW TAB: ICON MANAGER
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -482,13 +491,6 @@ print '</div>'; // tab-content
 print '</div>'; // nav-tabs-horizontal
 
 print '</div>'; // settingrevolutionprotheme
-
-print '<div class="divrevolutionprobuttonadmin">';
-print '<div style="clear:both;"></div>';
-print '<input type="submit" id="submitbutton" class="butAction" value="'.$langs->trans('Validate').'" style="float: left;">';
-print '<a class="butActionDelete" style="float: right;" href="'.dol_buildpath('/revolutionpro/admin/setup.php', 2).'?action=defaultparameters">'.$langs->trans('RevoProDefaultsParamets').'</a>';
-print '</div>';
-print '</form>';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECURITY LOCK CARD (outside the main form)
