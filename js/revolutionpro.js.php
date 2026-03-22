@@ -33,6 +33,78 @@ $(document).ready(function(){
 		});
 	}
 });
+
+// =====================================================================
+// ICON MANAGER — Swap FA classes from llx_revolutionpro_config
+// Reads --revpro-icon-map CSS variable set by revolutionpro.css.php
+// =====================================================================
+document.addEventListener('DOMContentLoaded', function() {
+	// Skip login pages
+	if (document.body && document.body.classList.contains('bodylogin')) return;
+
+	var rootStyles = getComputedStyle(document.documentElement);
+	var mapValue = rootStyles.getPropertyValue('--revpro-icon-map').trim();
+
+	// Remove wrapping quotes
+	if (mapValue && mapValue.length > 2) {
+		mapValue = mapValue.replace(/^['"]|['"]$/g, '');
+	}
+
+	if (!mapValue || mapValue === 'none') return;
+
+	var iconMap;
+	try {
+		iconMap = JSON.parse(mapValue);
+	} catch (e) {
+		return; // Invalid JSON, skip silently
+	}
+
+	// For each menu key, find the sidebar icon container and swap the FA class
+	Object.keys(iconMap).forEach(function(menuKey) {
+		var customClass = iconMap[menuKey]; // e.g. "fas fa-building"
+		if (!customClass) return;
+
+		// Revolution Pro sidebar uses: #mainmenutd_<key> .mainmenu.topmenuimage > span.fa-xxx
+		var container = document.getElementById('mainmenutd_' + menuKey);
+		if (!container) return;
+
+		// Find the FA icon span inside the container
+		var span = container.querySelector('span[class*="fa-"]');
+		if (!span) {
+			// Try finding the mainmenu div and create a span if needed
+			var mmDiv = container.querySelector('.mainmenu');
+			if (mmDiv) {
+				// Revolution Pro uses background-image for icons. Replace with FA span.
+				mmDiv.style.backgroundImage = 'none';
+				span = document.createElement('span');
+				span.style.cssText = 'color: rgba(255,255,255,0.85); font-size: 18px;';
+				mmDiv.appendChild(span);
+			} else {
+				return;
+			}
+		}
+
+		// Strip all existing FA icon classes but keep utility classes
+		var currentClasses = span.className.split(' ');
+		var newClasses = [];
+		for (var i = 0; i < currentClasses.length; i++) {
+			var cls = currentClasses[i].trim();
+			if (cls.match(/^fa-/) && !cls.match(/^fa-fw$/)) continue;
+			if (cls === 'fas' || cls === 'far' || cls === 'fab' || cls === 'fa') continue;
+			if (cls) newClasses.push(cls);
+		}
+
+		// Add the custom classes
+		var customParts = customClass.split(' ');
+		for (var j = 0; j < customParts.length; j++) {
+			if (customParts[j].trim()) {
+				newClasses.push(customParts[j].trim());
+			}
+		}
+
+		span.className = newClasses.join(' ');
+	});
+});
 <?php
 
 // // Session FOR Menu

@@ -2335,5 +2335,24 @@ if($valcss){
 // ── Flavor Pro: Include generated visibility CSS ──
 $hiddenCssPath = dirname(__FILE__).'/../admin/flavorpro_hidden.css';
 if (file_exists($hiddenCssPath)) {
+    print "\n/* Flavor Pro Menu Visibility (auto-generated) */\n";
     print file_get_contents($hiddenCssPath);
-}
+}
+
+// ── Flavor Pro: Pass icon config from llx_revolutionpro_config to JS via CSS variable ──
+if (is_object($db)) {
+    $sql_ic = "SELECT menu_key, fa_icon FROM ".MAIN_DB_PREFIX."revolutionpro_config WHERE entity=1 AND fa_icon != ''";
+    $resql_ic = $db->query($sql_ic);
+    if ($resql_ic) {
+        $iconMap = array();
+        while ($obj_ic = $db->fetch_object($resql_ic)) {
+            $iconMap[$obj_ic->menu_key] = $obj_ic->fa_icon;
+        }
+        if (!empty($iconMap)) {
+            $jsonMap = json_encode($iconMap);
+            print "\n/* Icon config carrier (read by revolutionpro.js.php) */\n";
+            print ":root { --revpro-icon-map: '".$jsonMap."'; }\n";
+        }
+    }
+}
+
