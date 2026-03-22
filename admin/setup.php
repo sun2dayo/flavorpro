@@ -196,7 +196,9 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
         $sections['menus'] = "\n";
         foreach ($availableMenus as $key => $menu) {
             if (GETPOST('hide_'.$key, 'alpha')) {
-                $sections['menus'] .= "#mainmenutd_{$key}, .menu_contenu[id*=\"{$key}\"], div.vmenu div[id*=\"{$key}\"], li.tmenu[data-mainmenu=\"{$key}\"], div.mainmenu.{$key} { display: none !important; }\n";
+                // Revolution Pro sidebar uses: <li class="site-menu-item {mainmenu} ...">
+                // Also hide from Dolibarr's native top menu if present
+                $sections['menus'] .= "li.site-menu-item.{$key}, #mainmenutd_{$key}, li.tmenu[data-mainmenu=\"{$key}\"] { display: none !important; }\n";
             }
         }
     }
@@ -204,7 +206,8 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
         $sections['admintools'] = "\n";
         foreach ($adminToolsSubmenus as $key => $item) {
             if (GETPOST('hide_at_'.$key, 'alpha')) {
-                $sections['admintools'] .= "{$item['css']} { display: none !important; }\n";
+                // Use :has() to hide parent <li> + fallback to hide <a> directly
+                $sections['admintools'] .= "li.site-menu-item:has({$item['css']}), {$item['css']} { display: none !important; }\n";
             }
         }
     }
@@ -212,7 +215,8 @@ if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
         $sections['moduletabs'] = "\n";
         foreach ($moduleTabs as $key => $tab) {
             if (GETPOST('hide_mt_'.$key, 'alpha')) {
-                $sections['moduletabs'] .= "{$tab['css']} { display: none !important; }\n";
+                // Hide tab links (and their parent containers) on the modules page
+                $sections['moduletabs'] .= "li:has({$tab['css']}), {$tab['css']} { display: none !important; }\n";
             }
         }
     }

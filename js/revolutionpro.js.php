@@ -37,6 +37,13 @@ $(document).ready(function(){
 // =====================================================================
 // ICON MANAGER — Swap FA classes from llx_revolutionpro_config
 // Reads --revpro-icon-map CSS variable set by revolutionpro.css.php
+// Revolution Pro sidebar structure:
+//   <li class="site-menu-item {mainmenu} ...">
+//     <a ...>
+//       <div class="site-menu-icon mainmenu icon-{key} mainmenu {key}"></div>
+//       <span class="site-menu-title">Label</span>
+//     </a>
+//   </li>
 // =====================================================================
 document.addEventListener('DOMContentLoaded', function() {
 	// Skip login pages
@@ -59,50 +66,36 @@ document.addEventListener('DOMContentLoaded', function() {
 		return; // Invalid JSON, skip silently
 	}
 
-	// For each menu key, find the sidebar icon container and swap the FA class
+	// For each menu key, find the sidebar icon container and swap the icon
 	Object.keys(iconMap).forEach(function(menuKey) {
-		var customClass = iconMap[menuKey]; // e.g. "fas fa-building"
+		var customClass = iconMap[menuKey]; // e.g. "fa fa-building"
 		if (!customClass) return;
 
-		// Revolution Pro sidebar uses: #mainmenutd_<key> .mainmenu.topmenuimage > span.fa-xxx
-		var container = document.getElementById('mainmenutd_' + menuKey);
-		if (!container) return;
+		// Revolution Pro sidebar icons: <div class="site-menu-icon mainmenu icon-{key} mainmenu {key}">
+		// Find by the menu key class on div.site-menu-icon
+		var iconDiv = document.querySelector('div.site-menu-icon.' + menuKey);
+		if (!iconDiv) return;
 
-		// Find the FA icon span inside the container
-		var span = container.querySelector('span[class*="fa-"]');
-		if (!span) {
-			// Try finding the mainmenu div and create a span if needed
-			var mmDiv = container.querySelector('.mainmenu');
-			if (mmDiv) {
-				// Revolution Pro uses background-image for icons. Replace with FA span.
-				mmDiv.style.backgroundImage = 'none';
-				span = document.createElement('span');
-				span.style.cssText = 'color: rgba(255,255,255,0.85); font-size: 18px;';
-				mmDiv.appendChild(span);
-			} else {
-				return;
-			}
+		// Remove the CSS background-image that Revolution Pro uses for native icons
+		iconDiv.style.backgroundImage = 'none';
+		iconDiv.style.display = 'flex';
+		iconDiv.style.alignItems = 'center';
+		iconDiv.style.justifyContent = 'center';
+
+		// Create an FA <i> element inside the icon container
+		var existingIcon = iconDiv.querySelector('i[class*="fa"]');
+		if (existingIcon) {
+			// Update existing FA icon
+			existingIcon.className = customClass + ' fa-fw';
+		} else {
+			// Create new FA icon
+			var faIcon = document.createElement('i');
+			faIcon.className = customClass + ' fa-fw';
+			faIcon.style.cssText = 'font-size: 18px; color: inherit;';
+			iconDiv.innerHTML = ''; // Clear any existing content
+			iconDiv.appendChild(faIcon);
 		}
-
-		// Strip all existing FA icon classes but keep utility classes
-		var currentClasses = span.className.split(' ');
-		var newClasses = [];
-		for (var i = 0; i < currentClasses.length; i++) {
-			var cls = currentClasses[i].trim();
-			if (cls.match(/^fa-/) && !cls.match(/^fa-fw$/)) continue;
-			if (cls === 'fas' || cls === 'far' || cls === 'fab' || cls === 'fa') continue;
-			if (cls) newClasses.push(cls);
-		}
-
-		// Add the custom classes
-		var customParts = customClass.split(' ');
-		for (var j = 0; j < customParts.length; j++) {
-			if (customParts[j].trim()) {
-				newClasses.push(customParts[j].trim());
-			}
-		}
-
-		span.className = newClasses.join(' ');
+	});
 	});
 });
 <?php
