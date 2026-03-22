@@ -2352,6 +2352,9 @@ if (is_object($db)) {
             $jsonMap = json_encode($iconMap);
             print "\n/* Icon config carrier (read by revolutionpro.js.php) */\n";
             print ":root { --revpro-icon-map: '".$jsonMap."'; }\n";
+            // Suppress ALL native background-image icons when icon map is active
+            print "div.site-menu-icon.mainmenu { background-image: none !important; background: none !important; display: flex !important; align-items: center; justify-content: center; }\n";
+            print "div.site-menu-icon.mainmenu i.fa { font-size: 18px; color: inherit; }\n";
         }
     }
 }
