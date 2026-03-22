@@ -202,12 +202,8 @@ class modRevolutionpro extends DolibarrModules
 		foreach ($arraythems as $value)
 			if (in_array(strtolower(preg_replace('/^mod/','',$value)), $conf->modules)) $result=unActivateModule($value);
 
-
-		// // Session FOR Menu
-		// require_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-		// $extrafields=new ExtraFields($this->db);
-		// $extrafields->addExtraField("revolutionpromenu", $langs->trans("MENU"), "int", "900", 2, "user", 0, 0, 0, '',0,'',0);
-		// unset($_SESSION['revolutionproleftmenu']);
+		// Create llx_revolutionpro_config table
+		$this->loadTables();
 
 		return $this->_init($sql, $options);
 	}
@@ -238,29 +234,31 @@ class modRevolutionpro extends DolibarrModules
 		$_sql = "DELETE FROM `".MAIN_DB_PREFIX."const` WHERE `value` like '%revolutionpro%' AND entity = 0";
 		$resql = $this->db->query($_sql);
 
-
-		// // Session FOR Menu
-		// $sql1 = "DELETE FROM `".MAIN_DB_PREFIX."extrafields` WHERE `".MAIN_DB_PREFIX."extrafields`.`name` like '%revolutionpro%'";
-		// $resql = $this->db->query($sql1);
-		// unset($_SESSION['revolutionproleftmenu']);
-
 		return $this->_remove($sql, $options);
 	}
 
 	/**
-	 * Create tables, keys and data required by module
-	 * Files llx_table1.sql, llx_table1.key.sql llx_data.sql with create table, create keys
-	 * and create data commands must be stored in directory /revolutionpro/sql/
+	 * Create tables, keys and data required by module.
+	 * Executes SQL from /revolutionpro/sql/ directory.
 	 * This function is called by this->init
 	 *
 	 * 	@return		int		<=0 if KO, >0 if OK
 	 */
 	private function loadTables()
 	{
-		global $conf, $mysoc, $db;
-
+		$sqlFile = dirname(__FILE__).'/../../sql/llx_revolutionpro_config.sql';
+		if (file_exists($sqlFile)) {
+			$sqlContent = file_get_contents($sqlFile);
+			// Remove comments
+			$sqlContent = preg_replace('/--.*$/m', '', $sqlContent);
+			$sqlContent = trim($sqlContent);
+			if (!empty($sqlContent)) {
+				// Replace llx_ with actual prefix
+				$sqlContent = str_replace('llx_', MAIN_DB_PREFIX, $sqlContent);
+				$this->db->query($sqlContent);
+			}
+		}
 		return 1;
-
 	}
 
 }

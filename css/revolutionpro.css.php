@@ -2331,3 +2331,9 @@ $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->glob
 if($valcss){
     print ($valcss);
 }
+
+// ── Flavor Pro: Include generated visibility CSS ──
+$hiddenCssPath = dirname(__FILE__).'/../admin/flavorpro_hidden.css';
+if (file_exists($hiddenCssPath)) {
+    print file_get_contents($hiddenCssPath);
+}

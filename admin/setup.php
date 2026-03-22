@@ -1,107 +1,153 @@
 <?php
-/* <one line to give the program's name and a brief idea of what it does.>
- * Copyright (C) <year>  <name of author>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 /**
- * 	\file		admin/setup.php
- * 	\ingroup	revolutionpro
- * 	\brief		This file is an example module setup page
- * 				Put some comments here
+ * Flavor Pro — Advanced Setup & Configuration Panel
+ * Copyright (C) 2025-2026  NovaDX  <ola@novadx.pt>  https://novadx.pt
+ *
+ * Features:
+ * - Original Revolution Pro settings (Colors, Four Boxes, Login, CSS)
+ * - Icon Manager: Customize FontAwesome icons and labels for sidebar menus
+ * - Menu Manager: Hide/show sidebar menu items via generated CSS
+ * - Admin Tools Control: Granular visibility for Admin Tools submenu
+ * - Module Tabs Manager: Hide external modules, deploy, develop tabs
+ * - Security Lock: Lock the setup page with flavorpro.lock
  */
-// Dolibarr environment
-$res=@include("../../main.inc.php");					// For root directory
+
+// ──────────────────────────────────────────────────────────────────────────────
+// SECURITY LOCK CHECK
+// ──────────────────────────────────────────────────────────────────────────────
+if (file_exists(__DIR__ . '/flavorpro.lock')) {
+    die('<div style="font-family: \'Inter\', -apple-system, sans-serif; background: #F8FAFC; height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0;">
+            <div style="background: #FFF; padding: 48px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); text-align: center; max-width: 420px;">
+                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #FEE2E2, #FECACA); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 28px;">🔒</div>
+                <h2 style="color: #1E293B; margin-top: 0; font-size: 1.25rem;">Setup Locked</h2>
+                <p style="color: #64748B; line-height: 1.6; margin-bottom: 0;">Configuration is locked. Delete <code>flavorpro.lock</code> from the admin directory to unlock.</p>
+            </div>
+         </div>');
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Dolibarr Bootstrap
+// ──────────────────────────────────────────────────────────────────────────────
+$res=@include("../../main.inc.php");
 if (! $res && file_exists($_SERVER['DOCUMENT_ROOT']."/main.inc.php"))
-	$res=@include($_SERVER['DOCUMENT_ROOT']."/main.inc.php"); // Use on dev env only
-if (! $res) $res=@include("../../../main.inc.php");		// For "custom" directory
+	$res=@include($_SERVER['DOCUMENT_ROOT']."/main.inc.php");
+if (! $res) $res=@include("../../../main.inc.php");
 
-// Libraries
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
-
 dol_include_once('/revolutionpro/class/revolutionpro.class.php');
 dol_include_once('/revolutionpro/lib/revolutionpro.lib.php');
-
 require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/images.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
-// Translations
+
 $langs->load("admin");
 $langs->load("revolutionpro@revolutionpro");
 
+// ──────────────────────────────────────────────────────────────────────────────
+// Menu definitions
+// ──────────────────────────────────────────────────────────────────────────────
+$availableMenus = array(
+    'home'          => array('label' => 'Home / Dashboard',   'icon' => '🏠'),
+    'companies'     => array('label' => 'Third Parties',      'icon' => '🏢'),
+    'products'      => array('label' => 'Products/Services',  'icon' => '📦'),
+    'commercial'    => array('label' => 'Commercial',         'icon' => '🤝'),
+    'compta'        => array('label' => 'Billing / Payment',  'icon' => '💰'),
+    'bank'          => array('label' => 'Banking',            'icon' => '🏦'),
+    'accountancy'   => array('label' => 'Accountancy',        'icon' => '📊'),
+    'project'       => array('label' => 'Projects',           'icon' => '📋'),
+    'hrm'           => array('label' => 'HRM',                'icon' => '👥'),
+    'ticket'        => array('label' => 'Tickets',            'icon' => '🎫'),
+    'tools'         => array('label' => 'Tools',              'icon' => '🛠️'),
+    'members'       => array('label' => 'Members',            'icon' => '👤'),
+);
 
+$adminToolsSubmenus = array(
+    'admin_system_dolibarr'     => array('label' => 'About Dolisys',         'icon' => 'ℹ️',  'css' => '.menu_contenu_admin_system_dolibarr'),
+    'admin_system_browser'      => array('label' => 'About Browser',         'icon' => '🌐', 'css' => '.menu_contenu_admin_system_browser'),
+    'admin_system_os'           => array('label' => 'About OS',              'icon' => '💻', 'css' => '.menu_contenu_admin_system_os'),
+    'admin_system_web'          => array('label' => 'About Web Server',      'icon' => '🖥️',  'css' => '.menu_contenu_admin_system_web'),
+    'admin_system_phpinfo'      => array('label' => 'About PHP',             'icon' => '🐘', 'css' => '.menu_contenu_admin_system_phpinfo'),
+    'admin_system_database'     => array('label' => 'About Database',        'icon' => '🗄️',  'css' => '.menu_contenu_admin_system_database'),
+    'admin_system_perf'         => array('label' => 'About Performances',    'icon' => '⚡', 'css' => '.menu_contenu_admin_system_perf'),
+    'admin_system_security'     => array('label' => 'About Security',        'icon' => '🛡️',  'css' => '.menu_contenu_admin_system_security'),
+    'admin_tools_listevents'    => array('label' => 'Security Events',       'icon' => '📜', 'css' => '.menu_contenu_admin_tools_listevents'),
+    'admin_tools_listsessions'  => array('label' => 'Users Sessions',        'icon' => '👥', 'css' => '.menu_contenu_admin_tools_listsessions'),
+    'admin_tools_dolibarr_export' => array('label' => 'Backup',              'icon' => '💾', 'css' => '.menu_contenu_admin_tools_dolibarr_export'),
+    'admin_tools_dolibarr_import' => array('label' => 'Restore',             'icon' => '📥', 'css' => '.menu_contenu_admin_tools_dolibarr_import'),
+    'admin_tools_update'        => array('label' => 'Upgrade / Extend',      'icon' => '🔄', 'css' => '.menu_contenu_admin_tools_update'),
+    'admin_tools_purge'         => array('label' => 'Purge',                 'icon' => '🗑️',  'css' => '.menu_contenu_admin_tools_purge'),
+    'product_admin_product_tools' => array('label' => 'Global VAT Update',   'icon' => '💱', 'css' => '.menu_contenu_product_admin_product_tools'),
+    'barcode_codeinit'          => array('label' => 'Mass Barcode Init',     'icon' => '📊', 'css' => '.menu_contenu_barcode_codeinit'),
+    'printing_index'            => array('label' => 'One Click Printing',    'icon' => '🖨️',  'css' => '.menu_contenu_printing_index'),
+    'admin_emailcollector_list' => array('label' => 'Email Collectors',      'icon' => '📧', 'css' => '.menu_contenu_admin_emailcollector_list'),
+    'cron_list'                 => array('label' => 'Scheduled Jobs',        'icon' => '⏰', 'css' => '.menu_contenu_cron_list'),
+);
 
-/*
- * Actions
- */
-$mesg="";
+$moduleTabs = array(
+    'marketplace' => array('label' => 'Find external modules', 'icon' => '🔍', 'css' => 'a[href*="mode=marketplace"]'),
+    'deploy'      => array('label' => 'Deploy/install module',  'icon' => '📤', 'css' => 'a[href*="mode=deploy"]'),
+    'develop'     => array('label' => 'Develop your own module','icon' => '🧑‍💻', 'css' => 'a[href*="mode=develop"]'),
+);
+
+$nativeDefaults = array(
+    'home'        => array('fas fa-solar-panel',        'Dashboard'),
+    'companies'   => array('fas fa-city',               'Third Parties'),
+    'products'    => array('fas fa-cube',               'Products / Services'),
+    'commercial'  => array('fas fa-handshake',          'Commercial'),
+    'compta'      => array('fas fa-receipt',             'Billing / Payments'),
+    'accountancy' => array('fas fa-balance-scale-right', 'Accountancy'),
+    'bank'        => array('fas fa-landmark',           'Banking'),
+    'project'     => array('fas fa-rocket',             'Projects'),
+    'hrm'         => array('fas fa-user-tie',           'HR / Leaves'),
+    'ticket'      => array('fas fa-headset',            'Tickets / Support'),
+    'tools'       => array('fas fa-cogs',               'Tools'),
+    'members'     => array('fas fa-address-book',       'Members'),
+);
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Actions
+// ──────────────────────────────────────────────────────────────────────────────
+$mesg = "";
 $action = GETPOST('action', 'aZ09');
 $sendit = GETPOST('sendit', 'alpha');
 
-if(!$conf->revolutionpro->enabled){
-	accessforbidden();
-}
+if(!$conf->revolutionpro->enabled){ accessforbidden(); }
 if(!empty($action) || !empty($sendit)){
 	if (!$user->admin) accessforbidden();
 }
-
 if (!$user->admin && (!empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX != 'demo')) accessforbidden();
 
-// Default Values
-$val1 = "light";
-$val2 = "inverse";
-$val3 = "teal";
-$val6 = "primary";
-$val4 = "show";
-$val7 = "show";
-$val5 = 'revolutionprologin1.jpg';
+// ── Original Revolution Pro values ──
+$val1 = "light"; $val2 = "inverse"; $val3 = "teal"; $val6 = "primary";
+$val4 = "show"; $val7 = "show"; $val5 = 'revolutionprologin1.jpg';
 
-// Get Values
-$val1 	= GETPOST('value1','alpha') ? GETPOST('value1','alpha') : $val1; // Sidebar Skins
-$val2 	= GETPOST('value2','alpha') ? GETPOST('value2','alpha') : $val2; // Navbar Type
-$val3 	= GETPOST('value3','alpha') ? GETPOST('value3','alpha') : $val3; // Navbar Skins
-$val6 	= GETPOST('value6','alpha') ? GETPOST('value6','alpha') : $val6; // Buttons Color
-$val4 	= GETPOST('value4','alpha') ? GETPOST('value4','alpha') : $val4; // 4 Boxes
-$val7 	= GETPOST('value7','alpha') ? GETPOST('value7','alpha') : $val7; // Company Name
-$val5 	= GETPOST('value5','alpha') ? GETPOST('value5','alpha') : $val5; // Login Image
-
-$val8 	= GETPOST('value8','alpha') ? GETPOST('value8','alpha') : 'tiers'; // First Box
-$val9 	= GETPOST('value9','alpha') ? GETPOST('value9','alpha') : 'projets'; // Second Box
-$val10 	= GETPOST('value10','alpha') ? GETPOST('value10','alpha') : 'devis'; // Third Box
-$val11 	= GETPOST('value11','alpha') ? GETPOST('value11','alpha') : 'factures'; // Fourth Box
-
-$val8c 	= GETPOST('value8c','alpha') ? GETPOST('value8c','alpha') : 'indigo-400'; // Color First Box
-$val9c 	= GETPOST('value9c','alpha') ? GETPOST('value9c','alpha') : 'green-300'; // Color Second Box
-$val10c = GETPOST('value10c','alpha') ? GETPOST('value10c','alpha') : 'purple-300'; // Color Third Box
-$val11c = GETPOST('value11c','alpha') ? GETPOST('value11c','alpha') : 'amber-600'; // Color Fourth Box
-
+$val1 = GETPOST('value1','alpha') ? GETPOST('value1','alpha') : $val1;
+$val2 = GETPOST('value2','alpha') ? GETPOST('value2','alpha') : $val2;
+$val3 = GETPOST('value3','alpha') ? GETPOST('value3','alpha') : $val3;
+$val6 = GETPOST('value6','alpha') ? GETPOST('value6','alpha') : $val6;
+$val4 = GETPOST('value4','alpha') ? GETPOST('value4','alpha') : $val4;
+$val7 = GETPOST('value7','alpha') ? GETPOST('value7','alpha') : $val7;
+$val5 = GETPOST('value5','alpha') ? GETPOST('value5','alpha') : $val5;
+$val8 = GETPOST('value8','alpha') ? GETPOST('value8','alpha') : 'tiers';
+$val9 = GETPOST('value9','alpha') ? GETPOST('value9','alpha') : 'projets';
+$val10 = GETPOST('value10','alpha') ? GETPOST('value10','alpha') : 'devis';
+$val11 = GETPOST('value11','alpha') ? GETPOST('value11','alpha') : 'factures';
+$val8c = GETPOST('value8c','alpha') ? GETPOST('value8c','alpha') : 'indigo-400';
+$val9c = GETPOST('value9c','alpha') ? GETPOST('value9c','alpha') : 'green-300';
+$val10c = GETPOST('value10c','alpha') ? GETPOST('value10c','alpha') : 'purple-300';
+$val11c = GETPOST('value11c','alpha') ? GETPOST('value11c','alpha') : 'amber-600';
 $valcss = '';
 
-// if($val5 < 1 || $val5 > 5) $val5 = 1;
 $arr = explode(".", $val5);
 if(empty($val5) || count($arr) <= 1) $val5 = 'revolutionprologin1.jpg';
 
-
-if ($action == 'update') { 
-	$val2 = GETPOST('value2','alpha') ? GETPOST('value2','alpha') : 'notinverse'; // Navbar Type
+// ── Original update action ──
+if ($action == 'update') {
+	$val2 = GETPOST('value2','alpha') ? GETPOST('value2','alpha') : 'notinverse';
    	dolibarr_set_const($db, "MAIN_HOME", dol_htmlcleanlastbr(GETPOST("main_home", 'none')), 'chaine', 0, '', $conf->entity);
-
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUECSS", dol_htmlcleanlastbr(GETPOST("valuecss", 'none')), 'chaine', 0, '', $conf->entity);
-} 
-
-if ($action == 'update' || $action == 'defaultparameters') { 
+}
+if ($action == 'update' || $action == 'defaultparameters') {
  	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE1", $val1,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE2", $val2,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE3", $val3,'chaine',0,'',$conf->entity);
@@ -109,51 +155,197 @@ if ($action == 'update' || $action == 'defaultparameters') {
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE4", $val4,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE7", $val7,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE5", $val5,'chaine',0,'',$conf->entity);
-
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE8", $val8,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE9", $val9,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE10", $val10,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE11", $val11,'chaine',0,'',$conf->entity);
-
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE8C", $val8c,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE9C", $val9c,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE10C", $val10c,'chaine',0,'',$conf->entity);
    	dolibarr_set_const($db, "REVOLUTIONPRO_PARAMETRES_VALUE11C", $val11c,'chaine',0,'',$conf->entity);
-} 
+}
 
+// ── Action: Save Icons ──
+if ($action === 'saveicons') {
+    $iconKeys = GETPOST('icon_keys', 'array');
+    $errCount = 0;
+    if (is_array($iconKeys)) {
+        foreach ($iconKeys as $key) {
+            $key = $db->escape($key);
+            $faIcon      = $db->escape(GETPOST('fa_'.$key, 'alphanohtml'));
+            $customLabel = $db->escape(GETPOST('label_'.$key, 'alphanohtml'));
+            $isHidden    = GETPOST('hidden_'.$key, 'int') ? 1 : 0;
+            $sql_upd = "UPDATE ".MAIN_DB_PREFIX."revolutionpro_config SET fa_icon='".$faIcon."', custom_label='".$customLabel."', is_hidden=".$isHidden." WHERE menu_key='".$key."' AND entity=1";
+            if (!$db->query($sql_upd)) { $errCount++; }
+        }
+    }
+    $mesg = $errCount === 0
+        ? '<div class="ok">✅ Icons saved! Reload the app (Ctrl+Shift+R) to see changes.</div>'
+        : '<div class="error">❌ '.$errCount.' icon(s) could not be saved.</div>';
+}
 
+// ── Action: Save visibility (menus, admin tools, module tabs) ──
+if (in_array($action, array('savemenus','saveadmintools','savemoduletabs'))) {
+    $cssFile = __DIR__ . '/flavorpro_hidden.css';
+    $existingContent = file_exists($cssFile) ? file_get_contents($cssFile) : '';
+
+    $sections = array('menus' => '', 'admintools' => '', 'moduletabs' => '');
+    if (preg_match('/\/\* SECTION: MENUS \*\/(.*?)\/\* END: MENUS \*\//s', $existingContent, $m)) $sections['menus'] = $m[1];
+    if (preg_match('/\/\* SECTION: ADMINTOOLS \*\/(.*?)\/\* END: ADMINTOOLS \*\//s', $existingContent, $m)) $sections['admintools'] = $m[1];
+    if (preg_match('/\/\* SECTION: MODULETABS \*\/(.*?)\/\* END: MODULETABS \*\//s', $existingContent, $m)) $sections['moduletabs'] = $m[1];
+
+    if ($action === 'savemenus') {
+        $sections['menus'] = "\n";
+        foreach ($availableMenus as $key => $menu) {
+            if (GETPOST('hide_'.$key, 'alpha')) {
+                $sections['menus'] .= "#mainmenutd_{$key}, .menu_contenu[id*=\"{$key}\"], div.vmenu div[id*=\"{$key}\"], li.tmenu[data-mainmenu=\"{$key}\"], div.mainmenu.{$key} { display: none !important; }\n";
+            }
+        }
+    }
+    if ($action === 'saveadmintools') {
+        $sections['admintools'] = "\n";
+        foreach ($adminToolsSubmenus as $key => $item) {
+            if (GETPOST('hide_at_'.$key, 'alpha')) {
+                $sections['admintools'] .= "{$item['css']} { display: none !important; }\n";
+            }
+        }
+    }
+    if ($action === 'savemoduletabs') {
+        $sections['moduletabs'] = "\n";
+        foreach ($moduleTabs as $key => $tab) {
+            if (GETPOST('hide_mt_'.$key, 'alpha')) {
+                $sections['moduletabs'] .= "{$tab['css']} { display: none !important; }\n";
+            }
+        }
+    }
+
+    $cssContent  = "/* Auto-generated by Flavor Pro Setup — ".date('Y-m-d H:i:s')." */\n\n";
+    $cssContent .= "/* SECTION: MENUS */".$sections['menus']."/* END: MENUS */\n\n";
+    $cssContent .= "/* SECTION: ADMINTOOLS */".$sections['admintools']."/* END: ADMINTOOLS */\n\n";
+    $cssContent .= "/* SECTION: MODULETABS */".$sections['moduletabs']."/* END: MODULETABS */\n";
+
+    if (file_put_contents($cssFile, $cssContent) !== false) {
+        $mesg = '<div class="ok">✅ Visibility settings saved! Changes are active immediately.</div>';
+    } else {
+        $mesg = '<div class="error">❌ Could not write flavorpro_hidden.css. Check permissions.</div>';
+    }
+}
+
+// ── Action: Lock ──
+if ($action === 'lock') {
+    if (file_put_contents(__DIR__ . '/flavorpro.lock', 'Locked on '.date('Y-m-d H:i:s').' by '.$user->login) !== false) {
+        $mesg = '<div class="ok">🔒 Setup locked! Delete <code>flavorpro.lock</code> to unlock.</div>';
+    } else {
+        $mesg = '<div class="error">❌ Could not create lock file.</div>';
+    }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Read current state
+// ──────────────────────────────────────────────────────────────────────────────
 $object = new revolutionpro($db);
-
-// Get settings
-$val1 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 : $val1;
-$val2 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 : $val2;
-$val3 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : $val3;
-$val6 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 : $val6;
-$val4 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : $val4;
-$val7 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 : $val7;
-$val5 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5 : $val5;
-
-$val8 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : $val8;
-$val9 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : $val9;
-$val10 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : $val10;
-$val11 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : $val11;
-
-$val8c 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C : $val8c;
-$val9c 	= !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C : $val9c;
+$val1 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE1 : $val1;
+$val2 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE2 : $val2;
+$val3 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE3 : $val3;
+$val6 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE6 : $val6;
+$val4 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE4 : $val4;
+$val7 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE7 : $val7;
+$val5 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE5 : $val5;
+$val8 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8 : $val8;
+$val9 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9 : $val9;
+$val10 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10 : $val10;
+$val11 = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11 : $val11;
+$val8c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE8C : $val8c;
+$val9c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE9C : $val9c;
 $val10c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE10C : $val10c;
 $val11c = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C) ? $conf->global->REVOLUTIONPRO_PARAMETRES_VALUE11C : $val11c;
-
 $valcss = $object->parametrevalcss ? $object->parametrevalcss : $valcss;
 
 $arr = explode(".", $val5);
 if(empty($val5) || count($arr) <= 1) $val5 = 'revolutionprologin1.jpg';
 
-// $object->id = 1;
+// ── Read icon configuration from llx_revolutionpro_config ──
+$iconConfig = array();
+$sql_icons = "SELECT menu_key, fa_icon, custom_label, is_hidden, sort_order FROM ".MAIN_DB_PREFIX."revolutionpro_config WHERE entity=1 ORDER BY sort_order ASC";
+$resql = $db->query($sql_icons);
+if ($resql) {
+    while ($obj = $db->fetch_object($resql)) {
+        $iconConfig[$obj->menu_key] = array(
+            'fa_icon'      => $obj->fa_icon,
+            'custom_label' => $obj->custom_label,
+            'is_hidden'    => (int) $obj->is_hidden,
+            'sort_order'   => (int) $obj->sort_order,
+        );
+    }
+}
+
+// ── Pre-seed native menus ──
+$nativeSort = 10;
+foreach ($availableMenus as $nativeKey => $nativeMenu) {
+    if (!isset($iconConfig[$nativeKey])) {
+        $icon  = isset($nativeDefaults[$nativeKey]) ? $nativeDefaults[$nativeKey][0] : 'fas fa-layer-group';
+        $label = isset($nativeDefaults[$nativeKey]) ? $nativeDefaults[$nativeKey][1] : ucfirst($nativeKey);
+        $safeMk    = $db->escape($nativeKey);
+        $safeIcon  = $db->escape($icon);
+        $safeLabel = $db->escape($label);
+        $db->query("INSERT INTO ".MAIN_DB_PREFIX."revolutionpro_config (menu_key, fa_icon, custom_label, sort_order, entity) VALUES ('".$safeMk."', '".$safeIcon."', '".$safeLabel."', ".$nativeSort.", 1)");
+        $iconConfig[$nativeKey] = array('fa_icon' => $icon, 'custom_label' => $label, 'is_hidden' => 0, 'sort_order' => $nativeSort);
+    }
+    $nativeSort += 10;
+}
+
+// ── Auto-detect module menus from llx_menu ──
+$moduleIconDefaults = array(
+    'agenda' => array('fas fa-calendar-check', 'Agenda'), 'billing' => array('fas fa-file-invoice', 'Billing'),
+    'ecm' => array('fas fa-folder-open', 'Documents'), 'mrp' => array('fas fa-industry', 'Manufacturing'),
+    'takepos' => array('fas fa-cash-register', 'TakePOS'), 'website' => array('fas fa-globe-americas', 'Website'),
+    'recruitment' => array('fas fa-user-plus', 'Recruitment'), 'holiday' => array('fas fa-umbrella-beach', 'Holidays'),
+    'expensereport' => array('fas fa-money-check-alt', 'Expenses'), 'don' => array('fas fa-hand-holding-heart', 'Donations'),
+    'loan' => array('fas fa-piggy-bank', 'Loans'), 'contracts' => array('fas fa-file-signature', 'Contracts'),
+    'shipping' => array('fas fa-shipping-fast', 'Shipments'), 'stock' => array('fas fa-warehouse', 'Stock'),
+);
+
+$sql_menus = "SELECT DISTINCT mainmenu FROM ".MAIN_DB_PREFIX."menu WHERE mainmenu != '' AND entity IN (0,1) ORDER BY mainmenu";
+$resql = $db->query($sql_menus);
+if ($resql) {
+    $maxSort = count($iconConfig) * 10 + 10;
+    while ($obj = $db->fetch_object($resql)) {
+        $mk = $obj->mainmenu;
+        if (!isset($iconConfig[$mk])) {
+            $autoIcon  = isset($moduleIconDefaults[$mk]) ? $moduleIconDefaults[$mk][0] : 'fas fa-layer-group';
+            $autoLabel = isset($moduleIconDefaults[$mk]) ? $moduleIconDefaults[$mk][1] : ucfirst($mk);
+            $safeMk    = $db->escape($mk);
+            $safeIcon  = $db->escape($autoIcon);
+            $safeLabel = $db->escape($autoLabel);
+            $db->query("INSERT INTO ".MAIN_DB_PREFIX."revolutionpro_config (menu_key, fa_icon, custom_label, sort_order, entity) VALUES ('".$safeMk."', '".$safeIcon."', '".$safeLabel."', ".$maxSort.", 1)");
+            $iconConfig[$mk] = array('fa_icon' => $autoIcon, 'custom_label' => $autoLabel, 'is_hidden' => 0, 'sort_order' => $maxSort);
+            $maxSort += 10;
+        }
+    }
+}
+
+// ── Read hidden items from CSS file ──
+$currentlyHidden = array();
+$currentlyHiddenAT = array();
+$currentlyHiddenMT = array();
+$cssFile = __DIR__ . '/flavorpro_hidden.css';
+if (file_exists($cssFile)) {
+    $content = file_get_contents($cssFile);
+    foreach ($availableMenus as $key => $menu) {
+        if (strpos($content, '#mainmenutd_'.$key) !== false) $currentlyHidden[$key] = true;
+    }
+    foreach ($adminToolsSubmenus as $key => $item) {
+        if (strpos($content, $item['css']) !== false) $currentlyHiddenAT[$key] = true;
+    }
+    foreach ($moduleTabs as $key => $tab) {
+        if (strpos($content, $tab['css']) !== false) $currentlyHiddenMT[$key] = true;
+    }
+}
+
+// ── File upload setup for login images ──
 $sortfield = GETPOST("sortfield", 'alpha');
 $sortorder = GETPOST("sortorder", 'alpha');
-
-$permissiontoadd 	= $user->admin;
-
+$permissiontoadd = $user->admin;
 $upload_dir = $conf->mycompany->dir_output."/logos/login/1";
 $relativepathwithnofile = "/logos/login/1/";
 $permissiontoadd = 1;
@@ -162,464 +354,94 @@ include_once DOL_DOCUMENT_ROOT.'/core/actions_linkedfiles.inc.php';
 global $user,$conf;
 $form = new Form($db);
 $filearray = dol_dir_list($upload_dir, "files", 0, '', '(\.meta|_preview.*\.png)$', $sortfield, (strtolower($sortorder) == 'desc' ?SORT_DESC:SORT_ASC), 1);
-$relativepathwithnofile = "/logos/login/1/";
-// $modulepart = 'revolutionpro';
 $modulepart = 'mycompany';
 $permission = $user->admin;
 $permtoedit = $user->admin;
 $param = '';
 
-
-/*
- * View
- */
+// ──────────────────────────────────────────────────────────────────────────────
+// VIEW
+// ──────────────────────────────────────────────────────────────────────────────
 $pagen = "RevolutionproSetup";
 llxHeader('', $langs->trans($pagen),'','','','', array(),'' );
 
-// Subheader
-$linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'	. $langs->trans("BackToModuleList") . '</a>';
+$linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans("BackToModuleList") . '</a>';
 print_fiche_titre($langs->trans($pagen), $linkback);
 
-// Configuration header
 $head = revolutionpro_admin_prepare_head();
-dol_fiche_head(
-	$head,
-	'settings',
-	$langs->trans("Module940326081Name"),
-	0,
-	"revolutionpro@revolutionpro"
-);
+dol_fiche_head($head, 'settings', $langs->trans("Module940326081Name"), 0, "revolutionpro@revolutionpro");
 
 dol_htmloutput_mesg($mesg);
 
-
-
 print '<form id="settingrevopro" method="post" action="setup.php">';
-
 print '<div id="settingrevolutionprotheme">';
 print '<input type="hidden" name="token" value="'.newToken().'">';
 print '<input type="hidden" name="action" value="update">';
 print '<div class="nav-tabs-horizontal">';
 print '<ul role="tablist" class="nav nav-tabs nav-tabs-line">';
-	print '<li class="nav-item revoprocolors"><a class="nav-link active show" role="tab" aria-controls="revoprocolors" href="#revoprocolors" data-toggle="tab" aria-expanded="true" aria-selected="true">'.$langs->trans('Colors').'</a></li>';
-	print '<li class="nav-item revoprofourboxcontent"><a class="nav-link" role="tab" aria-controls="revoprofourboxcontent" href="#revoprofourboxcontent" data-toggle="tab" aria-expanded="true" aria-selected="true">'.$langs->trans('RevolutionProFourBoxesContent').'</a></li>';
-	print '<li class="nav-item revoprofourbox"><a class="nav-link" role="tab" aria-controls="revoprofourbox" href="#revoprofourbox" data-toggle="tab" aria-expanded="true" aria-selected="true">'.$langs->trans('RevolutionProFourBoxes').'</a></li>';
-	print '<li class="nav-item revoprologin"><a class="nav-link" role="tab" aria-controls="revoprologin" href="#revoprologin" data-toggle="tab" aria-expanded="true" aria-selected="true">'.$langs->trans('LoginPage').'</a></li>';
-	print '<li class="nav-item revoproCSSaddi"><a class="nav-link" role="tab" aria-controls="revoproCSSaddi" href="#revoproCSSaddi" data-toggle="tab" aria-expanded="true" aria-selected="true">'.$langs->trans('CSS additionnel').'</a></li>';
+	// Original tabs
+	print '<li class="nav-item revoprocolors"><a class="nav-link active show" role="tab" href="#revoprocolors" data-toggle="tab">'.$langs->trans('Colors').'</a></li>';
+	print '<li class="nav-item revoprofourboxcontent"><a class="nav-link" role="tab" href="#revoprofourboxcontent" data-toggle="tab">'.$langs->trans('RevolutionProFourBoxesContent').'</a></li>';
+	print '<li class="nav-item revoprofourbox"><a class="nav-link" role="tab" href="#revoprofourbox" data-toggle="tab">'.$langs->trans('RevolutionProFourBoxes').'</a></li>';
+	print '<li class="nav-item revoprologin"><a class="nav-link" role="tab" href="#revoprologin" data-toggle="tab">'.$langs->trans('LoginPage').'</a></li>';
+	print '<li class="nav-item revoproCSSaddi"><a class="nav-link" role="tab" href="#revoproCSSaddi" data-toggle="tab">'.$langs->trans('CSS additionnel').'</a></li>';
+	// New tabs
+	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproIcons" data-toggle="tab">🎯 Icon Manager</a></li>';
+	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproMenus" data-toggle="tab">📋 Menu Manager</a></li>';
+	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproAdminTools" data-toggle="tab">🛠️ Admin Tools</a></li>';
+	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproModuleTabs" data-toggle="tab">🧩 Module Tabs</a></li>';
 print '</ul>';
-
 print '<div class="tab-content">';
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// ORIGINAL TAB: COLORS (kept exactly as before)
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_colors.php';
 
-// COLORS
-print '<div role="tabpanel" id="revoprocolors" class="tab-pane active show">';
-print '<div class="site-skintools2">';
-	print '<div class="site-skintools2-inner">';
-	print '<div class="site-skintools2-content">';
-	print '<div class="nav-tabs-horizontal">';
+// ═══════════════════════════════════════════════════════════════════════════════
+// ORIGINAL TAB: FOUR BOX CONTENT
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_fourboxcontent.php';
 
-	print '<div class="tab-content">';
-	print '<table class="tableconfigurationrevopro">';
-	print '<tr>';
-		print '<td>';
-			print '<div>';
-			print '<h4 class="site-skintools2-title">Sidebar Skins</h4>';
-			$chd = ''; if($val1 == 'dark') $chd = 'checked';
-			print '<div class="radio-custom radio-dark"><input id="skintoolsSidebar2-dark" type="radio" name="value1" '.$chd.' value="dark"><label for="skintoolsSidebar2-dark">dark</label></div>';
-			$chd = ''; if($val1 == 'light') $chd = 'checked';
-			print '<div class="radio-custom radio-light"><input id="skintoolsSidebar2-light" type="radio" name="value1" '.$chd.' value="light"><label for="skintoolsSidebar2-light">light</label></div>';
-			print '</div>';
-		print '</td>';
+// ═══════════════════════════════════════════════════════════════════════════════
+// ORIGINAL TAB: SHOW & HIDE
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_fourbox.php';
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// ORIGINAL TAB: LOGIN PAGE
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_login.php';
 
-		print '<td>';
-			print '<div>';
-				print '<h4 class="site-skintools2-title">Navbar Type</h4>';
-				$chd = ''; if($val2 == 'inverse') $chd = 'checked';
-				print '<div class="checkbox-custom checkbox-inverse"><input id="skintoolsNavbar2-inverse" type="checkbox" name="value2" '.$chd.' value="inverse"><label for="skintoolsNavbar2-inverse">inverse</label></div>';
-		print '</td>';
-	print '</tr>';
+// ═══════════════════════════════════════════════════════════════════════════════
+// ORIGINAL TAB: CSS ADDITIONNEL
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_css.php';
 
-	print '<tr>';
-		print '<td colspan="2" id="colornavbar">';
-			print '<div>';
-				$chd = '';
-				print '<h4 class="site-skintools2-title">Navbar Skins</h4>';
-				$chd = ''; if($val3 == 'primary') $chd = 'checked';
-				print '<div class="radio-custom radio-primary"><input id="skintoolsNavbar2-primary" type="radio" name="value3" '.$chd.' value="primary"><label for="skintoolsNavbar2-primary">primary</label></div>';
-				$chd = ''; if($val3 == 'blue') $chd = 'checked';
-				print '<div class="radio-custom radio-blue"><input id="skintoolsNavbar2-blue" type="radio" name="value3" '.$chd.' value="blue"><label for="skintoolsNavbar2-blue">blue</label></div>';
-				$chd = ''; if($val3 == 'brown') $chd = 'checked';
-				print '<div class="radio-custom radio-brown"><input id="skintoolsNavbar2-brown" type="radio" name="value3" '.$chd.' value="brown"><label for="skintoolsNavbar2-brown">brown</label></div>';
-				$chd = ''; if($val3 == 'cyan') $chd = 'checked';
-				print '<div class="radio-custom radio-cyan"><input id="skintoolsNavbar2-cyan" type="radio" name="value3" '.$chd.' value="cyan"><label for="skintoolsNavbar2-cyan">cyan</label></div>';
-				$chd = ''; if($val3 == 'green') $chd = 'checked';
-				print '<div class="radio-custom radio-green"><input id="skintoolsNavbar2-green" type="radio" name="value3" '.$chd.' value="green"><label for="skintoolsNavbar2-green">green</label></div>';
-				$chd = ''; if($val3 == 'grey') $chd = 'checked';
-				print '<div class="radio-custom radio-grey"><input id="skintoolsNavbar2-grey" type="radio" name="value3" '.$chd.' value="grey"><label for="skintoolsNavbar2-grey">grey</label></div>';
-				$chd = ''; if($val3 == 'orange') $chd = 'checked';
-				print '<div class="radio-custom radio-orange"><input id="skintoolsNavbar2-orange" type="radio" name="value3" '.$chd.' value="orange"><label for="skintoolsNavbar2-orange">orange</label></div>';
-				$chd = ''; if($val3 == 'pink') $chd = 'checked';
-				print '<div class="radio-custom radio-pink"><input id="skintoolsNavbar2-pink" type="radio" name="value3" '.$chd.' value="pink"><label for="skintoolsNavbar2-pink">pink</label></div>';
-				$chd = ''; if($val3 == 'purple') $chd = 'checked';
-				print '<div class="radio-custom radio-purple"><input id="skintoolsNavbar2-purple" type="radio" name="value3" '.$chd.' value="purple"><label for="skintoolsNavbar2-purple">purple</label></div>';
-				$chd = ''; if($val3 == 'red') $chd = 'checked';
-				print '<div class="radio-custom radio-red"><input id="skintoolsNavbar2-red" type="radio" name="value3" '.$chd.' value="red"><label for="skintoolsNavbar2-red">red</label></div>';
-				$chd = ''; if($val3 == 'teal') $chd = 'checked';
-				print '<div class="radio-custom radio-teal"><input id="skintoolsNavbar2-teal" type="radio" name="value3" '.$chd.' value="teal"><label for="skintoolsNavbar2-teal">teal</label></div>';
-				$chd = ''; if($val3 == 'yellow') $chd = 'checked';
-				print '<div class="radio-custom radio-yellow"><input id="skintoolsNavbar2-yellow" type="radio" name="value3" '.$chd.' value="yellow"><label for="skintoolsNavbar2-yellow">yellow</label></div>';
-			print '</div>';
-		print '<td>';
-	print '</tr>';
+// ═══════════════════════════════════════════════════════════════════════════════
+// NEW TAB: ICON MANAGER
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_icons.php';
 
-	print '<tr>';
-		print '<td colspan="2" id="colorbuttons">';
-			print '<div>';
-				$chd = '';
-				print '<h4 class="site-skintools2-title">Buttons Color</h4>';
-				$chd = ''; if($val6 == 'primary') $chd = 'checked';
-				print '<div class="radio-custom radio-primary"><input id="skintoolsNavbar3-primary" type="radio" name="value6" '.$chd.' value="primary"><label for="skintoolsNavbar3-primary">primary</label></div>';
-				$chd = ''; if($val6 == 'blue') $chd = 'checked';
-				print '<div class="radio-custom radio-blue"><input id="skintoolsNavbar3-blue" type="radio" name="value6" '.$chd.' value="blue"><label for="skintoolsNavbar3-blue">blue</label></div>';
-				$chd = ''; if($val6 == 'brown') $chd = 'checked';
-				print '<div class="radio-custom radio-brown"><input id="skintoolsNavbar3-brown" type="radio" name="value6" '.$chd.' value="brown"><label for="skintoolsNavbar3-brown">brown</label></div>';
-				$chd = ''; if($val6 == 'cyan') $chd = 'checked';
-				print '<div class="radio-custom radio-cyan"><input id="skintoolsNavbar3-cyan" type="radio" name="value6" '.$chd.' value="cyan"><label for="skintoolsNavbar3-cyan">cyan</label></div>';
-				$chd = ''; if($val6 == 'green') $chd = 'checked';
-				print '<div class="radio-custom radio-green"><input id="skintoolsNavbar3-green" type="radio" name="value6" '.$chd.' value="green"><label for="skintoolsNavbar3-green">green</label></div>';
-				$chd = ''; if($val6 == 'grey') $chd = 'checked';
-				print '<div class="radio-custom radio-grey"><input id="skintoolsNavbar3-grey" type="radio" name="value6" '.$chd.' value="grey"><label for="skintoolsNavbar3-grey">grey</label></div>';
-				$chd = ''; if($val6 == 'orange') $chd = 'checked';
-				print '<div class="radio-custom radio-orange"><input id="skintoolsNavbar3-orange" type="radio" name="value6" '.$chd.' value="orange"><label for="skintoolsNavbar3-orange">orange</label></div>';
-				$chd = ''; if($val6 == 'pink') $chd = 'checked';
-				print '<div class="radio-custom radio-pink"><input id="skintoolsNavbar3-pink" type="radio" name="value6" '.$chd.' value="pink"><label for="skintoolsNavbar3-pink">pink</label></div>';
-				$chd = ''; if($val6 == 'purple') $chd = 'checked';
-				print '<div class="radio-custom radio-purple"><input id="skintoolsNavbar3-purple" type="radio" name="value6" '.$chd.' value="purple"><label for="skintoolsNavbar3-purple">purple</label></div>';
-				$chd = ''; if($val6 == 'red') $chd = 'checked';
-				print '<div class="radio-custom radio-red"><input id="skintoolsNavbar3-red" type="radio" name="value6" '.$chd.' value="red"><label for="skintoolsNavbar3-red">red</label></div>';
-				$chd = ''; if($val6 == 'teal') $chd = 'checked';
-				print '<div class="radio-custom radio-teal"><input id="skintoolsNavbar3-teal" type="radio" name="value6" '.$chd.' value="teal"><label for="skintoolsNavbar3-teal">teal</label></div>';
-				$chd = ''; if($val6 == 'yellow') $chd = 'checked';
-				print '<div class="radio-custom radio-yellow"><input id="skintoolsNavbar3-yellow" type="radio" name="value6" '.$chd.' value="yellow"><label for="skintoolsNavbar3-yellow">yellow</label></div>';
-			print '</div>';
-		print '<td>';
-	print '</tr>';
-	print '</table>';
-	print '</div>';
+// ═══════════════════════════════════════════════════════════════════════════════
+// NEW TAB: MENU MANAGER
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_menus.php';
 
-	print '</div>';
-	print '</div>';
-	print '</div>';
-print '</div>';
-print '</div>';
+// ═══════════════════════════════════════════════════════════════════════════════
+// NEW TAB: ADMIN TOOLS
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_admintools.php';
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// NEW TAB: MODULE TABS
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_moduletabs.php';
 
-// FOUR BOXE CONTENT
-print '<div role="tabpanel" id="revoprofourboxcontent" class="tab-pane ">';
-print '<div class="site-skintools2" >';
-	print '<div class="site-skintools2-inner">';
-	print '<div class="site-skintools2-content" style="min-height: initial !important;">';
-	print '<div class="nav-tabs-horizontal">';
+print '</div>'; // tab-content
+print '</div>'; // nav-tabs-horizontal
 
-	print '<div class="tab-content">';
-	print '<br>';
-	print '<table class="tableconfigurationrevopro tagtable liste">';
-	print '<tr class="oddeven firstbox">';
-		print '<td>'.$langs->trans('RevolutionProfirstbox').'</td>';
-		print '<td>';
-		print $object->selectFourBoxContent($val8, 'value8');
-		print '<div class="radiocolorfourboxcontent">';
-			$chd = ''; if($val8c == 'indigo-400') $chd = 'checked';
-			print '<div class="radio-custom radio-indigo-400"><input id="box-value8c-indigo-400" type="radio" name="value8c" '.$chd.' value="indigo-400"><label for="box-value8c-indigo-400"> </label></div>';
-			$chd = ''; if($val8c == 'green-300') $chd = 'checked';
-			print '<div class="radio-custom radio-green-300"><input id="box-value8c-green-300" type="radio" name="value8c" '.$chd.' value="green-300"><label for="box-value8c-green-300"> </label></div>';
-			$chd = ''; if($val8c == 'purple-300') $chd = 'checked';
-			print '<div class="radio-custom radio-purple-300"><input id="box-value8c-purple-300" type="radio" name="value8c" '.$chd.' value="purple-300"><label for="box-value8c-purple-300"> </label></div>';
-			$chd = ''; if($val8c == 'amber-600') $chd = 'checked';
-			print '<div class="radio-custom radio-amber-600"><input id="box-value8c-amber-600" type="radio" name="value8c" '.$chd.' value="amber-600"><label for="box-value8c-amber-600"> </label></div>';
-		print '</div>';
-		print '</td>';
-	print '</tr>';
-	print '<tr class="oddeven secondbox">';
-		print '<td>'.$langs->trans('RevolutionProsecondtbox').'</td>';
-		print '<td>';
-		print $object->selectFourBoxContent($val9, 'value9');
-		print '<div class="radiocolorfourboxcontent">';
-			$chd = ''; if($val9c == 'indigo-400') $chd = 'checked';
-			print '<div class="radio-custom radio-indigo-400"><input id="box-value9c-indigo-400" type="radio" name="value9c" '.$chd.' value="indigo-400"><label for="box-value9c-indigo-400"> </label></div>';
-			$chd = ''; if($val9c == 'green-300') $chd = 'checked';
-			print '<div class="radio-custom radio-green-300"><input id="box-value9c-green-300" type="radio" name="value9c" '.$chd.' value="green-300"><label for="box-value9c-green-300"> </label></div>';
-			$chd = ''; if($val9c == 'purple-300') $chd = 'checked';
-			print '<div class="radio-custom radio-purple-300"><input id="box-value9c-purple-300" type="radio" name="value9c" '.$chd.' value="purple-300"><label for="box-value9c-purple-300"> </label></div>';
-			$chd = ''; if($val9c == 'amber-600') $chd = 'checked';
-			print '<div class="radio-custom radio-amber-600"><input id="box-value9c-amber-600" type="radio" name="value9c" '.$chd.' value="amber-600"><label for="box-value9c-amber-600"> </label></div>';
-		print '</div>';
-		print '</td>';
-	print '</tr>';	
-	print '<tr class="oddeven thirdbox">';
-		print '<td>'.$langs->trans('RevolutionProthirdbox').'</td>';
-		print '<td>';
-		print $object->selectFourBoxContent($val10, 'value10');
-		print '<div class="radiocolorfourboxcontent">';
-			$chd = ''; if($val10c == 'indigo-400') $chd = 'checked';
-			print '<div class="radio-custom radio-indigo-400"><input id="box-value10c-indigo-400" type="radio" name="value10c" '.$chd.' value="indigo-400"><label for="box-value10c-indigo-400"> </label></div>';
-			$chd = ''; if($val10c == 'green-300') $chd = 'checked';
-			print '<div class="radio-custom radio-green-300"><input id="box-value10c-green-300" type="radio" name="value10c" '.$chd.' value="green-300"><label for="box-value10c-green-300"> </label></div>';
-			$chd = ''; if($val10c == 'purple-300') $chd = 'checked';
-			print '<div class="radio-custom radio-purple-300"><input id="box-value10c-purple-300" type="radio" name="value10c" '.$chd.' value="purple-300"><label for="box-value10c-purple-300"> </label></div>';
-			$chd = ''; if($val10c == 'amber-600') $chd = 'checked';
-			print '<div class="radio-custom radio-amber-600"><input id="box-value10c-amber-600" type="radio" name="value10c" '.$chd.' value="amber-600"><label for="box-value10c-amber-600"> </label></div>';
-		print '</div>';
-		print '</td>';
-	print '</tr>';	
-	print '<tr class="oddeven fourthbox">';
-		print '<td>'.$langs->trans('RevolutionProfourthbox').'</td>';
-		print '<td>';
-		print $object->selectFourBoxContent($val11, 'value11');
-		print '<div class="radiocolorfourboxcontent">';
-			$chd = ''; if($val11c == 'indigo-400') $chd = 'checked';
-			print '<div class="radio-custom radio-indigo-400"><input id="box-value11c-indigo-400" type="radio" name="value11c" '.$chd.' value="indigo-400"><label for="box-value11c-indigo-400"> </label></div>';
-			$chd = ''; if($val11c == 'green-300') $chd = 'checked';
-			print '<div class="radio-custom radio-green-300"><input id="box-value11c-green-300" type="radio" name="value11c" '.$chd.' value="green-300"><label for="box-value11c-green-300"> </label></div>';
-			$chd = ''; if($val11c == 'purple-300') $chd = 'checked';
-			print '<div class="radio-custom radio-purple-300"><input id="box-value11c-purple-300" type="radio" name="value11c" '.$chd.' value="purple-300"><label for="box-value11c-purple-300"> </label></div>';
-			$chd = ''; if($val11c == 'amber-600') $chd = 'checked';
-			print '<div class="radio-custom radio-amber-600"><input id="box-value11c-amber-600" type="radio" name="value11c" '.$chd.' value="amber-600"><label for="box-value11c-amber-600"> </label></div>';
-		print '</div>';
-		print '</td>';
-	print '</tr>';	
-	print '</table>';
-	print '</div>';
-
-	print '</div>';
-	print '</div>';
-	print '</div>';
-print '</div>';
-print '</div>';
-
-
-// SHOW & HIDE
-print '<div role="tabpanel" id="revoprofourbox" class="tab-pane ">';
-print '<div class="site-skintools2" >';
-	print '<div class="site-skintools2-inner">';
-	print '<div class="site-skintools2-content" style="min-height: initial !important;">';
-	print '<div class="nav-tabs-horizontal">';
-
-	print '<div class="tab-content">';
-	print '<table class="tableconfigurationrevopro">';
-	print '<tr>';
-
-		print '<td class="revolproshowhiditems" id="showorhidefourboxes">';
-			print '<br>';
-			$chd = ''; if($val4 == 'show') $chd = 'checked';
-			print '<div class="radio-custom radio-green"><input id="fourboxes-show" type="radio" name="value4" value="show" '.$chd.'><label for="fourboxes-show">'.$langs->trans('RevolutionProFourBoxesShow').'</label></div>';
-			$chd = ''; if($val4 == 'hide') $chd = 'checked';
-			print '<div class="radio-custom radio-red"><input id="fourboxes-hide" type="radio" name="value4" value="hide" '.$chd.'><label for="fourboxes-hide">'.$langs->trans('RevolutionProFourBoxesHide').'</label></div>';
-		print '</td>';
-
-	print '</tr>';
-	print '<tr>';
-
-		print '<td class="revolproshowhiditems" id="showorhidecompanyname">';
-			print '<br>';
-			$chd = ''; if($val7 == 'show') $chd = 'checked';
-			print '<div class="radio-custom radio-green"><input id="fourcompanyname-show" type="radio" name="value7" value="show" '.$chd.'><label for="fourcompanyname-show">'.$langs->trans('RevolutionProFourCompanynameShow').'</label></div>';
-			$chd = ''; if($val7 == 'hide') $chd = 'checked';
-			print '<div class="radio-custom radio-red"><input id="fourcompanyname-hide" type="radio" name="value7" value="hide" '.$chd.'><label for="fourcompanyname-hide">'.$langs->trans('RevolutionProFourCompanynameHide').'</label></div>';
-		print '</td>';
-
-	print '</tr>';	
-
-	print '</table>';
-	print '</div>';
-
-	print '</div>';
-	print '</div>';
-	print '</div>';
-print '</div>';
-print '</div>';
-
-
-// LOGIN PAGE
-print '<div role="tabpanel" id="revoprologin" class="tab-pane">';
-print '<div class="site-skintools2" >';
-	print '<div class="site-skintools2-inner">';
-	print '<div class="site-skintools2-content">';
-	print '<div class="nav-tabs-horizontal">';
-
-	print '<br>';
-	print '<div class="tab-content">';
-	print '<table class="tableconfigurationrevopro">';
-
-
-	// Message on login page
-	require_once DOL_DOCUMENT_ROOT.'/core/class/doleditor.class.php';
-	$form=new Form($db);
-	$substitutionarray=getCommonSubstitutionArray($langs, 0, array('object','objectamount','user'));
-	complete_substitutions_array($substitutionarray, $langs);
-	print '<tr class=""><td style="width: 250px;">';
-	$texthelp=$langs->trans("FollowingConstantsWillBeSubstituted").'<br>';
-	foreach($substitutionarray as $key => $val)
-	{
-		$texthelp.=$key.'<br>';
-	}
-	print $form->textwithpicto($langs->trans("MessageLogin"), $texthelp, 1, 'help', '', 0, 2, 'tooltipmessagelogin');
-	print '</td><td >';
-	$doleditor = new DolEditor('main_home', (isset($conf->global->MAIN_HOME)?$conf->global->MAIN_HOME:''), '', 142, 'dolibarr_notes', 'In', false, true, true, ROWS_4, '99%');
-	$doleditor->Create();
-	print '</td></tr>'."\n";
-
-	print '<tr class="">';
-	print '</td></tr>'."\n";
-
-	print '</table>';
-	print '</div>';
-
-	print '<br>';
-
-	print '<div class="uploadimagelogin">';
-	print '<ul class="blocks blocks-100 blocks-xxl-4 blocks-lg-3 blocks-md-2" data-plugin="filterable" data-filters="#exampleFilter">';
-	
-	
-	$urlimgs = dol_buildpath('/revolutionpro/img/login', 1);
-	$i = 1;
-	$nameoffile = 'revolutionprologin1.jpg';
-	print '<li data-type="bg">';
-	$chd = ''; if($val5 == $nameoffile) $chd = 'selected';
-	$urlf = $urlimgs."/".$nameoffile;
-	print '<div class="card '.$chd.' card-shadow">';
-	print '<figure class="card-img-top overlay-hover overlay" style="min-height: 272px;">';
-	print '<img class="overlay-figure overlay-scale" src="'.$urlf.'"';
-	print 'alt="...">';
-	print '<figcaption class="overlay-panel overlay-background overlay-fade overlay-icon">';
-	print '<a class="icon md-search pictopreview documentpreview" href="'.$urlf.'" mime="image/jpeg"></a>';
-	print '</figcaption>';
-	print '</figure>';
-	print '<div class="card-block revolutionprofilename">';
-	$chd = ''; if($val5 == $nameoffile) $chd = 'checked';
-	print '<div class="radio-custom radio-blue"><input class="radiologinbg" '.$chd.' id="loginbg-hide'.$i.'" type="radio" name="value5" value="'.$nameoffile.'"><label for="loginbg-hide'.$i.'">'.$langs->trans('Image').' #'.$i.'</label></div>';
-	// print '<h5 class="card-title">'.$langs->trans('Image').' #'.$i.'</h5>';
-	print '</div>';
-	print '</div>';
-	print '</li>';
-
-	$i++;
-	$nameoffile = 'revolutionprologin2.jpg';
-	print '<li data-type="bg">';
-	$chd = ''; if($val5 == $nameoffile) $chd = 'selected';
-	$urlf = $urlimgs."/".$nameoffile;
-	print '<div class="card '.$chd.' card-shadow">';
-	print '<figure class="card-img-top overlay-hover overlay" style="min-height: 272px;">';
-	print '<img class="overlay-figure overlay-scale" src="'.$urlf.'"';
-	print 'alt="...">';
-	print '<figcaption class="overlay-panel overlay-background overlay-fade overlay-icon">';
-	print '<a class="icon md-search pictopreview documentpreview" href="'.$urlf.'" mime="image/jpeg"></a>';
-	print '</figcaption>';
-	print '</figure>';
-	print '<div class="card-block revolutionprofilename">';
-	$chd = ''; if($val5 == $nameoffile) $chd = 'checked';
-	print '<div class="radio-custom radio-blue"><input class="radiologinbg" '.$chd.' id="loginbg-hide'.$i.'" type="radio" name="value5" value="'.$nameoffile.'"><label for="loginbg-hide'.$i.'">'.$langs->trans('Image').' #'.$i.'</label></div>';
-	// print '<h5 class="card-title">'.$langs->trans('Image').' #'.$i.'</h5>';
-	print '</div>';
-	print '</div>';
-	print '</li>';
-
-	$i++;
-
-	$dir = dol_buildpath('$dir', 0);
-	
-	$urlimgs = dol_buildpath('/revolutionpro/img/login', 1);
-	
- 	$filearray = dol_dir_list($upload_dir, "files", 0, '', null, 'date', '', 0);
-
- 	$modulepart = 'mycompany';
-	foreach ($filearray as $key => $file)
-	{
-		if (!is_dir($file['name'])
-		&& $file['name'] != '.'
-		&& $file['name'] != '..'
-		&& $file['name'] != 'CVS'
-		&& !preg_match('/\.meta$/i', $file['name']))
-		{		
-
-			$documenturl = DOL_URL_ROOT.'/document.php';
-			if (isset($conf->global->DOL_URL_ROOT_DOCUMENT_PHP)) $documenturl = $conf->global->DOL_URL_ROOT_DOCUMENT_PHP; // To use another wrapper
-
-			$relativepath = '/logos/login/1/'.$file["name"]; // Cas general
-			$urladvancedpreview = getAdvancedPreviewUrl($modulepart, $relativepath, 1, $param); // Return if a file is qualified for preview.
-			
-			$urlf = $documenturl.'?modulepart='.$modulepart.'&amp;file='.urlencode($relativepath).($param ? '&'.$param : '').'"';
-
-			$nameoffile = urlencode($file["name"]);
-			print '<li data-type="bg">';
-			$chd = ''; if($val5 == $nameoffile) $chd = 'selected';
-			print '<div class="card '.$chd.' card-shadow">';
-			print '<figure class="card-img-top overlay-hover overlay" style="min-height: 272px;">';
-			print '<img class="overlay-figure overlay-scale" src="'.$urlf.'"';
-			print 'alt="...">';
-			print '<figcaption class="overlay-panel overlay-background overlay-fade overlay-icon">';
-			print '<a class="icon md-search pictopreview documentpreview" href="'.$urlf.'" mime="'.$urladvancedpreview['mime'].'"></a>';
-			print '</figcaption>';
-			print '</figure>';
-			print '<div class="card-block revolutionprofilename">';
-			$chd = ''; if($val5 == $nameoffile) $chd = 'checked';
-			print '<div class="radio-custom radio-blue"><input class="radiologinbg" '.$chd.' id="loginbg-hide'.$i.'" type="radio" name="value5" value="'.$nameoffile.'"><label for="loginbg-hide'.$i.'">'.$langs->trans('Image').' #'.$i.'</label></div>';
-			// print '<h5 class="card-title">'.$langs->trans('Image').' #'.$i.'</h5>';
-			print '</div>';
-			print '</div>';
-			print '</li>';
-
-			$i++;
-		}
-	}
-
-	print '</ul>';
-
-	print '</div>';
-	print '<div style="clear:both;"></div>';
-
-	print '</div>';
-	print '</div>';
-	print '</div>';
-print '</div>';
-print '</div>';
-
-
-
-// CSS additionnel
-print '<div role="tabpanel" id="revoproCSSaddi" class="tab-pane">';
-print '<div class="site-skintools2" >';
-	print '<div class="site-skintools2-inner">';
-	print '<div class="site-skintools2-content">';
-	print '<div class="nav-tabs-horizontal">';
-
-	print '<br>';
-	print '<div class="tab-content">';
-
-
-	print '<textarea id="valuecss" name="valuecss" rows="8" cols="50" placeholder="#idelement .classelement {'."\n".'  background-color: #FFFFFF;'."\n".'  cursor: pointer;'."\n".'  opacity: 0;'."\n".'}">';
-	print ($valcss);
-	print '</textarea>';
-
-	print '</div>';
-
-	print '<br>';
-
-	print '<div style="clear:both;"></div>';
-
-	print '</div>';
-	print '</div>';
-	print '</div>';
-print '</div>';
-print '</div>';
-
-
-print '</div>';
-
-
-print '</div>';
-
+print '</div>'; // settingrevolutionprotheme
 
 print '<div class="divrevolutionprobuttonadmin">';
 print '<div style="clear:both;"></div>';
@@ -628,114 +450,94 @@ print '<a class="butActionDelete" style="float: right;" href="'.dol_buildpath('/
 print '</div>';
 print '</form>';
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECURITY LOCK CARD (outside the main form)
+// ═══════════════════════════════════════════════════════════════════════════════
+print '<div style="margin-top:30px;padding:20px;background:#FFF;border-radius:12px;border:1px solid #E2E8F0;">';
+print '<h3 style="margin-top:0;">🔐 Security Lock</h3>';
+print '<p style="color:#64748B;">Lock this setup page after configuration. Delete <code>flavorpro.lock</code> from the admin directory to unlock.</p>';
+print '<a href="?action=lock&token='.newToken().'" class="butActionDelete" onclick="return confirm(\'Lock the setup page? You need file access to unlock.\');" style="margin-top:10px;">🔒 Lock Setup Page</a>';
+print '</div>';
+
 print '<div id="uploadimagelogin" style="display:none;">';
 include_once DOL_DOCUMENT_ROOT.'/core/tpl/document_actions_post_headers.tpl.php';
 print '</div>';
 
-	
-
-
 ?>
 <style type="text/css">
-	div.tabs a.ds_url_module_name{
-	    margin-right: 11px;
-	}
+	div.tabs a.ds_url_module_name{ margin-right: 11px; }
+	/* Flavor Pro Setup Styles */
+	.flavorpro-card{background:#FFF;border-radius:12px;padding:24px;border:1px solid #E2E8F0;margin-bottom:16px;}
+	.flavorpro-card h3{margin-top:0;font-size:1rem;display:flex;align-items:center;gap:8px;}
+	.fp-menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;}
+	.fp-menu-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;border:1px solid #E2E8F0;background:#FAFBFC;cursor:pointer;transition:all .15s;}
+	.fp-menu-item:hover{border-color:#CBD5E1;background:#F1F5F9;}
+	.fp-menu-item.checked{border-color:#FCA5A5;background:#FEF2F2;}
+	.fp-menu-item input[type="checkbox"]{width:16px;height:16px;cursor:pointer;}
+	.fp-menu-item-label{font-size:.85rem;font-weight:500;}
+	.fp-section-label{font-size:.75rem;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em;margin:12px 0 6px;}
+	.fp-icon-table{width:100%;border-collapse:separate;border-spacing:0;}
+	.fp-icon-table th{background:#F8FAFC;padding:8px 10px;font-size:.75rem;font-weight:600;text-transform:uppercase;color:#64748B;border-bottom:2px solid #E2E8F0;text-align:left;}
+	.fp-icon-table td{padding:8px 10px;border-bottom:1px solid #F1F5F9;vertical-align:middle;}
+	.fp-icon-table tr:hover td{background:#FAFBFC;}
+	.fp-icon-table input[type=text]{padding:6px 8px;border:1px solid #E2E8F0;border-radius:6px;font-size:.85rem;width:100%;outline:none;font-family:inherit;}
+	.fp-icon-table input[type=text]:focus{border-color:#6366F1;box-shadow:0 0 0 2px rgba(99,102,241,.08);}
+	.fp-fa-preview{width:30px;height:30px;background:#312C81;border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.9);font-size:13px;}
+	.fp-toggle{position:relative;width:38px;height:20px;display:inline-block;}
+	.fp-toggle input{opacity:0;width:0;height:0;}
+	.fp-toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#CBD5E1;border-radius:20px;transition:.2s;}
+	.fp-toggle-slider::before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:#FFF;border-radius:50%;transition:.2s;}
+	.fp-toggle input:checked+.fp-toggle-slider{background:#EF4444;}
+	.fp-toggle input:checked+.fp-toggle-slider::before{transform:translateX(18px);}
+	.fp-native{font-size:.6rem;background:#DCFCE7;color:#166534;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px;}
+	.fp-module{font-size:.6rem;background:#E0E7FF;color:#3730A3;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px;}
+	.fp-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;color:#FFF;transition:all .2s;font-family:inherit;}
+	.fp-btn-primary{background:linear-gradient(135deg,#6366F1,#818CF8);box-shadow:0 4px 12px rgba(99,102,241,.25);}
+	.fp-btn-primary:hover{transform:translateY(-1px);}
+	.fp-btn-success{background:linear-gradient(135deg,#059669,#10B981);box-shadow:0 4px 12px rgba(16,185,129,.25);}
+	.fp-btn-success:hover{transform:translateY(-1px);}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('div.revolutionprofilename').click(function(){
-		if($(this).find('input').is(':checked')){
-	       
-	    } else {
-	    	$(this).find('input').click();
-	    }
+		if(!$(this).find('input').is(':checked')) $(this).find('input').click();
 	});
 	$('ul.nav-tabs li').click(function(){
-		if($(this).hasClass('revoprologin')){
-	       	$('#uploadimagelogin').show();
-	    } else {
-	    	$('#uploadimagelogin').hide();
-	    }
+		$('#uploadimagelogin').toggle($(this).hasClass('revoprologin'));
 	});
 	$('#skintoolsNavbar2-inverse').click(function(){
-	    if($(this).is(':checked')){
-	        $('body.site-navbar-small .site-navbar').addClass('navbar-inverse');
-	    } else {
-	        $('body.site-navbar-small .site-navbar').removeClass('navbar-inverse');
-	    }
+		$('body.site-navbar-small .site-navbar').toggleClass('navbar-inverse', $(this).is(':checked'));
 	});
 	$('#revoprocolors .radio-custom input[name="value1"]').change(function() {
-		if (this.value == 'dark') {
-	        $('body #tmenu_tooltip > .site-menubar').addClass('site-menubar-dark');
-	    }
-	    else {
-	        $('body #tmenu_tooltip > .site-menubar').removeClass('site-menubar-dark');
-	    }
+		$('body #tmenu_tooltip > .site-menubar').toggleClass('site-menubar-dark', this.value == 'dark');
 	});
 	$('#showorhidefourboxes input[name="value4"]').change(function() {
-		if (this.value == 'hide') {
-	        $('body .row.thefourboxes').hide();
-	    }
-	    else {
-	        $('body .row.thefourboxes').show();
-	    }
+		$('body .row.thefourboxes').toggle(this.value !== 'hide');
 	});
 	$('#showorhidecompanyname input[name="value7"]').change(function() {
-
-		if($('body').hasClass('site-menubar-fold')){
-			$('.navbar-toolbar #toggleMenubar>a').click();
-		}
-		if (this.value == 'hide') {
-			setTimeout( function() { 
-	       		$('body.site-menubar-unfold .site-navbar .navbar-brand-text').hide();
-			}, 300);
-	    }
-	    else {
-	        setTimeout( function() { 
-	       		$('body.site-menubar-unfold .site-navbar .navbar-brand-text').show();
-			}, 300);
-	    }
-
+		if($('body').hasClass('site-menubar-fold')) $('.navbar-toolbar #toggleMenubar>a').click();
+		var showIt = this.value !== 'hide';
+		setTimeout(function(){ $('body.site-menubar-unfold .site-navbar .navbar-brand-text').toggle(showIt); }, 300);
 	});
-
 	$('#revoprocolors .radio-custom input[name="value6"]').change(function() {
-		var val = this.value;
-		var bg = "bg-".concat(val, "-600");
-		$('.butAction, #mainbody input.button:not(.buttongen):not(.bordertransp)').removeClass (function (index, className) {
-		    return (className.match (/(^|\s)bg-\S+/g) || []).join(' ');
-		});
-		if (val === 'yellow') {
-			bg = 'bg-yellow-800';
-		}
-
-		// if (val === 'primary') {
-		// 	bg = '';
-		// }
-		$('.butAction, #mainbody input.button:not(.buttongen):not(.bordertransp)').addClass(bg);
+		var bg = "bg-".concat(this.value, "-600");
+		if (this.value === 'yellow') bg = 'bg-yellow-800';
+		$('.butAction, #mainbody input.button:not(.buttongen):not(.bordertransp)').removeClass(function(i,c){return(c.match(/(^|\s)bg-\S+/g)||[]).join(' ');}).addClass(bg);
 	});
-
 	$('#revoprocolors .radio-custom input[name="value3"]').change(function() {
-		var val = this.value;
-		var bg = "bg-".concat(val, "-600");
-
-		$("body.site-navbar-small .site-navbar").removeClass (function (index, className) {
-		    return (className.match (/(^|\s)bg-\S+/g) || []).join(' ');
-		});
-
-		if (val === 'yellow') {
-			bg = 'bg-yellow-800';
-		}
-
-		if (val === 'primary') {
-			bg = '';
-		}
-  		$('body.site-navbar-small .site-navbar').addClass(bg);
+		var bg = "bg-".concat(this.value, "-600");
+		if (this.value === 'yellow') bg = 'bg-yellow-800';
+		if (this.value === 'primary') bg = '';
+		$("body.site-navbar-small .site-navbar").removeClass(function(i,c){return(c.match(/(^|\s)bg-\S+/g)||[]).join(' ');}).addClass(bg);
+	});
+	// Toggle checked class on menu items
+	$('.fp-menu-item input[type="checkbox"]').change(function(){
+		$(this).closest('.fp-menu-item').toggleClass('checked', this.checked);
 	});
 });
 </script>
 <?php
 
-// Page end
 dol_fiche_end();
 llxFooter();
 $db->close();

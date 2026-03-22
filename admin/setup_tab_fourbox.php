@@ -1,0 +1,34 @@
+<?php
+// TAB: Show & Hide (original Revolution Pro)
+print '<div role="tabpanel" id="revoprofourbox" class="tab-pane ">';
+print '<div class="site-skintools2" >';
+	print '<div class="site-skintools2-inner">';
+	print '<div class="site-skintools2-content" style="min-height: initial !important;">';
+	print '<div class="nav-tabs-horizontal">';
+	print '<div class="tab-content">';
+	print '<table class="tableconfigurationrevopro">';
+	print '<tr>';
+		print '<td class="revolproshowhiditems" id="showorhidefourboxes">';
+			print '<br>';
+			$chd = ''; if($val4 == 'show') $chd = 'checked';
+			print '<div class="radio-custom radio-green"><input id="fourboxes-show" type="radio" name="value4" value="show" '.$chd.'><label for="fourboxes-show">'.$langs->trans('RevolutionProFourBoxesShow').'</label></div>';
+			$chd = ''; if($val4 == 'hide') $chd = 'checked';
+			print '<div class="radio-custom radio-red"><input id="fourboxes-hide" type="radio" name="value4" value="hide" '.$chd.'><label for="fourboxes-hide">'.$langs->trans('RevolutionProFourBoxesHide').'</label></div>';
+		print '</td>';
+	print '</tr>';
+	print '<tr>';
+		print '<td class="revolproshowhiditems" id="showorhidecompanyname">';
+			print '<br>';
+			$chd = ''; if($val7 == 'show') $chd = 'checked';
+			print '<div class="radio-custom radio-green"><input id="fourcompanyname-show" type="radio" name="value7" value="show" '.$chd.'><label for="fourcompanyname-show">'.$langs->trans('RevolutionProFourCompanynameShow').'</label></div>';
+			$chd = ''; if($val7 == 'hide') $chd = 'checked';
+			print '<div class="radio-custom radio-red"><input id="fourcompanyname-hide" type="radio" name="value7" value="hide" '.$chd.'><label for="fourcompanyname-hide">'.$langs->trans('RevolutionProFourCompanynameHide').'</label></div>';
+		print '</td>';
+	print '</tr>';
+	print '</table>';
+	print '</div>';
+	print '</div>';
+	print '</div>';
+	print '</div>';
+print '</div>';
+print '</div>';
