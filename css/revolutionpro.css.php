@@ -2331,6 +2331,12 @@ $valcss = !empty($conf->global->REVOLUTIONPRO_PARAMETRES_VALUECSS) ? $conf->glob
 if($valcss){
     print ($valcss);
 }
+// ── Fix: .hideobject must override .inline-block from bootstrap-extend.min.css ──
+// bootstrap-extend defines .inline-block { display: inline-block !important }
+// which breaks Dolibarr's AJAX toggle ON/OFF visibility (both shown at once)
+print "\n/* Fix: .hideobject must override .inline-block (bootstrap-extend conflict) */\n";
+print ".hideobject { display: none !important; }\n";
+print ".inline-block.hideobject { display: none !important; }\n";
 
 // ── Flavor Pro: Include generated visibility CSS ──
 $hiddenCssPath = dirname(__FILE__).'/../admin/flavorpro_hidden.css';
