@@ -93,19 +93,31 @@ function rpWhiteLabel() {
 	// 3. Sidebar brand text: keep the company name as-is
 	// (The company name is set in Dolibarr company settings, not here)
 
-	// 4. Replace URLs pointing to dolibarr.org
+	// 4. Replace ALL URLs pointing to any dolibarr.org subdomain
+	//    (www.dolibarr.org, wiki.dolibarr.org, etc.)
 	if (brandUrl) {
 		var links = document.querySelectorAll('a[href*="dolibarr.org"]');
 		links.forEach(function(a) {
-			a.href = a.href.replace(/https?:\/\/(www\.)?dolibarr\.org[^\s"]*/gi, brandUrl);
+			a.href = brandUrl;
 		});
 	}
 
-	// 5. Replace in meta description if present
-	var metaDesc = document.querySelector('meta[name="description"]');
-	if (metaDesc && metaDesc.content) {
-		metaDesc.content = metaDesc.content.replace(/Dolibarr/g, brandName);
-	}
+	// 5. Replace title/alt attributes containing "Dolibarr"
+	var titledEls = document.querySelectorAll('[title*="Dolibarr"]');
+	titledEls.forEach(function(el) {
+		el.title = el.title.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
+		el.title = el.title.replace(/Dolibarr/g, brandName);
+	});
+	var altEls = document.querySelectorAll('[alt*="Dolibarr"]');
+	altEls.forEach(function(el) {
+		el.alt = el.alt.replace(/Dolibarr/g, brandName);
+	});
+
+	// 6. Replace in meta tags (description, author, generator)
+	document.querySelectorAll('meta[content*="Dolibarr"], meta[content*="dolibarr"]').forEach(function(meta) {
+		meta.content = meta.content.replace(/Dolibarr\s*Development\s*Team/gi, brandName);
+		meta.content = meta.content.replace(/Dolibarr/gi, brandName);
+	});
 }
 <?php
 
