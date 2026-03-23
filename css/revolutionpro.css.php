@@ -2439,8 +2439,12 @@ if (is_object($db)) {
 
         if ($brandName) {
             $safeBrand = str_replace("'", "\\'", $brandName);
-            print "\n/* White-Label: Brand name carrier (read by revolutionpro.js.php) */\n";
-            print ":root { --revpro-brand-name: '".$safeBrand."'; --revpro-brand-url: 'https://www.novadx.pt'; }\n";
+            // Also pass company name for version strings (e.g. "Dolisys 22.0.4")
+            global $mysoc;
+            $companyName = (is_object($mysoc) && !empty($mysoc->name)) ? $mysoc->name : $brandName;
+            $safeCompany = str_replace("'", "\\'", $companyName);
+            print "\n/* White-Label: Brand + company name carriers (read by revolutionpro.js.php) */\n";
+            print ":root { --revpro-brand-name: '".$safeBrand."'; --revpro-brand-url: 'https://www.novadx.pt'; --revpro-company-name: '".$safeCompany."'; }\n";
         }
 
         // Fix sidebar brand text truncation — show full company name

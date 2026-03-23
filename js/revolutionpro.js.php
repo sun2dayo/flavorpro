@@ -57,13 +57,27 @@ function rpWhiteLabel() {
 	var rootStyles = getComputedStyle(document.documentElement);
 	var brandName = rootStyles.getPropertyValue('--revpro-brand-name').trim();
 	var brandUrl = rootStyles.getPropertyValue('--revpro-brand-url').trim();
+	var companyName = rootStyles.getPropertyValue('--revpro-company-name').trim();
 
 	// Remove wrapping quotes from CSS variables
 	if (brandName) brandName = brandName.replace(/^['"]|['"]$/g, '');
 	if (brandUrl) brandUrl = brandUrl.replace(/^['"]|['"]$/g, '');
+	if (companyName) companyName = companyName.replace(/^['"]|['"]$/g, '');
 
 	if (!brandName || brandName === 'none') return;
 	if (!brandUrl) brandUrl = '';
+	if (!companyName) companyName = brandName; // fallback
+
+	// Helper: replace Dolibarr in a string, using company name for version strings
+	function rpReplace(str) {
+		// "Dolibarr 22.0.4" → "Dolisys 22.0.4" (company name + keep version)
+		str = str.replace(/Dolibarr\s+(\d+\.\d+[\.\d]*)/g, companyName + ' $1');
+		// "Dolibarr ERP & CRM" → brand name
+		str = str.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
+		// Remaining standalone "Dolibarr"
+		str = str.replace(/Dolibarr/g, brandName);
+		return str;
+	}
 
 	// 1. Replace text content in DOM using TreeWalker (efficient, no re-rendering)
 	// Skip the sidebar brand area — company name should stay
@@ -79,15 +93,13 @@ function rpWhiteLabel() {
 		// Skip text inside the sidebar brand area
 		if (brandTextEl && brandTextEl.contains(node)) continue;
 		if (node.nodeValue && node.nodeValue.indexOf('Dolibarr') !== -1) {
-			node.nodeValue = node.nodeValue.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
-			node.nodeValue = node.nodeValue.replace(/Dolibarr/g, brandName);
+			node.nodeValue = rpReplace(node.nodeValue);
 		}
 	}
 
-	// 2. Replace page title
+	// 2. Replace page title (uses company name for version)
 	if (document.title && document.title.indexOf('Dolibarr') !== -1) {
-		document.title = document.title.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
-		document.title = document.title.replace(/Dolibarr/g, brandName);
+		document.title = rpReplace(document.title);
 	}
 
 	// 3. Sidebar brand text: keep the company name as-is
@@ -105,12 +117,11 @@ function rpWhiteLabel() {
 	// 5. Replace title/alt attributes containing "Dolibarr"
 	var titledEls = document.querySelectorAll('[title*="Dolibarr"]');
 	titledEls.forEach(function(el) {
-		el.title = el.title.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
-		el.title = el.title.replace(/Dolibarr/g, brandName);
+		el.title = rpReplace(el.title);
 	});
 	var altEls = document.querySelectorAll('[alt*="Dolibarr"]');
 	altEls.forEach(function(el) {
-		el.alt = el.alt.replace(/Dolibarr/g, brandName);
+		el.alt = rpReplace(el.alt);
 	});
 
 	// 6. Replace in meta tags (description, author, generator)
