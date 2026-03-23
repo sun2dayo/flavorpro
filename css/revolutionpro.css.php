@@ -2899,12 +2899,12 @@ if (is_object($db)) {
    ========================================================================== */
 
 /* Background */
-body:not(.bodytakepos) {
+body.revolutionpro:not(.bodytakepos) {
     /* Only apply if TakePOS classes are present */
 }
 
 /* Numpad in payment modal — modern slate */
-body:not(.bodytakepos) button.calcbutton {
+body.revolutionpro:not(.bodytakepos) button.calcbutton {
     background: linear-gradient(145deg, #334155 0%, #1e293b 100%) !important;
     color: #f1f5f9 !important;
     border: 1px solid rgba(148, 163, 184, 0.15) !important;
@@ -2915,17 +2915,17 @@ body:not(.bodytakepos) button.calcbutton {
     box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
     transition: all 0.15s ease;
 }
-body:not(.bodytakepos) button.calcbutton:hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton:hover {
     background: linear-gradient(145deg, #475569 0%, #334155 100%) !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-body:not(.bodytakepos) button.calcbutton:active {
+body.revolutionpro:not(.bodytakepos) button.calcbutton:active {
     background: #6366F1 !important;
     color: #FFFFFF !important;
 }
 
 /* Function keys in popup — indigo-violet */
-body:not(.bodytakepos) button.calcbutton2 {
+body.revolutionpro:not(.bodytakepos) button.calcbutton2 {
     background: linear-gradient(135deg, #4F46E5, #7C3AED) !important;
     color: #FFFFFF !important;
     border: none !important;
@@ -2934,17 +2934,17 @@ body:not(.bodytakepos) button.calcbutton2 {
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
     transition: all 0.15s ease !important;
 }
-body:not(.bodytakepos) button.calcbutton2:hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton2:hover {
     background: linear-gradient(135deg, #4338CA, #6D28D9) !important;
     box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35) !important;
 }
-body:not(.bodytakepos) button.calcbutton2.clicked {
+body.revolutionpro:not(.bodytakepos) button.calcbutton2.clicked {
     background: linear-gradient(135deg, #7C3AED, #8B5CF6) !important;
     box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3) !important;
 }
 
 /* C (Clear) and X buttons */
-body:not(.bodytakepos) button.calcbutton3 {
+body.revolutionpro:not(.bodytakepos) button.calcbutton3 {
     background: #F1F5F9 !important;
     color: #475569 !important;
     border: 1px solid #CBD5E1 !important;
@@ -2952,24 +2952,24 @@ body:not(.bodytakepos) button.calcbutton3 {
     font-weight: 700 !important;
     transition: all 0.15s ease !important;
 }
-body:not(.bodytakepos) button.calcbutton3:hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton3:hover {
     background: #E2E8F0 !important;
 }
 
 /* Delete button — popup */
-body:not(.bodytakepos) button.calcbutton2.poscolordelete,
-body:not(.bodytakepos) button.calcbutton3.poscolordelete {
+body.revolutionpro:not(.bodytakepos) button.calcbutton2.poscolordelete,
+body.revolutionpro:not(.bodytakepos) button.calcbutton3.poscolordelete {
     background: linear-gradient(135deg, #EF4444, #DC2626) !important;
     color: #FFFFFF !important;
     border: none !important;
 }
-body:not(.bodytakepos) button.calcbutton2.poscolordelete:hover,
-body:not(.bodytakepos) button.calcbutton3.poscolordelete:hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton2.poscolordelete:hover,
+body.revolutionpro:not(.bodytakepos) button.calcbutton3.poscolordelete:hover {
     background: linear-gradient(135deg, #f87171, #EF4444) !important;
 }
 
 /* Payment method buttons — color-coded via nth-of-type */
-body:not(.bodytakepos) button.calcbutton.poscolorblue {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue {
     background: linear-gradient(135deg, #4F46E5, #6366F1) !important;
     color: #FFFFFF !important;
     border: none !important;
@@ -2977,49 +2977,49 @@ body:not(.bodytakepos) button.calcbutton.poscolorblue {
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
     font-weight: 600 !important;
 }
-body:not(.bodytakepos) button.calcbutton.poscolorblue:hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:hover {
     background: linear-gradient(135deg, #4338CA, #4F46E5) !important;
     box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35) !important;
 }
 /* Cash — emerald */
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+1) {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+1) {
     background: linear-gradient(135deg, #059669, #10B981) !important;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
 }
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+1):hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+1):hover {
     background: linear-gradient(135deg, #047857, #059669) !important;
 }
 /* Check — sky blue */
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+2) {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+2) {
     background: linear-gradient(135deg, #0284C7, #0EA5E9) !important;
     box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25) !important;
 }
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+2):hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+2):hover {
     background: linear-gradient(135deg, #0369A1, #0284C7) !important;
 }
 /* Credit card — indigo (default) */
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+3) {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n+3) {
     background: linear-gradient(135deg, #4F46E5, #6366F1) !important;
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
 }
 /* Bank transfer — teal */
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n) {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n) {
     background: linear-gradient(135deg, #0D9488, #14B8A6) !important;
     box-shadow: 0 4px 12px rgba(20, 184, 166, 0.25) !important;
 }
-body:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n):hover {
+body.revolutionpro:not(.bodytakepos) button.calcbutton.poscolorblue:nth-of-type(4n):hover {
     background: linear-gradient(135deg, #0F766E, #0D9488) !important;
 }
 
 /* Debit payment / special */
-body:not(.bodytakepos) button.calcbutton2.poscolorgreen {
+body.revolutionpro:not(.bodytakepos) button.calcbutton2.poscolorgreen {
     background: linear-gradient(135deg, #059669, #10B981) !important;
     color: #FFFFFF !important;
     border: none !important;
 }
 
 /* Payment input & totals */
-body:not(.bodytakepos) .takepospay {
+body.revolutionpro:not(.bodytakepos) .takepospay {
     font-size: 1.5em !important;
     border: 2px solid #E2E8F0 !important;
     border-radius: 12px !important;
@@ -3028,15 +3028,15 @@ body:not(.bodytakepos) .takepospay {
     color: #1E293B !important;
     font-weight: 600 !important;
 }
-body:not(.bodytakepos) .takepospay:focus {
+body.revolutionpro:not(.bodytakepos) .takepospay:focus {
     border-color: #6366F1 !important;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
     outline: none !important;
 }
 
 /* Payment display bars */
-body:not(.bodytakepos) .paymentbordline,
-body:not(.bodytakepos) div.paymentbordline {
+body.revolutionpro:not(.bodytakepos) .paymentbordline,
+body.revolutionpro:not(.bodytakepos) div.paymentbordline {
     background: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important;
     border: 1px solid #E2E8F0 !important;
     border-radius: 12px !important;
@@ -3047,11 +3047,11 @@ body:not(.bodytakepos) div.paymentbordline {
 }
 
 /* Split sale — clean card layout with indigo header */
-body:not(.bodytakepos) .headersplit {
+body.revolutionpro:not(.bodytakepos) .headersplit {
     padding-top: 12px !important;
     padding-bottom: 4px !important;
 }
-body:not(.bodytakepos) .headercontent {
+body.revolutionpro:not(.bodytakepos) .headercontent {
     border: 2px solid #6366F1 !important;
     border-radius: 12px !important;
     background: linear-gradient(135deg, #EEF2FF, #E0E7FF) !important;
@@ -3060,16 +3060,16 @@ body:not(.bodytakepos) .headercontent {
     font-size: 1.1rem !important;
     padding: 10px 0 !important;
 }
-body:not(.bodytakepos) .headercontent:hover {
+body.revolutionpro:not(.bodytakepos) .headercontent:hover {
     background: linear-gradient(135deg, #E0E7FF, #C7D2FE) !important;
 }
-body:not(.bodytakepos) .splitsale {
+body.revolutionpro:not(.bodytakepos) .splitsale {
     border-radius: 12px !important;
     overflow: hidden !important;
 }
 
 /* Discount buttons */
-body:not(.bodytakepos) button.item_value {
+body.revolutionpro:not(.bodytakepos) button.item_value {
     background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
     border: 1px solid #cbd5e1 !important;
     border-radius: 8px !important;
@@ -3077,11 +3077,11 @@ body:not(.bodytakepos) button.item_value {
     transition: all 0.15s ease;
     color: #334155;
 }
-body:not(.bodytakepos) button.item_value:hover {
+body.revolutionpro:not(.bodytakepos) button.item_value:hover {
     border-color: #818cf8 !important;
     background: #eef2ff !important;
 }
-body:not(.bodytakepos) button.item_value.selected {
+body.revolutionpro:not(.bodytakepos) button.item_value.selected {
     background: linear-gradient(145deg, #4338ca 0%, #6366f1 100%) !important;
     color: #fff !important;
     border-color: #4338ca !important;
@@ -3090,7 +3090,7 @@ body:not(.bodytakepos) button.item_value.selected {
 }
 
 /* Action buttons in popups */
-body:not(.bodytakepos) button.actionbutton {
+body.revolutionpro:not(.bodytakepos) button.actionbutton {
     background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
     color: #1e293b !important;
     border: 1px solid rgba(148, 163, 184, 0.3) !important;
@@ -3098,15 +3098,15 @@ body:not(.bodytakepos) button.actionbutton {
     font-weight: 600 !important;
     transition: all 0.15s ease;
 }
-body:not(.bodytakepos) button.actionbutton:hover {
+body.revolutionpro:not(.bodytakepos) button.actionbutton:hover {
     background: linear-gradient(145deg, #fff 0%, #f1f5f9 100%) !important;
     color: #4338ca !important;
     border-color: #4F46E5 !important;
 }
 
 /* butAction in popups */
-body:not(.bodytakepos) .butAction,
-body:not(.bodytakepos) a.butAction {
+body.revolutionpro:not(.bodytakepos) .butAction,
+body.revolutionpro:not(.bodytakepos) a.butAction {
     background-color: #4F46E5 !important;
     color: #FFFFFF !important;
     border: none !important;
@@ -3118,28 +3118,28 @@ body:not(.bodytakepos) a.butAction {
 }
 
 /* jQuery UI dialogs in popups */
-body:not(.bodytakepos) .ui-dialog {
+body.revolutionpro:not(.bodytakepos) .ui-dialog {
     border-radius: 16px !important;
     border: none !important;
     box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
     overflow: hidden;
 }
-body:not(.bodytakepos) .ui-dialog .ui-dialog-titlebar {
+body.revolutionpro:not(.bodytakepos) .ui-dialog .ui-dialog-titlebar {
     background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%) !important;
     color: #fff !important;
     border: none !important;
     padding: 12px 16px !important;
 }
-body:not(.bodytakepos) .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+body.revolutionpro:not(.bodytakepos) .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
     color: #fff !important;
     font-weight: 600;
 }
-body:not(.bodytakepos) .ui-dialog .ui-dialog-titlebar-close {
+body.revolutionpro:not(.bodytakepos) .ui-dialog .ui-dialog-titlebar-close {
     background: rgba(255,255,255,0.15) !important;
     border: none !important;
     border-radius: 50% !important;
 }
-body:not(.bodytakepos) .ui-dialog .ui-dialog-buttonpane button {
+body.revolutionpro:not(.bodytakepos) .ui-dialog .ui-dialog-buttonpane button {
     background: linear-gradient(145deg, #4338ca 0%, #3730a3 100%) !important;
     color: #fff !important;
     border: none !important;
@@ -3150,10 +3150,10 @@ body:not(.bodytakepos) .ui-dialog .ui-dialog-buttonpane button {
 }
 
 /* Close button */
-body:not(.bodytakepos) .close {
+body.revolutionpro:not(.bodytakepos) .close {
     color: rgba(255,255,255,0.8) !important;
 }
-body:not(.bodytakepos) .close:hover {
+body.revolutionpro:not(.bodytakepos) .close:hover {
     color: #fff !important;
 }
 
