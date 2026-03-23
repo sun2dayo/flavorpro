@@ -2412,6 +2412,10 @@ if (is_object($db)) {
                     print "div.mainmenu.{$safeKey}::before { content: \"{$unicode}\" !important; }\n";
                 }
             }
+            // Hide submenu arrows in folded sidebar (they overlap with icons)
+            print "\n/* Hide submenu arrows in folded sidebar to prevent icon overlap */\n";
+            print ".site-menubar-fold .site-menu > .site-menu-item > a .site-menu-arrow { display: none !important; }\n";
+            print "#mainbody:not(.site-navbar-small) .site-menu > .site-menu-item > a .site-menu-arrow { display: none !important; }\n";
         }
     }
 }
