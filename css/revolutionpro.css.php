@@ -2440,8 +2440,8 @@ if (is_object($db)) {
         if ($brandName) {
             $safeBrand = str_replace("'", "\\'", $brandName);
             // Also pass company name for version strings (e.g. "Dolisys 22.0.4")
-            global $mysoc;
-            $companyName = (is_object($mysoc) && !empty($mysoc->name)) ? $mysoc->name : $brandName;
+            // Note: $mysoc is not available here (NOREQUIRESOC), so read from DB config
+            $companyName = getDolGlobalString('MAIN_INFO_SOCIETE_NOM', $brandName);
             $safeCompany = str_replace("'", "\\'", $companyName);
             print "\n/* White-Label: Brand + company name carriers (read by revolutionpro.js.php) */\n";
             print ":root { --revpro-brand-name: '".$safeBrand."'; --revpro-brand-url: 'https://www.novadx.pt'; --revpro-company-name: '".$safeCompany."'; }\n";
