@@ -1082,16 +1082,23 @@ class revolutionpro extends Commonobject{
 			$helppage = $arrayres['helppage'];
 			$mode = $arrayres['mode'];
 
-			// Link to help pages
+			// Link to help pages — White-label: redirect to brand documentation
 			if ($helpbaseurl && $helppage)
 			{
 				$text = '';
 				$title = $langs->trans($mode == 'wiki' ? 'GoToWikiHelpPage' : 'GoToHelpPage');
-				if ($mode == 'wiki') $title .= ' - '.$langs->trans("PageWiki").' &quot;'.dol_escape_htmltag(strtr($helppage, '_', ' ')).'&quot;'."";
-				$text .= '<a class="help" target="_blank" rel="noopener" href="';
-				if ($mode == 'wiki') $text .= sprintf($helpbaseurl, urlencode(html_entity_decode($helppage)));
-				else $text .= sprintf($helpbaseurl, $helppage);
-				$text .= '">';
+				// White-label: override help URL if brand name is configured
+				$wlBrand = getDolGlobalString('REVOLUTIONPRO_BRAND_NAME', '');
+				$wlEnabled = getDolGlobalString('REVOLUTIONPRO_WHITELABEL_ENABLED', '0');
+				if ($wlEnabled && $wlBrand) {
+					$helpUrl = 'https://www.novadx.pt/documentation';
+					$title = 'Documentation';
+				} else {
+					if ($mode == 'wiki') $helpUrl = sprintf($helpbaseurl, urlencode(html_entity_decode($helppage)));
+					else $helpUrl = sprintf($helpbaseurl, $helppage);
+					if ($mode == 'wiki') $title .= ' - '.$langs->trans("PageWiki").' &quot;'.dol_escape_htmltag(strtr($helppage, '_', ' ')).'&quot;'."";
+				}
+				$text .= '<a class="help" target="_blank" rel="noopener" href="'.$helpUrl.'">';
 				$text .= '<span class="fa fa-question-circle atoplogin valignmiddle"></span>';
 				$text .= '</a>';
 				$toprightmenu .= '<span class="dropdown-item othersmenus righttopmenu4">';
