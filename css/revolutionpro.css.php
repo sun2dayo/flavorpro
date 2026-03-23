@@ -2485,4 +2485,589 @@ if (is_object($db)) {
         }
     }
 }
-
+
+// ═══════════════════════════════════════════════════════════════
+// ── TakePOS Modernization: Premium POS Design ──
+// ═══════════════════════════════════════════════════════════════
+?>
+
+/* ────────────────────────────────────────
+   TakePOS: Topbar
+   ──────────────────────────────────────── */
+.bodytakepos .header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%) !important;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 2px 12px rgba(30, 27, 75, 0.4);
+}
+.bodytakepos .topnav {
+    background: transparent !important;
+}
+.bodytakepos .topnav a {
+    color: #e0e7ff !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.bodytakepos .topnav a:hover:not(.nohover) {
+    background: rgba(255,255,255,0.15) !important;
+    color: #fff !important;
+    border-radius: 6px;
+}
+.bodytakepos .topnav-terminalhour {
+    color: #c7d2fe !important;
+    font-size: 0.95em;
+}
+.bodytakepos .topnav input[type="text"] {
+    background: rgba(255,255,255,0.95) !important;
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    font-size: 1.1em !important;
+    transition: border-color 0.2s;
+}
+.bodytakepos .topnav input[type="text"]:focus {
+    border-color: #818cf8 !important;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+    outline: none;
+}
+.bodytakepos div#moreinfo, .bodytakepos div#infowarehouse {
+    color: #a5b4fc !important;
+    font-size: 0.85em;
+}
+
+/* ────────────────────────────────────────
+   TakePOS: Numpad Buttons (0-9, .)
+   ──────────────────────────────────────── */
+.bodytakepos button.calcbutton {
+    background: linear-gradient(145deg, #334155 0%, #1e293b 100%) !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(148, 163, 184, 0.15) !important;
+    border-radius: 10px !important;
+    font-size: 16pt !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: all 0.15s ease;
+}
+.bodytakepos button.calcbutton:hover {
+    background: linear-gradient(145deg, #475569 0%, #334155 100%) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+    transform: translateY(-1px);
+}
+.bodytakepos button.calcbutton:active {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* ────────────────────────────────────────
+   TakePOS: Function Keys (Qty, Price, Line disc.)
+   ──────────────────────────────────────── */
+.bodytakepos button.calcbutton2 {
+    background: linear-gradient(145deg, #4338ca 0%, #3730a3 100%) !important;
+    color: #e0e7ff !important;
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+    border-radius: 10px !important;
+    font-size: 11pt !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(67, 56, 202, 0.25);
+    transition: all 0.15s ease;
+}
+.bodytakepos button.calcbutton2:hover {
+    background: linear-gradient(145deg, #4f46e5 0%, #4338ca 100%) !important;
+    box-shadow: 0 4px 14px rgba(67, 56, 202, 0.35);
+    transform: translateY(-1px);
+}
+.bodytakepos button.calcbutton2:active {
+    background: linear-gradient(145deg, #3730a3 0%, #312e81 100%) !important;
+}
+.bodytakepos button.calcbutton2.clicked {
+    background: linear-gradient(145deg, #6d28d9 0%, #5b21b6 100%) !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3), 0 2px 8px rgba(109, 40, 217, 0.3);
+}
+
+/* Clear button (C) — Blue */
+.bodytakepos button.calcbutton.poscolorblue {
+    background: linear-gradient(145deg, #0284c7 0%, #0369a1 100%) !important;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+}
+.bodytakepos button.calcbutton.poscolorblue:hover {
+    background: linear-gradient(145deg, #0ea5e9 0%, #0284c7 100%) !important;
+}
+
+/* Delete button — Red */
+.bodytakepos button.calcbutton2.poscolordelete {
+    background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+.bodytakepos button.calcbutton2.poscolordelete:hover {
+    background: linear-gradient(145deg, #f87171 0%, #ef4444 100%) !important;
+}
+
+/* ────────────────────────────────────────
+   TakePOS: Action Buttons (New, History, Payment, etc.)
+   ──────────────────────────────────────── */
+.bodytakepos button.actionbutton {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    color: #1e293b !important;
+    border: 1px solid rgba(148, 163, 184, 0.3) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: all 0.15s ease;
+}
+.bodytakepos button.actionbutton:hover {
+    background: linear-gradient(145deg, #fff 0%, #f1f5f9 100%) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+    color: #4338ca !important;
+}
+.bodytakepos button.actionbutton:active {
+    background: linear-gradient(145deg, #e2e8f0 0%, #cbd5e1 100%) !important;
+    transform: translateY(0);
+}
+.bodytakepos button.actionbutton .iconwithlabel {
+    padding-bottom: 6px;
+}
+
+/* ────────────────────────────────────────
+   TakePOS: Product Cards
+   ──────────────────────────────────────── */
+.bodytakepos div.wrapper, .bodytakepos div.wrapper2 {
+    border: 1px solid rgba(148, 163, 184, 0.2) !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.bodytakepos div.wrapper:hover, .bodytakepos div.wrapper2:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-color: rgba(99, 102, 241, 0.3) !important;
+}
+.bodytakepos button.productbutton {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    color: #334155 !important;
+    border-radius: 10px !important;
+    border: none !important;
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+    transition: all 0.15s ease;
+}
+.bodytakepos button.productbutton:hover {
+    background: linear-gradient(145deg, #e0e7ff 0%, #c7d2fe 100%) !important;
+    color: #3730a3 !important;
+}
+.bodytakepos button.productbutton:active {
+    background: linear-gradient(145deg, #4338ca 0%, #3730a3 100%) !important;
+    color: #fff !important;
+}
+.bodytakepos .productprice {
+    background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%) !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    font-size: 1.6em !important;
+    padding: 4px 8px !important;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(67, 56, 202, 0.3);
+}
+
+/* ────────────────────────────────────────
+   TakePOS: Invoice/Order Lines
+   ──────────────────────────────────────── */
+.bodytakepos .posinvoiceline td {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 13px;
+}
+.bodytakepos tr.selected td {
+    background-color: #eef2ff !important;
+    border-left: 3px solid #4338ca;
+}
+.bodytakepos .order td {
+    color: #059669 !important;
+}
+
+/* ────────────────────────────────────────
+   TakePOS: Modals — Modern Rounded Design
+   ──────────────────────────────────────── */
+.bodytakepos .modal-content {
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1) !important;
+    overflow: hidden;
+}
+.bodytakepos .modal-header {
+    background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%) !important;
+    color: #fff !important;
+    padding: 14px 20px !important;
+    border-bottom: none !important;
+    font-size: 1.1em;
+    letter-spacing: 0.3px;
+}
+.bodytakepos .modal-body {
+    padding: 20px !important;
+    background: #fafbfc;
+}
+.bodytakepos .close {
+    color: rgba(255,255,255,0.8) !important;
+    font-size: 24px;
+    transition: color 0.2s;
+}
+.bodytakepos .close:hover {
+    color: #fff !important;
+}
+
+/* Payment Modal Numpad */
+.bodytakepos .modal .block {
+    background: linear-gradient(145deg, #334155 0%, #1e293b 100%) !important;
+    color: #f1f5f9 !important;
+    border-radius: 8px !important;
+    font-weight: 600;
+    font-size: 17px !important;
+    transition: all 0.15s ease;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+.bodytakepos .modal .block:hover {
+    background: linear-gradient(145deg, #475569 0%, #334155 100%) !important;
+}
+
+/* Payment Method Buttons — Color-coded */
+.bodytakepos .paymentbordline {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    transition: all 0.2s ease;
+}
+.bodytakepos .paymentbordline:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+}
+.bodytakepos .takepospay {
+    font-size: 1.4em !important;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Split Sale Modal */
+.bodytakepos .headercontent {
+    background: linear-gradient(135deg, #312e81 0%, #4338ca 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(49, 46, 129, 0.3);
+    padding: 12px 20px;
+}
+.bodytakepos .splitsale {
+    background: #f8fafc;
+}
+
+/* Item Value (Discount) buttons */
+.bodytakepos button.item_value {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    color: #334155;
+}
+.bodytakepos button.item_value:hover {
+    border-color: #818cf8 !important;
+    background: #eef2ff !important;
+}
+.bodytakepos button.item_value.selected {
+    background: linear-gradient(145deg, #4338ca 0%, #6366f1 100%) !important;
+    color: #fff !important;
+    border-color: #4338ca !important;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(67, 56, 202, 0.3);
+}
+
+/* jQuery UI Dialog — Payment dialogs */
+.bodytakepos .ui-dialog {
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
+    overflow: hidden;
+}
+.bodytakepos .ui-dialog .ui-dialog-titlebar {
+    background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 12px 16px !important;
+}
+.bodytakepos .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+    color: #fff !important;
+    font-weight: 600;
+}
+.bodytakepos .ui-dialog .ui-dialog-titlebar-close {
+    background: rgba(255,255,255,0.15) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    color: #fff !important;
+}
+.bodytakepos .ui-dialog .ui-dialog-titlebar-close:hover {
+    background: rgba(255,255,255,0.25) !important;
+}
+.bodytakepos .ui-dialog .ui-dialog-content {
+    padding: 20px !important;
+}
+.bodytakepos .ui-dialog .ui-dialog-buttonpane {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 12px 16px !important;
+}
+.bodytakepos .ui-dialog .ui-dialog-buttonpane button {
+    background: linear-gradient(145deg, #4338ca 0%, #3730a3 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+.bodytakepos .ui-dialog .ui-dialog-buttonpane button:hover {
+    background: linear-gradient(145deg, #4f46e5 0%, #4338ca 100%) !important;
+    box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);
+}
+
+/* Colorbox (popup images/modals) */
+.bodytakepos #cboxOverlay {
+    background: rgba(15, 23, 42, 0.7) !important;
+}
+.bodytakepos #cboxContent {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+/* Basket Tabs (shopping cart buttons) */
+.bodytakepos .basketselected {
+    color: #4338ca !important;
+    font-weight: 700;
+    border-bottom: 3px solid #4338ca;
+}
+
+/* Category tabs */
+.bodytakepos .tab-category {
+    border-radius: 8px !important;
+    transition: all 0.15s ease;
+}
+.bodytakepos .tab-category:hover {
+    background: #eef2ff !important;
+}
+.bodytakepos .tab-category.active {
+    border-top: 3px solid #4338ca !important;
+    background: #fff !important;
+}
+
+/* Arrow navigation */
+.bodytakepos .indicator {
+    background: rgba(67, 56, 202, 0.6) !important;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.bodytakepos .indicator:hover {
+    background: rgba(67, 56, 202, 0.9) !important;
+}
+
+/* Custom scrollbar for TakePOS */
+.bodytakepos ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.bodytakepos ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+.bodytakepos ::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 3px;
+}
+.bodytakepos ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ────────────────────────────────────────
+   TakePOS: iframe Modals (.revolutionpro) 
+   Popup pages (pay.php, split.php, reduction.php, freezone.php)
+   load inside iframes with body.revolutionpro NOT body.bodytakepos
+   ──────────────────────────────────────── */
+
+/* Modal containers */
+.revolutionpro .modal-content {
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1) !important;
+    overflow: hidden;
+}
+.revolutionpro .modal-header {
+    background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%) !important;
+    color: #fff !important;
+    padding: 14px 20px !important;
+    border-bottom: none !important;
+    font-size: 1.1em;
+}
+.revolutionpro .modal-body {
+    padding: 20px !important;
+    background: #fafbfc;
+}
+
+/* Numpad in payment modal */
+.revolutionpro button.calcbutton {
+    background: linear-gradient(145deg, #334155 0%, #1e293b 100%) !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(148, 163, 184, 0.15) !important;
+    border-radius: 10px !important;
+    font-size: 16pt !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: all 0.15s ease;
+}
+.revolutionpro button.calcbutton:hover {
+    background: linear-gradient(145deg, #475569 0%, #334155 100%) !important;
+}
+.revolutionpro button.calcbutton:active {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+}
+
+/* Function keys in modal */
+.revolutionpro button.calcbutton2 {
+    background: linear-gradient(145deg, #4338ca 0%, #3730a3 100%) !important;
+    color: #e0e7ff !important;
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(67, 56, 202, 0.25);
+    transition: all 0.15s ease;
+}
+.revolutionpro button.calcbutton.poscolorblue {
+    background: linear-gradient(145deg, #0284c7 0%, #0369a1 100%) !important;
+}
+.revolutionpro button.calcbutton2.poscolordelete {
+    background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%) !important;
+    color: #fff !important;
+}
+
+/* Payment numpad (.block class) */
+.revolutionpro .block {
+    background: linear-gradient(145deg, #334155 0%, #1e293b 100%) !important;
+    color: #f1f5f9 !important;
+    border-radius: 8px !important;
+    font-weight: 600;
+    font-size: 17px !important;
+    transition: all 0.15s ease;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+.revolutionpro .block:hover {
+    background: linear-gradient(145deg, #475569 0%, #334155 100%) !important;
+}
+
+/* Payment methods */
+.revolutionpro .paymentbordline, .revolutionpro div.paymentbordline {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    transition: all 0.2s ease;
+}
+.revolutionpro .paymentbordline:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+}
+.revolutionpro .takepospay {
+    font-size: 1.4em !important;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Split sale header */
+.revolutionpro .headercontent {
+    background: linear-gradient(135deg, #312e81 0%, #4338ca 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(49, 46, 129, 0.3);
+}
+
+/* Discount buttons */
+.revolutionpro button.item_value {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    transition: all 0.15s ease;
+    color: #334155;
+}
+.revolutionpro button.item_value.selected {
+    background: linear-gradient(145deg, #4338ca 0%, #6366f1 100%) !important;
+    color: #fff !important;
+    border-color: #4338ca !important;
+    font-weight: 700;
+}
+
+/* Action buttons in modals */
+.revolutionpro button.actionbutton {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    color: #1e293b !important;
+    border: 1px solid rgba(148, 163, 184, 0.3) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: all 0.15s ease;
+}
+.revolutionpro button.actionbutton:hover {
+    background: linear-gradient(145deg, #fff 0%, #f1f5f9 100%) !important;
+    color: #4338ca !important;
+}
+
+/* jQuery UI dialogs in modals */
+.revolutionpro .ui-dialog {
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
+    overflow: hidden;
+}
+.revolutionpro .ui-dialog .ui-dialog-titlebar {
+    background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 12px 16px !important;
+}
+.revolutionpro .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+    color: #fff !important;
+}
+.revolutionpro .ui-dialog .ui-dialog-titlebar-close {
+    background: rgba(255,255,255,0.15) !important;
+    border: none !important;
+    border-radius: 50% !important;
+}
+.revolutionpro .ui-dialog .ui-dialog-buttonpane button {
+    background: linear-gradient(145deg, #4338ca 0%, #3730a3 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Close button in modals */
+.revolutionpro .close {
+    color: rgba(255,255,255,0.8) !important;
+    transition: color 0.2s;
+}
+.revolutionpro .close:hover {
+    color: #fff !important;
+}
+
+<?php
