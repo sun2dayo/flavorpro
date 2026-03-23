@@ -35,69 +35,10 @@ $(document).ready(function(){
 });
 
 // =====================================================================
-// ICON MANAGER — Swap FA classes from llx_revolutionpro_config
-// Reads --revpro-icon-map CSS variable set by revolutionpro.css.php
-// Revolution Pro sidebar structure:
-//   <li class="site-menu-item {mainmenu} ...">
-//     <a ...>
-//       <div class="site-menu-icon mainmenu icon-{key} mainmenu {key}"></div>
-//       <span class="site-menu-title">Label</span>
-//     </a>
-//   </li>
+// ICON MANAGER — Icons are now handled via pure CSS ::before overrides
+// in revolutionpro.css.php (per-key content property overrides).
+// No JS DOM manipulation needed.
 // =====================================================================
-document.addEventListener('DOMContentLoaded', function() {
-	// Skip login pages
-	if (document.body && document.body.classList.contains('bodylogin')) return;
-
-	// Delay to ensure Revolution Pro sidebar is fully rendered
-	setTimeout(function() {
-		var rootStyles = getComputedStyle(document.documentElement);
-		var mapValue = rootStyles.getPropertyValue('--revpro-icon-map').trim();
-
-		// Remove wrapping quotes
-		if (mapValue && mapValue.length > 2) {
-			mapValue = mapValue.replace(/^['"]|['"]$/g, '');
-		}
-
-		if (!mapValue || mapValue === 'none') return;
-
-		var iconMap;
-		try {
-			iconMap = JSON.parse(mapValue);
-		} catch (e) {
-			return; // Invalid JSON, skip silently
-		}
-
-		// For each menu key, find the sidebar icon container and swap the icon
-		Object.keys(iconMap).forEach(function(menuKey) {
-			var customClass = iconMap[menuKey]; // e.g. "fa fa-building"
-			if (!customClass) return;
-
-			// Revolution Pro sidebar icons: <div class="site-menu-icon mainmenu icon-{key} {key}">
-			var iconDiv = document.querySelector('div.site-menu-icon.' + menuKey);
-			if (!iconDiv) return;
-
-			// Remove the CSS background-image that Revolution Pro uses for native icons
-			iconDiv.style.backgroundImage = 'none';
-			iconDiv.style.background = 'none';
-			iconDiv.style.display = 'flex';
-			iconDiv.style.alignItems = 'center';
-			iconDiv.style.justifyContent = 'center';
-
-			// Create an FA <i> element inside the icon container
-			var existingIcon = iconDiv.querySelector('i[class*="fa"]');
-			if (existingIcon) {
-				existingIcon.className = customClass + ' fa-fw';
-			} else {
-				var faIcon = document.createElement('i');
-				faIcon.className = customClass + ' fa-fw';
-				faIcon.style.cssText = 'font-size: 18px; color: inherit;';
-				iconDiv.innerHTML = '';
-				iconDiv.appendChild(faIcon);
-			}
-		});
-	}, 500); // 500ms delay for sidebar rendering
-});
 <?php
 
 // // Session FOR Menu
