@@ -2428,4 +2428,38 @@ if (file_exists($hiddenCssFile)) {
     print file_get_contents($hiddenCssFile);
     print "\n";
 }
+
+// ── White-Label: Brand name, URL, and logo CSS ──
+if (is_object($db)) {
+    $wlEnabled = getDolGlobalString('REVOLUTIONPRO_WHITELABEL_ENABLED', '0');
+    if ($wlEnabled) {
+        $brandName   = getDolGlobalString('REVOLUTIONPRO_BRAND_NAME', '');
+        $sidebarLogo = getDolGlobalString('REVOLUTIONPRO_SIDEBAR_LOGO', '');
+        $loginLogo   = getDolGlobalString('REVOLUTIONPRO_LOGIN_LOGO', '');
+
+        if ($brandName) {
+            $safeBrand = str_replace("'", "\\'", $brandName);
+            print "\n/* White-Label: Brand name carrier (read by revolutionpro.js.php) */\n";
+            print ":root { --revpro-brand-name: '".$safeBrand."'; --revpro-brand-url: 'https://www.novadx.pt'; }\n";
+        }
+
+        // Sidebar logo override
+        if ($sidebarLogo) {
+            $logoUrl = dol_buildpath('/revolutionpro/img/logos/'.$sidebarLogo, 1);
+            print "\n/* White-Label: Sidebar logo override */\n";
+            print ".navbar-brand-logo { content: url('".$logoUrl."') !important; max-height: 30px !important; }\n";
+            print ".navbar-brand-logo, img.login_logo_title { max-height: 30px !important; }\n";
+            // Also override via background-image for image elements rendered as divs
+            print ".site-navbar .navbar-brand img { content: url('".$logoUrl."') !important; }\n";
+        }
+
+        // Login page logo override
+        if ($loginLogo) {
+            $loginLogoUrl = dol_buildpath('/revolutionpro/img/logos/'.$loginLogo, 1);
+            print "\n/* White-Label: Login page logo override */\n";
+            print ".page-login-v2 .page-brand-info img, .bodylogin .login_logo_title img, .bodylogin .login_main_home img { content: url('".$loginLogoUrl."') !important; max-height: 80px !important; }\n";
+            print ".bodylogin img.login_logo_title { content: url('".$loginLogoUrl."') !important; max-height: 80px !important; }\n";
+        }
+    }
+}
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1024 768" xml:space="preserve">
+<rect fill="#efede7" width="1024" height="768" />
+
+ 
+ <g id="logo-group" stroke-width="0" stroke-miterlimit="2" transform="translate(-1886.3 -1414.7) scale(4.6841)">
+  <path id="path12" style="font-variant-ligatures:normal" d="m534.98 396.68 31.683 42.772h-26.93l-18.38-24.71zm4.75-68.12h26.931l-31.683 42.613-13.465-18.059z" class="c1" fill="#e08409"/>
+  <polygon id="polygon14" style="font-variant-ligatures:normal" transform="matrix(2.2 0 0 2.2 295.25 170.35)" class="c3" points="85.926 71.915 104.65 97.118 85.926 122.32 73.685 122.32 92.406 97.118 73.685 71.915" fill="#0e62b8"/>
+ </g>
+
+</svg>

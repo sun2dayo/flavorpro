@@ -267,6 +267,19 @@ if (in_array($action, array('savemenus','saveadmintools','savesetupmenu','savemo
     }
 }
 
+// ── Action: Save White-Label ──
+if ($action === 'savewhitelabel') {
+    $wlEnabled   = GETPOST('wl_enabled', 'int') ? '1' : '0';
+    $brandName   = GETPOST('brand_name', 'alphanohtml');
+    $sidebarLogo = GETPOST('sidebar_logo', 'alphanohtml');
+    $loginLogo   = GETPOST('login_logo', 'alphanohtml');
+    dolibarr_set_const($db, 'REVOLUTIONPRO_WHITELABEL_ENABLED', $wlEnabled, 'chaine', 0, '', $conf->entity);
+    dolibarr_set_const($db, 'REVOLUTIONPRO_BRAND_NAME', $brandName, 'chaine', 0, '', $conf->entity);
+    dolibarr_set_const($db, 'REVOLUTIONPRO_SIDEBAR_LOGO', $sidebarLogo, 'chaine', 0, '', $conf->entity);
+    dolibarr_set_const($db, 'REVOLUTIONPRO_LOGIN_LOGO', $loginLogo, 'chaine', 0, '', $conf->entity);
+    $mesg = '<div class="ok">✅ White-label settings saved!</div>';
+}
+
 // ── Action: Lock ──
 if ($action === 'lock') {
     if (file_put_contents(__DIR__ . '/flavorpro.lock', 'Locked on '.date('Y-m-d H:i:s').' by '.$user->login) !== false) {
@@ -430,6 +443,7 @@ print '<ul role="tablist" class="nav nav-tabs nav-tabs-line">';
 	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproMenus" data-toggle="tab">📋 Menu Manager</a></li>';
 	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproAdminTools" data-toggle="tab">🛠️ Admin Tools</a></li>';
 	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproModuleTabs" data-toggle="tab">🧩 Module Tabs</a></li>';
+	print '<li class="nav-item"><a class="nav-link" role="tab" href="#revoproWhiteLabel" data-toggle="tab">🏷️ White-Label</a></li>';
 print '</ul>';
 print '<div class="tab-content">';
 
@@ -486,6 +500,11 @@ require __DIR__.'/setup_tab_admintools.php';
 // NEW TAB: MODULE TABS
 // ═══════════════════════════════════════════════════════════════════════════════
 require __DIR__.'/setup_tab_moduletabs.php';
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NEW TAB: WHITE-LABEL
+// ═══════════════════════════════════════════════════════════════════════════════
+require __DIR__.'/setup_tab_whitelabel.php';
 
 print '</div>'; // tab-content
 print '</div>'; // nav-tabs-horizontal

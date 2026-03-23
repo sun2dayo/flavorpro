@@ -39,6 +39,71 @@ $(document).ready(function(){
 // in revolutionpro.css.php (per-key content property overrides).
 // No JS DOM manipulation needed.
 // =====================================================================
+
+// =====================================================================
+// WHITE-LABEL — Replace "Dolibarr" text and URLs with brand name
+// Reads --revpro-brand-name CSS variable set by revolutionpro.css.php
+// =====================================================================
+document.addEventListener('DOMContentLoaded', function() {
+	if (document.body && document.body.classList.contains('bodylogin')) {
+		// On login page, run immediately with slight delay for DOM readiness
+		setTimeout(rpWhiteLabel, 200);
+	} else {
+		setTimeout(rpWhiteLabel, 400);
+	}
+});
+
+function rpWhiteLabel() {
+	var rootStyles = getComputedStyle(document.documentElement);
+	var brandName = rootStyles.getPropertyValue('--revpro-brand-name').trim();
+	var brandUrl = rootStyles.getPropertyValue('--revpro-brand-url').trim();
+
+	// Remove wrapping quotes from CSS variables
+	if (brandName) brandName = brandName.replace(/^['"]|['"]$/g, '');
+	if (brandUrl) brandUrl = brandUrl.replace(/^['"]|['"]$/g, '');
+
+	if (!brandName || brandName === 'none') return;
+	if (!brandUrl) brandUrl = '';
+
+	// 1. Replace text content in DOM using TreeWalker (efficient, no re-rendering)
+	var walker = document.createTreeWalker(
+		document.body,
+		NodeFilter.SHOW_TEXT,
+		null,
+		false
+	);
+	var node;
+	while (node = walker.nextNode()) {
+		if (node.nodeValue && node.nodeValue.indexOf('Dolibarr') !== -1) {
+			node.nodeValue = node.nodeValue.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
+			node.nodeValue = node.nodeValue.replace(/Dolibarr/g, brandName);
+		}
+	}
+
+	// 2. Replace page title
+	if (document.title && document.title.indexOf('Dolibarr') !== -1) {
+		document.title = document.title.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
+		document.title = document.title.replace(/Dolibarr/g, brandName);
+	}
+
+	// 3. Replace sidebar brand text (Revolution Pro)
+	var brandText = document.querySelector('.navbar-brand-text');
+	if (brandText) brandText.textContent = brandName;
+
+	// 4. Replace URLs pointing to dolibarr.org
+	if (brandUrl) {
+		var links = document.querySelectorAll('a[href*="dolibarr.org"]');
+		links.forEach(function(a) {
+			a.href = a.href.replace(/https?:\/\/(www\.)?dolibarr\.org[^\s"]*/gi, brandUrl);
+		});
+	}
+
+	// 5. Replace in meta description if present
+	var metaDesc = document.querySelector('meta[name="description"]');
+	if (metaDesc && metaDesc.content) {
+		metaDesc.content = metaDesc.content.replace(/Dolibarr/g, brandName);
+	}
+}
 <?php
 
 // // Session FOR Menu
