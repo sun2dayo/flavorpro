@@ -1144,6 +1144,7 @@ class revolutionpro extends Commonobject{
 
 		$text = '<span href="#" class="aversion"><span class="hideonsmartphone small">'.DOL_VERSION.'</span></span>';
 		$toprightmenu .= '<span class="dropdown-item othersmenus righttopmenu5">';
+		$appli = (defined('DOL_APPLICATION_TITLE') ? constant('DOL_APPLICATION_TITLE') : 'Dolibarr').' '.DOL_VERSION;
 		$toprightmenu .= $form->textwithtooltip('', $appli, 2, 1, $text, 'login_block_elem', 2);
 		$toprightmenu .= '</span>';
 			
