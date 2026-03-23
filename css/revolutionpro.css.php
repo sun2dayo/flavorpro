@@ -2341,6 +2341,45 @@ if (file_exists($hiddenCssPath)) {
 
 // ── Flavor Pro: Pass icon config from llx_revolutionpro_config to JS via CSS variable ──
 if (is_object($db)) {
+    // FA class name → unicode lookup (Font Awesome 4/5 compatible)
+    $faUnicode = array(
+        'fa-home'=>'\f015','fa-star'=>'\f005','fa-building'=>'\f1ad','fa-cube'=>'\f1b2',
+        'fa-briefcase'=>'\f0b1','fa-university'=>'\f19c','fa-calculator'=>'\f1ec',
+        'fa-project-diagram'=>'\f542','fa-user-tie'=>'\f508','fa-ticket-alt'=>'\f3ff',
+        'fa-wrench'=>'\f0ad','fa-users'=>'\f0c0','fa-calendar-check'=>'\f274',
+        'fa-money-bill-wave'=>'\f53a','fa-folder-open'=>'\f07c','fa-industry'=>'\f275',
+        'fa-cash-register'=>'\f788','fa-cogs'=>'\f085','fa-cog'=>'\f013',
+        'fa-layer-group'=>'\f5fd','fa-file-invoice'=>'\f570','fa-globe'=>'\f0ac',
+        'fa-user-plus'=>'\f234','fa-umbrella-beach'=>'\f5ca','fa-money-check-alt'=>'\f53d',
+        'fa-hand-holding-heart'=>'\f4be','fa-piggy-bank'=>'\f4d3','fa-file-signature'=>'\f573',
+        'fa-shipping-fast'=>'\f48b','fa-warehouse'=>'\f494','fa-rocket'=>'\f135',
+        'fa-heart'=>'\f004','fa-flag'=>'\f024','fa-bolt'=>'\f0e7','fa-bell'=>'\f0f3',
+        'fa-shield-alt'=>'\f3ed','fa-lock'=>'\f023','fa-key'=>'\f084','fa-magic'=>'\f0d0',
+        'fa-paint-brush'=>'\f1fc','fa-palette'=>'\f53f','fa-diamond'=>'\f219',
+        'fa-trophy'=>'\f091','fa-chart-line'=>'\f201','fa-chart-bar'=>'\f080',
+        'fa-chart-pie'=>'\f200','fa-database'=>'\f1c0','fa-server'=>'\f233',
+        'fa-cloud'=>'\f0c2','fa-code'=>'\f121','fa-terminal'=>'\f120',
+        'fa-desktop'=>'\f108','fa-laptop'=>'\f109','fa-mobile-alt'=>'\f3cd',
+        'fa-envelope'=>'\f0e0','fa-phone'=>'\f095','fa-map-marker-alt'=>'\f3c5',
+        'fa-search'=>'\f002','fa-edit'=>'\f044','fa-trash'=>'\f1f8','fa-plus'=>'\f067',
+        'fa-minus'=>'\f068','fa-check'=>'\f00c','fa-times'=>'\f00d','fa-eye'=>'\f06e',
+        'fa-download'=>'\f019','fa-upload'=>'\f093','fa-print'=>'\f02f',
+        'fa-file'=>'\f15b','fa-file-alt'=>'\f15c','fa-copy'=>'\f0c5',
+        'fa-bookmark'=>'\f02e','fa-tag'=>'\f02b','fa-tags'=>'\f02c',
+        'fa-comment'=>'\f075','fa-comments'=>'\f086','fa-share'=>'\f064',
+        'fa-link'=>'\f0c1','fa-paperclip'=>'\f0c6','fa-calendar'=>'\f073',
+        'fa-clock'=>'\f017','fa-history'=>'\f1da','fa-undo'=>'\f0e2',
+        'fa-handshake'=>'\f2b5','fa-address-book'=>'\f2b9','fa-sitemap'=>'\f0e8',
+        'fa-bars'=>'\f0c9','fa-th'=>'\f00a','fa-list'=>'\f03a',
+        'fa-shopping-cart'=>'\f07a','fa-credit-card'=>'\f09d','fa-money-bill'=>'\f0d6',
+        'fa-balance-scale'=>'\f24e','fa-gavel'=>'\f0e3','fa-landmark'=>'\f66f',
+        'fa-headset'=>'\f590','fa-cubes'=>'\f1b3','fa-box'=>'\f466',
+        'fa-dolly'=>'\f472','fa-truck'=>'\f0d1','fa-plane'=>'\f072',
+        'fa-anchor'=>'\f13d','fa-compass'=>'\f14e','fa-globe-americas'=>'\f57d',
+        'fa-solar-panel'=>'\f5ba','fa-city'=>'\f64f','fa-balance-scale-right'=>'\f516',
+        'fa-address-card'=>'\f2bb',
+    );
+
     $sql_ic = "SELECT menu_key, fa_icon FROM ".MAIN_DB_PREFIX."revolutionpro_config WHERE entity=1 AND fa_icon != ''";
     $resql_ic = $db->query($sql_ic);
     if ($resql_ic) {
@@ -2352,12 +2391,31 @@ if (is_object($db)) {
             $jsonMap = json_encode($iconMap);
             print "\n/* Icon config carrier (read by revolutionpro.js.php) */\n";
             print ":root { --revpro-icon-map: '".$jsonMap."'; }\n";
-            // Suppress ALL native background-image icons when icon map is active
-            print "div.site-menu-icon.mainmenu { background-image: none !important; background: none !important; display: flex !important; align-items: center; justify-content: center; }\n";
-            print "div.site-menu-icon.mainmenu i.fa { font-size: 18px; color: inherit; }\n";
+
+            // Generate per-key CSS ::before content overrides
+            // Theme uses: div.mainmenu.home::before { content: "\f015" }
+            // We override with: div.mainmenu.home::before { content: "\f005" !important }
+            print "\n/* Flavor Pro: Per-menu icon overrides */\n";
+            foreach ($iconMap as $menuKey => $faClass) {
+                // Extract the icon name from class (e.g. "fa fa-star" -> "fa-star")
+                $parts = explode(' ', trim($faClass));
+                $iconName = '';
+                foreach ($parts as $part) {
+                    if (strpos($part, 'fa-') === 0 && $part !== 'fa-fw') {
+                        $iconName = $part;
+                        break;
+                    }
+                }
+                if ($iconName && isset($faUnicode[$iconName])) {
+                    $unicode = $faUnicode[$iconName];
+                    $safeKey = htmlspecialchars($menuKey);
+                    print "div.mainmenu.{$safeKey}::before { content: \"{$unicode}\" !important; }\n";
+                }
+            }
         }
     }
 }
+
 
 // ── Flavor Pro: Include visibility rules (flavorpro_hidden.css) ──
 $hiddenCssFile = dirname(__DIR__).'/admin/flavorpro_hidden.css';
