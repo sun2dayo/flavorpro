@@ -2338,6 +2338,10 @@ print "\n/* Fix: .hideobject must override .inline-block (bootstrap-extend confl
 print ".hideobject { display: none !important; }\n";
 print ".inline-block.hideobject { display: none !important; }\n";
 
+// ── Hide the ? help button (links to wiki.dolibarr.org) ──
+print "\n/* White-Label: Hide help button linking to Dolibarr wiki */\n";
+print ".righttopmenu4 { display: none !important; }\n";
+
 // ── Flavor Pro: Include generated visibility CSS ──
 $hiddenCssPath = dirname(__FILE__).'/../admin/flavorpro_hidden.css';
 if (file_exists($hiddenCssPath)) {
