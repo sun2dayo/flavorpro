@@ -66,6 +66,8 @@ function rpWhiteLabel() {
 	if (!brandUrl) brandUrl = '';
 
 	// 1. Replace text content in DOM using TreeWalker (efficient, no re-rendering)
+	// Skip the sidebar brand area — company name should stay
+	var brandTextEl = document.querySelector('.navbar-brand-text');
 	var walker = document.createTreeWalker(
 		document.body,
 		NodeFilter.SHOW_TEXT,
@@ -74,6 +76,8 @@ function rpWhiteLabel() {
 	);
 	var node;
 	while (node = walker.nextNode()) {
+		// Skip text inside the sidebar brand area
+		if (brandTextEl && brandTextEl.contains(node)) continue;
 		if (node.nodeValue && node.nodeValue.indexOf('Dolibarr') !== -1) {
 			node.nodeValue = node.nodeValue.replace(/Dolibarr\s*ERP\s*(&|&amp;)?\s*CRM/gi, brandName);
 			node.nodeValue = node.nodeValue.replace(/Dolibarr/g, brandName);
@@ -86,9 +90,8 @@ function rpWhiteLabel() {
 		document.title = document.title.replace(/Dolibarr/g, brandName);
 	}
 
-	// 3. Replace sidebar brand text (Revolution Pro)
-	var brandText = document.querySelector('.navbar-brand-text');
-	if (brandText) brandText.textContent = brandName;
+	// 3. Sidebar brand text: keep the company name as-is
+	// (The company name is set in Dolibarr company settings, not here)
 
 	// 4. Replace URLs pointing to dolibarr.org
 	if (brandUrl) {

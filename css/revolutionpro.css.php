@@ -2443,17 +2443,25 @@ if (is_object($db)) {
             print ":root { --revpro-brand-name: '".$safeBrand."'; --revpro-brand-url: 'https://www.novadx.pt'; }\n";
         }
 
-        // Sidebar logo override
+        // Fix sidebar brand text truncation — show full company name
+        print "\n/* White-Label: Fix brand text truncation */\n";
+        print "body.site-navbar-small .site-navbar .navbar-brand { max-width: none !important; overflow: visible !important; text-overflow: unset !important; }\n";
+        print ".navbar-brand-text { white-space: nowrap !important; overflow: visible !important; text-overflow: unset !important; }\n";
+
+        // Sidebar logo: fallback ONLY — use white-label logo if no company logo is set
+        // The company logo has src like viewimage.php?...mycompany...
+        // If company has a logo, don't override it. Only set for the case where
+        // no company logo exists (img src will be empty or default dolibarr icon)
         if ($sidebarLogo) {
             $logoUrl = dol_buildpath('/revolutionpro/img/logos/'.$sidebarLogo, 1);
-            print "\n/* White-Label: Sidebar logo override */\n";
-            print ".navbar-brand-logo { content: url('".$logoUrl."') !important; max-height: 30px !important; }\n";
-            print ".navbar-brand-logo, img.login_logo_title { max-height: 30px !important; }\n";
-            // Also override via background-image for image elements rendered as divs
-            print ".site-navbar .navbar-brand img { content: url('".$logoUrl."') !important; }\n";
+            print "\n/* White-Label: Sidebar logo (fallback when no company logo) */\n";
+            // Only apply to imgs WITHOUT a company logo URL
+            // Company logos have src containing 'viewimage.php?...mycompany'
+            // Default Dolibarr logo has src like 'dolibarr_logo.svg' or similar
+            print ".navbar-brand-logo:not([src*='viewimage.php']) { content: url('".$logoUrl."') !important; max-height: 30px !important; }\n";
         }
 
-        // Login page logo override
+        // Login page logo override (always applies — login page is where branding matters most)
         if ($loginLogo) {
             $loginLogoUrl = dol_buildpath('/revolutionpro/img/logos/'.$loginLogo, 1);
             print "\n/* White-Label: Login page logo override */\n";
