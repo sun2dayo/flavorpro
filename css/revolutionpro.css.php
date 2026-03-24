@@ -2132,6 +2132,14 @@ body.bodylogin .page-brand-info * {
     position: relative;
     z-index: 1;
 }
+/* Logo image on left panel — larger and forced white */
+body.bodylogin .page-brand-info img {
+    width: 100px !important;
+    height: auto !important;
+    max-width: 100px !important;
+    filter: brightness(0) invert(1) !important;
+    margin-bottom: 16px !important;
+}
 body.bodylogin .page-brand-info .brand-text {
     font-family: 'Inter', sans-serif !important;
     font-weight: 700 !important;
