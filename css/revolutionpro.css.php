@@ -2093,9 +2093,9 @@ body.bodylogin.page-login-v2 .page-login-main {
     background-image: none !important;
 }
 
-/* ── Left panel: clean purple gradient (NO background image) ── */
+/* ── Left panel: clean indigo gradient (matches template) ── */
 body.bodylogin .page-brand-info {
-    background: linear-gradient(160deg, #7C3AED 0%, #8B5CF6 30%, #A78BFA 70%, #C4B5FD 100%) !important;
+    background: linear-gradient(160deg, #312E81 0%, #3730A3 25%, #4338CA 50%, #4F46E5 75%, #6366F1 100%) !important;
     position: relative;
     overflow: hidden;
 }
@@ -2205,8 +2205,8 @@ body.bodylogin .tdinputlogin {
     box-sizing: border-box !important;
 }
 body.bodylogin .tdinputlogin:focus-within {
-    border-color: #7C3AED !important;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+    border-color: #6366F1 !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
 }
 
 /* ── Input icons ── */
@@ -2273,7 +2273,7 @@ body.bodylogin .login_table input.button,
 body.bodylogin .login_table input[type="submit"] {
     width: 100% !important;
     padding: 13px 24px !important;
-    background: linear-gradient(135deg, #7C3AED, #8B5CF6) !important;
+    background: linear-gradient(135deg, #4F46E5, #6366F1) !important;
     color: #FFFFFF !important;
     border: none !important;
     border-radius: 8px !important;
@@ -2283,28 +2283,28 @@ body.bodylogin .login_table input[type="submit"] {
     letter-spacing: 1px !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35) !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35) !important;
     text-transform: uppercase !important;
     line-height: 1.5 !important;
 }
 body.bodylogin #login-submit-wrapper input[type="submit"]:hover,
 body.bodylogin .login_table input.button:hover,
 body.bodylogin .login_table input[type="submit"]:hover {
-    background: linear-gradient(135deg, #6D28D9, #7C3AED) !important;
-    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.45) !important;
+    background: linear-gradient(135deg, #4338CA, #4F46E5) !important;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45) !important;
     transform: translateY(-1px) !important;
 }
 
 /* ── Forgot password link ── */
 body.bodylogin a.alogin {
-    color: #7C3AED !important;
+    color: #4F46E5 !important;
     text-decoration: none !important;
     font-size: 13px !important;
     font-weight: 500 !important;
     font-family: 'Inter', sans-serif !important;
 }
 body.bodylogin a.alogin:hover {
-    color: #6D28D9 !important;
+    color: #4338CA !important;
     text-decoration: underline !important;
 }
 
