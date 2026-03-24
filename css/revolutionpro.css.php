@@ -478,11 +478,13 @@ body:not(.bodylogin) {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-body:not(.bodylogin) #id-right {
+body:not(.bodylogin) .page-content,
+body:not(.bodylogin) .fiche {
     animation: ndxFadeIn 0.3s ease-out both;
 }
 /* Fade-out when navigating away */
-body.ndx-navigating #id-right {
+body.ndx-navigating .page-content,
+body.ndx-navigating .fiche {
     opacity: 0 !important;
     transform: translateY(4px) !important;
     transition: opacity 0.15s ease, transform 0.15s ease !important;
