@@ -390,7 +390,7 @@ $(document).ready(function(){
 			var brandPanel = document.querySelector('.page-brand-info');
 			var loginMain = document.querySelector('.page-login-main');
 			if (brandPanel) {
-				brandPanel.style.cssText = 'position:fixed!important;left:0!important;top:0!important;bottom:0!important;right:470px!important;width:auto!important;margin:0!important;padding:0!important;background:linear-gradient(160deg,#7C3AED 0%,#8B5CF6 30%,#A78BFA 70%,#C4B5FD 100%)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;z-index:1!important;overflow:hidden!important;';
+				brandPanel.style.cssText = 'position:fixed!important;left:0!important;top:0!important;bottom:0!important;right:470px!important;width:auto!important;margin:0!important;padding:0!important;background:linear-gradient(160deg,#312E81 0%,#3730A3 25%,#4338CA 50%,#4F46E5 75%,#6366F1 100%)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;z-index:1!important;overflow:hidden!important;';
 			}
 			if (loginMain) {
 				loginMain.style.cssText = 'position:fixed!important;right:0!important;top:0!important;bottom:0!important;width:470px!important;background-image:none!important;background-color:#FFFFFF!important;padding:0 50px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;z-index:2!important;overflow-y:auto!important;';
@@ -402,4 +402,43 @@ $(document).ready(function(){
 	$('body .site-menu>.site-menu-item>a ').on('click', function(e) {
 	     $(this).parent('li').find('a.mm-next').click();
 	});
+
+	// =====================================================================
+	// PASSWORD EYE TOGGLE FIX — Dolibarr core attaches the handler twice
+	// because the theme DOM manipulation causes the inline script to
+	// re-execute. We unbind all handlers and attach a single clean one.
+	// =====================================================================
+	var $eyeBtn = $('#togglepassword');
+	if ($eyeBtn.length) {
+		$eyeBtn.off('click').on('click', function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			var $pwd = $('#password');
+			if ($pwd.attr('type') === 'password') {
+				$pwd.attr('type', 'text');
+				$eyeBtn.find('.fa-eye').attr('class', 'fa fa-eye-slash');
+			} else {
+				$pwd.attr('type', 'password');
+				$eyeBtn.find('.fa-eye-slash').attr('class', 'fa fa-eye');
+			}
+			return false;
+		});
+		// Fix styling — position the eye icon properly
+		$eyeBtn.css({
+			'position': 'absolute',
+			'right': '12px',
+			'top': '50%',
+			'transform': 'translateY(-50%)',
+			'cursor': 'pointer',
+			'opacity': '0.5',
+			'z-index': '10',
+			'width': 'auto',
+			'padding': '4px'
+		});
+		$eyeBtn.parent().css('position', 'relative');
+		$eyeBtn.hover(
+			function() { $(this).css('opacity', '0.8'); },
+			function() { $(this).css('opacity', '0.5'); }
+		);
+	}
 });
