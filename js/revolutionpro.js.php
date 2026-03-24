@@ -404,41 +404,40 @@ $(document).ready(function(){
 	});
 
 	// =====================================================================
-	// PASSWORD EYE TOGGLE FIX — Dolibarr core attaches the handler twice
-	// because the theme DOM manipulation causes the inline script to
-	// re-execute. We unbind all handlers and attach a single clean one.
+	// PASSWORD EYE TOGGLE FIX — Dolibarr core attaches the click handler
+	// twice (inline script re-executes due to theme DOM manipulation).
+	// We use setTimeout + cloneNode to nuke ALL handlers after everything
+	// has finished loading, then attach a single clean handler.
 	// =====================================================================
-	var $eyeBtn = $('#togglepassword');
-	if ($eyeBtn.length) {
-		$eyeBtn.off('click').on('click', function(e) {
+	setTimeout(function() {
+		var oldEye = document.getElementById('togglepassword');
+		if (!oldEye) return;
+
+		// Clone the element (deep clone children, but strips all event listeners)
+		var newEye = oldEye.cloneNode(true);
+		oldEye.parentNode.replaceChild(newEye, oldEye);
+
+		// Attach a single clean click handler
+		newEye.addEventListener('click', function(e) {
 			e.preventDefault();
 			e.stopImmediatePropagation();
-			var $pwd = $('#password');
-			if ($pwd.attr('type') === 'password') {
-				$pwd.attr('type', 'text');
-				$eyeBtn.find('.fa-eye').attr('class', 'fa fa-eye-slash');
+			var pwd = document.getElementById('password');
+			if (!pwd) return;
+			if (pwd.type === 'password') {
+				pwd.type = 'text';
+				var icon = newEye.querySelector('.fa-eye');
+				if (icon) icon.className = 'fa fa-eye-slash';
 			} else {
-				$pwd.attr('type', 'password');
-				$eyeBtn.find('.fa-eye-slash').attr('class', 'fa fa-eye');
+				pwd.type = 'password';
+				var icon2 = newEye.querySelector('.fa-eye-slash');
+				if (icon2) icon2.className = 'fa fa-eye';
 			}
-			return false;
 		});
-		// Fix styling — position the eye icon properly
-		$eyeBtn.css({
-			'position': 'absolute',
-			'right': '12px',
-			'top': '50%',
-			'transform': 'translateY(-50%)',
-			'cursor': 'pointer',
-			'opacity': '0.5',
-			'z-index': '10',
-			'width': 'auto',
-			'padding': '4px'
-		});
-		$eyeBtn.parent().css('position', 'relative');
-		$eyeBtn.hover(
-			function() { $(this).css('opacity', '0.8'); },
-			function() { $(this).css('opacity', '0.5'); }
-		);
-	}
+
+		// Fix styling — position the eye icon properly inside the input container
+		newEye.style.cssText = 'position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;opacity:0.5;z-index:10;width:auto;padding:4px;';
+		if (newEye.parentElement) newEye.parentElement.style.position = 'relative';
+		newEye.addEventListener('mouseenter', function() { this.style.opacity = '0.8'; });
+		newEye.addEventListener('mouseleave', function() { this.style.opacity = '0.5'; });
+	}, 500);
 });
