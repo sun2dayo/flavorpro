@@ -404,40 +404,10 @@ $(document).ready(function(){
 	});
 
 	// =====================================================================
-	// PASSWORD EYE TOGGLE FIX — Dolibarr core attaches the click handler
-	// twice (inline script re-executes due to theme DOM manipulation).
-	// We use setTimeout + cloneNode to nuke ALL handlers after everything
-	// has finished loading, then attach a single clean handler.
+	// HIDE PASSWORD EYE TOGGLE — Dolibarr core has a bug where the inline
+	// script attaches the click handler twice, causing double-toggle that
+	// cancels itself. Hiding the broken element until core is fixed.
 	// =====================================================================
-	setTimeout(function() {
-		var oldEye = document.getElementById('togglepassword');
-		if (!oldEye) return;
-
-		// Clone the element (deep clone children, but strips all event listeners)
-		var newEye = oldEye.cloneNode(true);
-		oldEye.parentNode.replaceChild(newEye, oldEye);
-
-		// Attach a single clean click handler
-		newEye.addEventListener('click', function(e) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-			var pwd = document.getElementById('password');
-			if (!pwd) return;
-			if (pwd.type === 'password') {
-				pwd.type = 'text';
-				var icon = newEye.querySelector('.fa-eye');
-				if (icon) icon.className = 'fa fa-eye-slash';
-			} else {
-				pwd.type = 'password';
-				var icon2 = newEye.querySelector('.fa-eye-slash');
-				if (icon2) icon2.className = 'fa fa-eye';
-			}
-		});
-
-		// Fix styling — position the eye icon properly inside the input container
-		newEye.style.cssText = 'position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;opacity:0.5;z-index:10;width:auto;padding:4px;';
-		if (newEye.parentElement) newEye.parentElement.style.position = 'relative';
-		newEye.addEventListener('mouseenter', function() { this.style.opacity = '0.8'; });
-		newEye.addEventListener('mouseleave', function() { this.style.opacity = '0.5'; });
-	}, 500);
+	var eyeToggle = document.getElementById('togglepassword');
+	if (eyeToggle) eyeToggle.style.display = 'none';
 });
