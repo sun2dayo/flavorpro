@@ -450,7 +450,20 @@ body:not(.bodylogin) {
 }
 
 /* ══ NovaDX Pro: Page Transition System ══ */
-/* Top progress bar */
+/* Disable animsition full-screen loading overlay */
+.animsition-loading,
+.animsition-loading:after {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+/* Force body visible immediately (animsition sets opacity:0) */
+body.animsition,
+body.animsition-overlay {
+    opacity: 1 !important;
+    animation: none !important;
+}
+/* Top progress bar (our replacement for animsition) */
 #ndx-progress-bar {
     position: fixed;
     top: 0;
@@ -469,18 +482,8 @@ body:not(.bodylogin) {
 }
 #ndx-progress-bar.ndx-done {
     width: 100%;
-    transition: width 0.15s ease;
     opacity: 0;
     transition: width 0.15s ease, opacity 0.3s ease 0.15s;
-}
-/* Content area fade-in on page load */
-@keyframes ndxFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-body:not(.bodylogin) .page-content,
-body:not(.bodylogin) .fiche {
-    animation: ndxFadeIn 0.3s ease-out both;
 }
 /* Fade-out when navigating away */
 body.ndx-navigating .page-content,
