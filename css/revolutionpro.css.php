@@ -2092,6 +2092,10 @@ body.bodylogin.page-login-v2.page-dark.layout-full::before {
 body.bodylogin.page-login-v2 .page-login-main {
     background-image: none !important;
 }
+/* ── Hide broken eye toggle (Dolibarr core double-handler bug) ── */
+body.bodylogin #togglepassword {
+    display: none !important;
+}
 
 /* ── Left panel: clean indigo gradient (matches template) ── */
 body.bodylogin .page-brand-info {
