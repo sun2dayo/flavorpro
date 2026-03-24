@@ -20,6 +20,24 @@ global $langs,$db,$mysoc;
 top_httphead('text/javascript; charset=UTF-8');
 
 ?>
+// =====================================================================
+// KILL ANIMSITION — prevent the full-screen loading overlay
+// Must run BEFORE Site.js calls $BODY.animsition()
+// =====================================================================
+if (typeof jQuery !== 'undefined') {
+	jQuery.fn.animsition = function() {
+		this.css('opacity', '1');
+		return this;
+	};
+}
+document.addEventListener('DOMContentLoaded', function() {
+	var overlays = document.querySelectorAll('.loader-overlay, .animsition-loading');
+	for (var i = 0; i < overlays.length; i++) {
+		overlays[i].parentNode.removeChild(overlays[i]);
+	}
+	document.body.style.opacity = '1';
+});
+
 $(document).ready(function(){
 	if($('.info-box-module-external').length >0){
 		var arrmodl=['ajaxlivesearch','bluetheme','extranetdolibarr','moderntheme','monitoring','orangetheme','payrollmod','personalizdoli','pointagemod','reservsalle','revolutionpro','taskgantt'];

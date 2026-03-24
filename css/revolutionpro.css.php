@@ -450,18 +450,26 @@ body:not(.bodylogin) {
 }
 
 /* ══ NovaDX Pro: Page Transition System ══ */
-/* Disable animsition full-screen loading overlay */
+/* Disable animsition full-screen loading overlay (Site.js uses loader-overlay class) */
 .animsition-loading,
-.animsition-loading:after {
+.animsition-loading:after,
+.loader-overlay,
+.loader-content,
+.loader-index {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
 }
 /* Force body visible immediately (animsition sets opacity:0) */
 body.animsition,
 body.animsition-overlay {
     opacity: 1 !important;
     animation: none !important;
+    animation-fill-mode: none !important;
+    -webkit-animation-fill-mode: none !important;
 }
 /* Top progress bar (our replacement for animsition) */
 #ndx-progress-bar {
