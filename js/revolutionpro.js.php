@@ -42,9 +42,9 @@ $(document).ready(function(){
 // PAGE TRANSITION SYSTEM — Creates a smooth SPA-like feel
 // Progress bar + content fade-out on navigate, fade-in on load
 // =====================================================================
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
 	// Skip on login page and iframes
-	if (document.body && (document.body.classList.contains('bodylogin') || window.self !== window.top)) return;
+	if (document.body.classList.contains('bodylogin') || window.self !== window.top) return;
 
 	// Create progress bar element
 	var bar = document.createElement('div');
@@ -90,7 +90,7 @@ $(document).ready(function(){
 		bar.className = 'ndx-done';
 		setTimeout(function() { bar.className = ''; }, 500);
 	});
-})();
+});
 
 // =====================================================================
 // WHITE-LABEL — Replace "Dolibarr" text and URLs with brand name
