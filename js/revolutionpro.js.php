@@ -35,10 +35,62 @@ $(document).ready(function(){
 });
 
 // =====================================================================
-// ICON MANAGER — Icons are now handled via pure CSS ::before overrides
-// in revolutionpro.css.php (per-key content property overrides).
-// No JS DOM manipulation needed.
+// ICON MANAGER — Icons handled via pure CSS ::before overrides.
 // =====================================================================
+
+// =====================================================================
+// PAGE TRANSITION SYSTEM — Creates a smooth SPA-like feel
+// Progress bar + content fade-out on navigate, fade-in on load
+// =====================================================================
+(function() {
+	// Skip on login page and iframes
+	if (document.body && (document.body.classList.contains('bodylogin') || window.self !== window.top)) return;
+
+	// Create progress bar element
+	var bar = document.createElement('div');
+	bar.id = 'ndx-progress-bar';
+	document.body.appendChild(bar);
+
+	// Intercept link clicks for smooth navigation
+	document.addEventListener('click', function(e) {
+		var link = e.target.closest('a');
+		if (!link) return;
+
+		var href = link.getAttribute('href');
+		// Skip: no href, hash-only, javascript:, new tab, download, mailto
+		if (!href || href === '#' || href.charAt(0) === '#'
+			|| href.indexOf('javascript:') === 0
+			|| link.target === '_blank'
+			|| link.hasAttribute('download')
+			|| href.indexOf('mailto:') === 0
+			|| e.ctrlKey || e.metaKey || e.shiftKey) return;
+
+		// Skip AJAX-style links (onclick handlers, mmenu navigation)
+		if (link.getAttribute('onclick') || link.classList.contains('mm-next') || link.classList.contains('mm-prev')) return;
+
+		// Only same-origin links
+		try {
+			var url = new URL(href, window.location.origin);
+			if (url.origin !== window.location.origin) return;
+		} catch(ex) { return; }
+
+		// Trigger progress bar and fade-out
+		bar.className = 'ndx-loading';
+		document.body.classList.add('ndx-navigating');
+	}, true);
+
+	// Also trigger on form submissions
+	document.addEventListener('submit', function() {
+		bar.className = 'ndx-loading';
+		document.body.classList.add('ndx-navigating');
+	}, true);
+
+	// On page fully loaded, finish the bar
+	window.addEventListener('load', function() {
+		bar.className = 'ndx-done';
+		setTimeout(function() { bar.className = ''; }, 500);
+	});
+})();
 
 // =====================================================================
 // WHITE-LABEL — Replace "Dolibarr" text and URLs with brand name

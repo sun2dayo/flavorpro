@@ -449,6 +449,45 @@ body:not(.bodylogin) {
     color: var(--ndx-slate-800) !important;
 }
 
+/* ══ NovaDX Pro: Page Transition System ══ */
+/* Top progress bar */
+#ndx-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #F59E0B, #6366F1);
+    z-index: 99999;
+    transition: width 0.4s ease;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+#ndx-progress-bar.ndx-loading {
+    width: 85%;
+    transition: width 8s cubic-bezier(0.1, 0.5, 0.3, 1);
+}
+#ndx-progress-bar.ndx-done {
+    width: 100%;
+    transition: width 0.15s ease;
+    opacity: 0;
+    transition: width 0.15s ease, opacity 0.3s ease 0.15s;
+}
+/* Content area fade-in on page load */
+@keyframes ndxFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+body:not(.bodylogin) #id-right {
+    animation: ndxFadeIn 0.3s ease-out both;
+}
+/* Fade-out when navigating away */
+body.ndx-navigating #id-right {
+    opacity: 0 !important;
+    transform: translateY(4px) !important;
+    transition: opacity 0.15s ease, transform 0.15s ease !important;
+}
+
 /* ── NovaDX Pro: Smooth transitions on interactive elements ── */
 a, button, input, select, .site-menu-item, .card, .btn,
 .butAction, .butActionDelete, .badge, .nav-link {
