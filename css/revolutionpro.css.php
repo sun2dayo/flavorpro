@@ -489,11 +489,11 @@ a, button, input, select, .site-menu-item, .card, .btn,
     background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-/* 5. Item Ativo (O "Toque" NovaDX) */
+/* 5. Item Ativo — Orange accent (template accent colour) */
 .mm-listview > li.mm-selected > a, .site-menu-item.active > a {
-    background-color: var(--ndx-primary-alpha-08) !important;
+    background-color: rgba(245, 158, 11, 0.1) !important;
     color: #FFFFFF !important;
-    border-left: 4px solid var(--ndx-primary-500) !important;
+    border-left: 4px solid #F59E0B !important;
     font-weight: 500 !important;
 }
 
@@ -520,6 +520,50 @@ a, button, input, select, .site-menu-item, .card, .btn,
 .site-menu-sub .site-menu-item > a:hover {
     color: rgba(255, 255, 255, 0.9) !important;
     background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ── Parent/Child menu visual distinction ── */
+/* Parent items (metrovmenu) — section headers */
+.mm-listview > li.metrovmenu > a,
+.site-menu-item.metrovmenu > a {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.06em !important;
+    padding-top: 16px !important;
+    padding-bottom: 10px !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    margin-top: 4px !important;
+}
+/* First parent item — no top border */
+.mm-listview > li.metrovmenu:first-child > a,
+.site-menu-item.metrovmenu:first-child > a {
+    border-top: none !important;
+    margin-top: 0 !important;
+}
+/* Child items (metrovsmenu) — lighter, indented feel */
+.mm-listview > li.metrovsmenu > a,
+.site-menu-item.metrovsmenu > a {
+    font-weight: 400 !important;
+    font-size: 0.85rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    border-left: 2px solid rgba(255, 255, 255, 0.08) !important;
+    margin-left: 8px !important;
+}
+.mm-listview > li.metrovsmenu > a:hover,
+.site-menu-item.metrovsmenu > a:hover {
+    color: #FFFFFF !important;
+    border-left-color: rgba(255, 255, 255, 0.25) !important;
+}
+/* Active child — orange left border */
+.mm-listview > li.metrovsmenu.mm-selected > a,
+.site-menu-item.metrovsmenu.active > a {
+    border-left: 3px solid #F59E0B !important;
+    color: #FFFFFF !important;
+    background-color: rgba(245, 158, 11, 0.08) !important;
 }
 
 /* 8. Ocultar blocos de perfil/logos antigos na sidebar */
