@@ -69,14 +69,25 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (link.getAttribute('onclick') || link.classList.contains('mm-next') || link.classList.contains('mm-prev')) return;
 
 		// Only same-origin links
+		var finalUrl;
 		try {
 			var url = new URL(href, window.location.origin);
 			if (url.origin !== window.location.origin) return;
+			finalUrl = url.href;
 		} catch(ex) { return; }
+
+		// Prevent default navigation — we handle it after the animation
+		e.preventDefault();
+		e.stopPropagation();
 
 		// Trigger progress bar and fade-out
 		bar.className = 'ndx-loading';
 		document.body.classList.add('ndx-navigating');
+
+		// Navigate after fade-out completes (150ms)
+		setTimeout(function() {
+			window.location.href = finalUrl;
+		}, 150);
 	}, true);
 
 	// Also trigger on form submissions
