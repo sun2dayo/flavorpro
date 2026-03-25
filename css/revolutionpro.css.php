@@ -2636,8 +2636,20 @@ if (is_object($db)) {
 .bodytakepos .topnav {
     background: transparent !important;
 }
+/* Force ALL topnav text/links/spans/icons to white — override RevPro globals */
+.bodytakepos .topnav,
 .bodytakepos .topnav a,
-.bodytakepos .topnav span {
+.bodytakepos .topnav span,
+.bodytakepos .topnav div,
+.bodytakepos .topnav-left,
+.bodytakepos .topnav-left a,
+.bodytakepos .topnav-left span,
+.bodytakepos .topnav-right,
+.bodytakepos .topnav-right a,
+.bodytakepos .topnav-right span,
+.bodytakepos .topnav .login_block_other a,
+.bodytakepos .topnav .login_block_user,
+.bodytakepos .topnav .login_block_user a {
     color: #FFFFFF !important;
     font-weight: 500;
 }
@@ -2648,8 +2660,9 @@ if (is_object($db)) {
 }
 .bodytakepos .topnav .fa,
 .bodytakepos .topnav .fas,
-.bodytakepos .topnav .far {
-    color: rgba(255,255,255,0.8) !important;
+.bodytakepos .topnav .far,
+.bodytakepos .topnav i[class*="fa-"] {
+    color: rgba(255,255,255,0.9) !important;
 }
 .bodytakepos .topnav-terminalhour {
     color: #e0e7ff !important;
@@ -2660,7 +2673,7 @@ if (is_object($db)) {
     font-size: 0.85em;
 }
 
-/* Search field */
+/* Search field — keep dark text for readability */
 .bodytakepos .topnav input[type="text"] {
     background: rgba(255,255,255,0.95) !important;
     border: 1px solid rgba(99, 102, 241, 0.3) !important;
@@ -2677,7 +2690,8 @@ if (is_object($db)) {
 }
 
 /* Login block */
-.bodytakepos .login_block {
+.bodytakepos .login_block,
+.bodytakepos .login_block * {
     color: #FFFFFF !important;
 }
 .bodytakepos .login_block a {
@@ -3142,16 +3156,35 @@ body.revolutionpro:not(.bodytakepos) .takepospay:focus {
     outline: none !important;
 }
 
-/* Payment display bars */
+/* Payment display bars — dark bg so .colorwhite text is visible */
 body.revolutionpro:not(.bodytakepos) .paymentbordline,
 body.revolutionpro:not(.bodytakepos) div.paymentbordline {
-    background: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important;
-    border: 1px solid #E2E8F0 !important;
+    background: linear-gradient(135deg, #4B5563, #374151) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
     border-radius: 12px !important;
-    color: #1E293B !important;
+    color: #FFFFFF !important;
     padding: 10px 16px !important;
     font-weight: 600 !important;
     margin-bottom: 8px !important;
+}
+/* Ensure .colorwhite is actually white in payment context */
+body.revolutionpro:not(.bodytakepos) .paymentbordline .colorwhite {
+    color: #FFFFFF !important;
+}
+body.revolutionpro:not(.bodytakepos) .paymentbordline .colorred {
+    color: #F87171 !important;
+}
+/* Total line — indigo accent */
+body.revolutionpro:not(.bodytakepos) .paymentbordlinetotal {
+    background: linear-gradient(135deg, #312e81, #4338ca) !important;
+}
+/* Received line — slightly different shade */
+body.revolutionpro:not(.bodytakepos) .paymentbordlinereceived {
+    background: linear-gradient(135deg, #4B5563, #374151) !important;
+}
+/* Change line */
+body.revolutionpro:not(.bodytakepos) .paymentbordlinechange {
+    background: linear-gradient(135deg, #374151, #1F2937) !important;
 }
 
 /* Split sale — clean card layout with indigo header */
