@@ -108,7 +108,7 @@ class ActionsREVOLUTIONPRO
 		$jsscript .= '<script src="'.dol_buildpath('/revolutionpro/theme', 1).'/custom/custom.js"></script>';
 
 
-		if($user && !$user->admin && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
+		if($user && !$user->admin && isset($conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX) && $conf->global->REVOLUTIONPRO_PARAMETRES_VALUEX == 'demo'){
 			$jsscript .= '<script src="'.dol_buildpath('/revolutionpro/theme', 1).'/global/js/skintools.js"></script>';
 		}
 
