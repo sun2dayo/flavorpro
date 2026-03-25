@@ -3167,8 +3167,17 @@ body.revolutionpro:not(.bodytakepos) div.paymentbordline {
     font-weight: 600 !important;
     margin-bottom: 8px !important;
 }
+/* Override .takepospay when inside payment bars — transparent bg, white text */
+body.revolutionpro:not(.bodytakepos) .paymentbordline .takepospay,
+body.revolutionpro:not(.bodytakepos) .paymentbordline span.takepospay {
+    background: transparent !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    padding: 0 !important;
+}
 /* Ensure .colorwhite is actually white in payment context */
-body.revolutionpro:not(.bodytakepos) .paymentbordline .colorwhite {
+body.revolutionpro:not(.bodytakepos) .paymentbordline .colorwhite,
+body.revolutionpro:not(.bodytakepos) .paymentbordline span.colorwhite {
     color: #FFFFFF !important;
 }
 body.revolutionpro:not(.bodytakepos) .paymentbordline .colorred {
