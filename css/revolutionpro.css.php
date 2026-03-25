@@ -2673,7 +2673,6 @@ if (is_object($db)) {
 .bodytakepos .header span,
 .bodytakepos .header div {
     color: #FFFFFF !important;
-    font-weight: 500;
 }
 
 /* Known TakePos element IDs — belt-and-suspenders */
@@ -2701,11 +2700,14 @@ if (is_object($db)) {
 .bodytakepos .topnav .fas,
 .bodytakepos .topnav .far,
 .bodytakepos .topnav i[class*="fa-"],
+.bodytakepos .topnav span[class*="fa-"],
 .bodytakepos .header .fa,
 .bodytakepos .header .fas,
 .bodytakepos .header .far,
-.bodytakepos .header i[class*="fa-"] {
+.bodytakepos .header i[class*="fa-"],
+.bodytakepos .header span[class*="fa-"] {
     color: #FFFFFF !important;
+    font-weight: 900 !important;
 }
 .bodytakepos .topnav-terminalhour {
     color: #e0e7ff !important;
