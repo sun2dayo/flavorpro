@@ -2634,33 +2634,64 @@ if (is_object($db)) {
     box-shadow: 0 2px 12px rgba(30, 27, 75, 0.3) !important;
 }
 /* Override CSS variables within TakePos so core Dolibarr a{color:var()} works */
-.bodytakepos {
+.bodytakepos,
+.bodytakepos .topnav,
+.bodytakepos .header {
     --colortextlink: #FFFFFF !important;
+    --colortextbackhmenu: #FFFFFF !important;
 }
 .bodytakepos .topnav {
     background: transparent !important;
-    --colortextlink: #FFFFFF !important;
 }
-/* Force ALL topnav descendants to white — override --colortextlink inheritance */
+
+/* ── NUCLEAR: override a:link/a:visited/a:active pseudo-classes ──
+   Dolibarr core uses `a:link { color: var(--colortextlink) }` which beats
+   our plain `.topnav a` selector in specificity. Match the pseudo-classes. */
+.bodytakepos .topnav a:link,
+.bodytakepos .topnav a:visited,
+.bodytakepos .topnav a:active,
+.bodytakepos .topnav a:hover,
+.bodytakepos .header a:link,
+.bodytakepos .header a:visited,
+.bodytakepos .header a:active,
+.bodytakepos .header a:hover,
+.bodytakepos .topnav-left a:link,
+.bodytakepos .topnav-left a:visited,
+.bodytakepos .topnav-left a:active,
+.bodytakepos .topnav-right a:link,
+.bodytakepos .topnav-right a:visited,
+.bodytakepos .topnav-right a:active {
+    color: #FFFFFF !important;
+}
+
+/* Force ALL topnav descendants to white */
 .bodytakepos .topnav *,
 .bodytakepos .topnav a,
 .bodytakepos .topnav span,
 .bodytakepos .topnav div,
-.bodytakepos .topnav-left,
-.bodytakepos .topnav-left a,
-.bodytakepos .topnav-left span,
-.bodytakepos .topnav-right,
-.bodytakepos .topnav-right a,
-.bodytakepos .topnav-right span,
-.bodytakepos .topnav .login_block_other a,
-.bodytakepos .topnav .login_block_user,
-.bodytakepos .topnav .login_block_user a,
 .bodytakepos .header a,
 .bodytakepos .header span,
 .bodytakepos .header div {
     color: #FFFFFF !important;
     font-weight: 500;
 }
+
+/* Known TakePos element IDs — belt-and-suspenders */
+.bodytakepos #customer,
+.bodytakepos #customer span,
+.bodytakepos #multicurrency,
+.bodytakepos #multicurrency span,
+.bodytakepos #shoppingcart,
+.bodytakepos #shoppingcart span,
+.bodytakepos a#icon_icon_fullscreen,
+.bodytakepos a#icon_icon_fullscreen span,
+.bodytakepos a.topnav-terminalhour,
+.bodytakepos a.topnav-terminalhour span,
+.bodytakepos .topnav .classlink,
+.bodytakepos .topnav .commonlink {
+    color: #FFFFFF !important;
+}
+
 .bodytakepos .topnav a:hover:not(.nohover) {
     background: rgba(255,255,255,0.15) !important;
     color: #FFFFFF !important;
@@ -2669,8 +2700,12 @@ if (is_object($db)) {
 .bodytakepos .topnav .fa,
 .bodytakepos .topnav .fas,
 .bodytakepos .topnav .far,
-.bodytakepos .topnav i[class*="fa-"] {
-    color: rgba(255,255,255,0.9) !important;
+.bodytakepos .topnav i[class*="fa-"],
+.bodytakepos .header .fa,
+.bodytakepos .header .fas,
+.bodytakepos .header .far,
+.bodytakepos .header i[class*="fa-"] {
+    color: #FFFFFF !important;
 }
 .bodytakepos .topnav-terminalhour {
     color: #e0e7ff !important;
@@ -2702,7 +2737,9 @@ if (is_object($db)) {
 .bodytakepos .login_block * {
     color: #FFFFFF !important;
 }
-.bodytakepos .login_block a {
+.bodytakepos .login_block a,
+.bodytakepos .login_block a:link,
+.bodytakepos .login_block a:visited {
     color: #e0e7ff !important;
 }
 
