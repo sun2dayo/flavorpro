@@ -2633,11 +2633,16 @@ if (is_object($db)) {
     border-bottom: none !important;
     box-shadow: 0 2px 12px rgba(30, 27, 75, 0.3) !important;
 }
+/* Override CSS variables within TakePos so core Dolibarr a{color:var()} works */
+.bodytakepos {
+    --colortextlink: #FFFFFF !important;
+}
 .bodytakepos .topnav {
     background: transparent !important;
+    --colortextlink: #FFFFFF !important;
 }
-/* Force ALL topnav text/links/spans/icons to white — override RevPro globals */
-.bodytakepos .topnav,
+/* Force ALL topnav descendants to white — override --colortextlink inheritance */
+.bodytakepos .topnav *,
 .bodytakepos .topnav a,
 .bodytakepos .topnav span,
 .bodytakepos .topnav div,
@@ -2649,7 +2654,10 @@ if (is_object($db)) {
 .bodytakepos .topnav-right span,
 .bodytakepos .topnav .login_block_other a,
 .bodytakepos .topnav .login_block_user,
-.bodytakepos .topnav .login_block_user a {
+.bodytakepos .topnav .login_block_user a,
+.bodytakepos .header a,
+.bodytakepos .header span,
+.bodytakepos .header div {
     color: #FFFFFF !important;
     font-weight: 500;
 }
@@ -3194,6 +3202,14 @@ body.revolutionpro:not(.bodytakepos) .paymentbordlinereceived {
 /* Change line */
 body.revolutionpro:not(.bodytakepos) .paymentbordlinechange {
     background: linear-gradient(135deg, #374151, #1F2937) !important;
+}
+
+/* Fix payment container height — bars need more space with our padding */
+body.revolutionpro:not(.bodytakepos) div[style*="height:140px"],
+body.revolutionpro:not(.bodytakepos) div[style*="height: 140px"] {
+    height: auto !important;
+    min-height: 140px !important;
+    padding-bottom: 8px !important;
 }
 
 /* Split sale — clean card layout with indigo header */
