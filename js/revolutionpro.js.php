@@ -20,6 +20,13 @@ global $langs,$db,$mysoc;
 top_httphead('text/javascript; charset=UTF-8');
 
 ?>
+/* ── Immediate CSS fix: liste_titre section headers ── */
+(function(){
+	var s = document.createElement('style');
+	s.textContent = 'tr.liste_titre th, tr.liste_titre td, tr.liste_titre_sel th, tr.liste_titre_sel td, .tagtr.liste_titre .tagtd, div.liste_titre_bydiv { background-color: transparent !important; background: transparent !important; color: #ffffff !important; border-bottom: none !important; } tr.liste_titre a, tr.liste_titre .badge, tr.liste_titre th a { color: #ffffff !important; }';
+	(document.head || document.documentElement).appendChild(s);
+})();
+
 // =====================================================================
 // KILL ANIMSITION — prevent the full-screen loading overlay
 // Must run BEFORE Site.js calls $BODY.animsition()
@@ -36,11 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		overlays[i].parentNode.removeChild(overlays[i]);
 	}
 	document.body.style.opacity = '1';
-
-	/* Fix liste_titre section headers — white text on theme bg */
-	var s = document.createElement('style');
-	s.textContent = 'tr.liste_titre th, tr.liste_titre td, tr.liste_titre_sel th, tr.liste_titre_sel td, .tagtr.liste_titre .tagtd, div.liste_titre_bydiv { background-color: transparent !important; background: transparent !important; color: #ffffff !important; border-bottom: none !important; } tr.liste_titre a, tr.liste_titre .badge, tr.liste_titre th a { color: #ffffff !important; }';
-	document.head.appendChild(s);
 });
 
 $(document).ready(function(){
