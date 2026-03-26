@@ -1032,6 +1032,18 @@ table.liste th, table.noborder th {
     letter-spacing: 0.04em !important;
     border-bottom: 2px solid var(--ndx-slate-200) !important;
 }
+/* Dashboard section titles — let row indigo background show through */
+tr.liste_titre th,
+tr.liste_titre td,
+tr.liste_titre_sel th,
+tr.liste_titre_sel td,
+.tagtr.liste_titre .tagtd,
+div.liste_titre_bydiv {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+}
 
 /* ══════════════════════════════════════════════════════════════════
    NovaDX Pro — Phase 3.1: NUCLEAR HOTFIX
