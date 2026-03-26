@@ -236,71 +236,23 @@ $(window).on('load',function(){
 	$('#loader-overlay').hide();
 });
 
-/* ── Modernize Dashboard Charts (Chart.js v3+ global defaults) ── */
-/* Poll for Chart.js availability since it may load after this script */
+/* ── Modernize Dashboard Charts — Chart.js Plugin Approach ── */
+/* Registers a plugin BEFORE any chart is created so every chart (including AJAX) gets themed */
 (function() {
 	var rpWaitAttempts = 0;
 	var rpWaitInterval = setInterval(function() {
 		rpWaitAttempts++;
 		if (typeof Chart === 'undefined') {
-			if (rpWaitAttempts >= 30) clearInterval(rpWaitInterval);
+			if (rpWaitAttempts >= 50) clearInterval(rpWaitInterval);
 			return;
 		}
 		clearInterval(rpWaitInterval);
 
-		/* ── Chart.js detected — apply global defaults ── */
-		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-		Chart.defaults.font.size = 12;
-		Chart.defaults.font.weight = '500';
-		Chart.defaults.color = '#64748B';
-
-		Chart.defaults.elements.bar.borderRadius = 8;
-		Chart.defaults.elements.bar.borderSkipped = false;
-		Chart.defaults.elements.bar.borderWidth = 0;
-
-		Chart.defaults.elements.line.tension = 0.4;
-		Chart.defaults.elements.line.borderWidth = 2.5;
-		Chart.defaults.elements.point.radius = 4;
-		Chart.defaults.elements.point.hoverRadius = 7;
-		Chart.defaults.elements.point.backgroundColor = '#4F46E5';
-
-		Chart.defaults.elements.arc.borderWidth = 2;
-		Chart.defaults.elements.arc.borderColor = '#ffffff';
-		Chart.defaults.elements.arc.hoverOffset = 8;
-
-		if (Chart.defaults.scale) {
-			Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
-			Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
-			Chart.defaults.scale.grid.drawBorder = false;
-			Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
-			Chart.defaults.scale.ticks.padding = 8;
-		}
-
-		Chart.defaults.animation = Chart.defaults.animation || {};
-		Chart.defaults.animation.duration = 1200;
-		Chart.defaults.animation.easing = 'easeOutQuart';
-
-		if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
-			Chart.defaults.plugins.legend.labels.padding = 16;
-			Chart.defaults.plugins.legend.labels.usePointStyle = true;
-			Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
-		}
-
-		if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
-			Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
-			Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", size: 13, weight: '600' };
-			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif", size: 12 };
-			Chart.defaults.plugins.tooltip.padding = 12;
-			Chart.defaults.plugins.tooltip.cornerRadius = 10;
-			Chart.defaults.plugins.tooltip.displayColors = true;
-			Chart.defaults.plugins.tooltip.boxPadding = 4;
-		}
-
-		/* NovaDX Indigo-cohesive color palette — first 3 high-contrast for year bars */
+		/* ── NovaDX Indigo palette ── */
 		var rpPalette = [
-			'rgba(79, 70, 229, 0.85)',   /* indigo-600   — 2024 / dataset 1 */
-			'rgba(99, 102, 241, 0.80)',  /* indigo-500   — 2025 / dataset 2 */
-			'rgba(245, 158, 11, 0.85)',  /* amber-500    — 2026 / dataset 3 */
+			'rgba(79, 70, 229, 0.85)',   /* #4F46E5 indigo-600  — dataset 1 / 2024 */
+			'rgba(99, 102, 241, 0.80)',  /* #6366F1 indigo-500  — dataset 2 / 2025 */
+			'rgba(245, 158, 11, 0.85)',  /* #F59E0B amber-500   — dataset 3 / 2026 */
 			'rgba(139, 92, 246, 0.85)',  /* violet-500   */
 			'rgba(14, 165, 233, 0.85)', /* sky-500      */
 			'rgba(16, 185, 129, 0.85)', /* emerald-500  */
@@ -314,77 +266,121 @@ $(window).on('load',function(){
 			'rgba(109, 118, 209, 0.85)' /* slate-indigo */
 		];
 		var rpPaletteSolid = [
-			'rgb(79, 70, 229)',   'rgb(99, 102, 241)',  'rgb(245, 158, 11)',
-			'rgb(139, 92, 246)', 'rgb(14, 165, 233)', 'rgb(16, 185, 129)',
-			'rgb(244, 63, 94)',  'rgb(59, 130, 246)', 'rgb(168, 162, 255)',
-			'rgb(6, 182, 212)',  'rgb(129, 140, 248)', 'rgb(34, 197, 94)',
+			'rgb(79, 70, 229)',  'rgb(99, 102, 241)', 'rgb(245, 158, 11)',
+			'rgb(139, 92, 246)','rgb(14, 165, 233)','rgb(16, 185, 129)',
+			'rgb(244, 63, 94)', 'rgb(59, 130, 246)', 'rgb(168, 162, 255)',
+			'rgb(6, 182, 212)', 'rgb(129, 140, 248)','rgb(34, 197, 94)',
 			'rgb(165, 180, 252)','rgb(109, 118, 209)'
 		];
 
-		/* Update existing chart instances */
-		function rpUpdateCharts() {
-			var ci = Chart.instances;
-			if (!ci || Object.keys(ci).length === 0) return;
-			Object.keys(ci).forEach(function(key) {
-				var ch = ci[key];
-				if (!ch || !ch.config || ch._rpModernized) return;
-
-				if (ch.config.type === 'doughnut' || ch.config.type === 'pie') {
-					ch.options.cutout = '70%';
-					ch.options.spacing = 3;
-					if (ch.data && ch.data.datasets) {
-						ch.data.datasets.forEach(function(ds) {
-							ds.borderWidth = 2;
-							ds.borderColor = '#ffffff';
-							ds.hoverOffset = 8;
-							if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
-								for (var c = 0; c < ds.backgroundColor.length; c++) {
-									ds.backgroundColor[c] = rpPalette[c % rpPalette.length];
-								}
-							}
-						});
-					}
-				}
-
-				if (ch.config.type === 'bar') {
-					if (ch.data && ch.data.datasets) {
-						ch.data.datasets.forEach(function(ds, idx) {
-							ds.borderRadius = 8;
-							ds.borderSkipped = false;
-							ds.borderWidth = 0;
-							ds.maxBarThickness = 32;
-							ds.backgroundColor = rpPalette[idx % rpPalette.length];
-							ds.borderColor = rpPaletteSolid[idx % rpPaletteSolid.length];
-						});
-					}
-					if (ch.options.scales) {
-						Object.keys(ch.options.scales).forEach(function(sk) {
-							var sc = ch.options.scales[sk];
-							if (sc) {
-								sc.grid = sc.grid || {};
-								sc.grid.color = 'rgba(148, 163, 184, 0.12)';
-								sc.grid.drawBorder = false;
-								sc.ticks = sc.ticks || {};
-								sc.ticks.padding = 8;
-							}
-						});
-					}
-				}
-
-				ch._rpModernized = true;
-				ch.update('none');
-			});
+		/* ── Apply Chart.js global defaults ── */
+		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+		Chart.defaults.font.size = 12;
+		Chart.defaults.font.weight = '500';
+		Chart.defaults.color = '#64748B';
+		Chart.defaults.elements.bar.borderRadius = 8;
+		Chart.defaults.elements.bar.borderSkipped = false;
+		Chart.defaults.elements.bar.borderWidth = 0;
+		Chart.defaults.elements.line.tension = 0.4;
+		Chart.defaults.elements.line.borderWidth = 2.5;
+		Chart.defaults.elements.point.radius = 4;
+		Chart.defaults.elements.point.hoverRadius = 7;
+		Chart.defaults.elements.point.backgroundColor = '#4F46E5';
+		Chart.defaults.elements.arc.borderWidth = 2;
+		Chart.defaults.elements.arc.borderColor = '#ffffff';
+		Chart.defaults.elements.arc.hoverOffset = 8;
+		if (Chart.defaults.scale) {
+			Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
+			Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
+			Chart.defaults.scale.grid.drawBorder = false;
+			Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
+			Chart.defaults.scale.ticks.padding = 8;
+		}
+		Chart.defaults.animation = Chart.defaults.animation || {};
+		Chart.defaults.animation.duration = 1200;
+		Chart.defaults.animation.easing = 'easeOutQuart';
+		if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
+			Chart.defaults.plugins.legend.labels.padding = 16;
+			Chart.defaults.plugins.legend.labels.usePointStyle = true;
+			Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
+		}
+		if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
+			Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
+			Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", size: 13, weight: '600' };
+			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif", size: 12 };
+			Chart.defaults.plugins.tooltip.padding = 12;
+			Chart.defaults.plugins.tooltip.cornerRadius = 10;
+			Chart.defaults.plugins.tooltip.displayColors = true;
+			Chart.defaults.plugins.tooltip.boxPadding = 4;
 		}
 
-		/* Poll for chart instances */
-		var rpChartAttempts = 0;
-		var rpChartInterval = setInterval(function() {
-			rpChartAttempts++;
-			rpUpdateCharts();
-			if (rpChartAttempts >= 25) clearInterval(rpChartInterval);
-		}, 600);
-	}, 300);
+		/* ── Theme a single chart instance ── */
+		function rpThemeChart(ch) {
+			if (!ch || !ch.config || ch._rpModernized) return;
+			if (ch.config.type === 'doughnut' || ch.config.type === 'pie') {
+				ch.options.cutout = '70%';
+				ch.options.spacing = 3;
+				if (ch.data && ch.data.datasets) {
+					ch.data.datasets.forEach(function(ds) {
+						ds.borderWidth = 2;
+						ds.borderColor = '#ffffff';
+						ds.hoverOffset = 8;
+						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
+							for (var c = 0; c < ds.backgroundColor.length; c++) {
+								ds.backgroundColor[c] = rpPalette[c % rpPalette.length];
+							}
+						}
+					});
+				}
+			}
+			if (ch.config.type === 'bar') {
+				if (ch.data && ch.data.datasets) {
+					ch.data.datasets.forEach(function(ds, idx) {
+						ds.borderRadius = 8;
+						ds.borderSkipped = false;
+						ds.borderWidth = 0;
+						ds.maxBarThickness = 32;
+						ds.backgroundColor = rpPalette[idx % rpPalette.length];
+						ds.borderColor = rpPaletteSolid[idx % rpPaletteSolid.length];
+					});
+				}
+				if (ch.options.scales) {
+					Object.keys(ch.options.scales).forEach(function(sk) {
+						var sc = ch.options.scales[sk];
+						if (sc) {
+							sc.grid = sc.grid || {};
+							sc.grid.color = 'rgba(148, 163, 184, 0.12)';
+							sc.grid.drawBorder = false;
+							sc.ticks = sc.ticks || {};
+							sc.ticks.padding = 8;
+						}
+					});
+				}
+			}
+			ch._rpModernized = true;
+		}
+
+		/* ── Register global plugin — fires on EVERY chart init ── */
+		Chart.register({
+			id: 'rpNovaDXTheme',
+			afterInit: function(chart) {
+				rpThemeChart(chart);
+				chart.update('none');
+			}
+		});
+
+		/* ── Also theme any charts already created before plugin registered ── */
+		var ci = Chart.instances;
+		if (ci) {
+			var keys = Object.keys(ci);
+			keys.forEach(function(key) {
+				rpThemeChart(ci[key]);
+				if (ci[key]) ci[key].update('none');
+			});
+		}
+	}, 200);
 })();
+
 
 <?php
 
