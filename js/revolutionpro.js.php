@@ -275,84 +275,45 @@ $(window).on('load',function(){
 			'rgb(165, 180, 252)','rgb(109, 118, 209)'
 		];
 
-		/* ── Apply theme to a single chart ── */
+		/* ── Apply theme to a single chart (ONLY color changes — no other props to avoid _scriptable crash) ── */
 		function rpTheme(ch) {
-			if (!ch || !ch.config || !ch.data) return;
+			if (!ch || !ch.config || !ch.data || !ch.data.datasets) return;
 			var type = ch.config.type;
 
 			if (type === 'doughnut' || type === 'pie') {
-				ch.options.cutout = '70%';
-				ch.options.spacing = 3;
-				if (ch.data.datasets) {
-					ch.data.datasets.forEach(function(ds) {
-						ds.borderWidth = 2;
-						ds.borderColor = '#ffffff';
-						ds.hoverOffset = 8;
-						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
-							for (var c = 0; c < ds.backgroundColor.length; c++) {
-								ds.backgroundColor[c] = P[c % P.length];
-							}
+				ch.data.datasets.forEach(function(ds) {
+					if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
+						for (var c = 0; c < ds.backgroundColor.length; c++) {
+							ds.backgroundColor[c] = P[c % P.length];
 						}
-					});
-				}
+					}
+				});
 			}
 
 			if (type === 'bar') {
-				if (ch.data.datasets) {
-					ch.data.datasets.forEach(function(ds, idx) {
-						ds.borderRadius = 8;
-						ds.borderSkipped = false;
-						ds.borderWidth = 0;
-						ds.maxBarThickness = 32;
-						ds.backgroundColor = P[idx % P.length];
-						ds.borderColor = PS[idx % PS.length];
-					});
-				}
-				/* scales/grid handled via Chart.defaults.scale — NOT per-chart to avoid _scriptable crash */
+				ch.data.datasets.forEach(function(ds, idx) {
+					ds.backgroundColor = P[idx % P.length];
+					ds.borderColor = PS[idx % PS.length];
+				});
 			}
 
 			ch._rpDone = true;
 		}
 
-		/* ── 1. Set global defaults (affects newly created charts) ── */
+		/* ── 1. Set global defaults (ONLY string-safe values to avoid _scriptable crash) ── */
 		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-		Chart.defaults.font.size = 12;
 		Chart.defaults.font.weight = '500';
 		Chart.defaults.color = '#64748B';
-		Chart.defaults.elements.bar.borderRadius = 8;
-		Chart.defaults.elements.bar.borderSkipped = false;
-		Chart.defaults.elements.bar.borderWidth = 0;
-		Chart.defaults.elements.line.tension = 0.4;
-		Chart.defaults.elements.line.borderWidth = 2.5;
-		Chart.defaults.elements.point.radius = 4;
-		Chart.defaults.elements.point.hoverRadius = 7;
 		Chart.defaults.elements.point.backgroundColor = '#4F46E5';
-		Chart.defaults.elements.arc.borderWidth = 2;
 		Chart.defaults.elements.arc.borderColor = '#ffffff';
-		Chart.defaults.elements.arc.hoverOffset = 8;
 		if (Chart.defaults.scale) {
 			Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
 			Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
-			Chart.defaults.scale.grid.drawBorder = false;
-			Chart.defaults.scale.ticks = Chart.defaults.scale.ticks || {};
-			Chart.defaults.scale.ticks.padding = 8;
-		}
-		Chart.defaults.animation = Chart.defaults.animation || {};
-		Chart.defaults.animation.duration = 1200;
-		Chart.defaults.animation.easing = 'easeOutQuart';
-		if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
-			Chart.defaults.plugins.legend.labels.padding = 16;
-			Chart.defaults.plugins.legend.labels.usePointStyle = true;
-			Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
 		}
 		if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
 			Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
-			Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", size: 13, weight: '600' };
-			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif", size: 12 };
-			Chart.defaults.plugins.tooltip.padding = 12;
-			Chart.defaults.plugins.tooltip.cornerRadius = 10;
-			Chart.defaults.plugins.tooltip.displayColors = true;
-			Chart.defaults.plugins.tooltip.boxPadding = 4;
+			Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", weight: '600' };
+			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif" };
 		}
 
 		/* ── 2. Monkey-patch Chart.prototype.update to intercept EVERY render ── */
