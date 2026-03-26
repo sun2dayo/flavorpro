@@ -236,23 +236,25 @@ $(window).on('load',function(){
 	$('#loader-overlay').hide();
 });
 
-/* ── Modernize Dashboard Charts — Chart.js Plugin Approach ── */
-/* Registers a plugin BEFORE any chart is created so every chart (including AJAX) gets themed */
+/* ═══════════════════════════════════════════════════════════════════
+   Modernize Dashboard Charts — Monkey-Patch + Polling Sweep
+   Guaranteed to work with Chart.js v3.x regardless of load order.
+   ═══════════════════════════════════════════════════════════════════ */
 (function() {
 	var rpWaitAttempts = 0;
 	var rpWaitInterval = setInterval(function() {
 		rpWaitAttempts++;
 		if (typeof Chart === 'undefined') {
-			if (rpWaitAttempts >= 50) clearInterval(rpWaitInterval);
+			if (rpWaitAttempts >= 80) clearInterval(rpWaitInterval);
 			return;
 		}
 		clearInterval(rpWaitInterval);
 
 		/* ── NovaDX Indigo palette ── */
-		var rpPalette = [
-			'rgba(79, 70, 229, 0.85)',   /* #4F46E5 indigo-600  — dataset 1 / 2024 */
-			'rgba(99, 102, 241, 0.80)',  /* #6366F1 indigo-500  — dataset 2 / 2025 */
-			'rgba(245, 158, 11, 0.85)',  /* #F59E0B amber-500   — dataset 3 / 2026 */
+		var P = [
+			'rgba(79, 70, 229, 0.85)',   /* #4F46E5 indigo-600  — dataset 0 / 2024 */
+			'rgba(99, 102, 241, 0.80)',  /* #6366F1 indigo-500  — dataset 1 / 2025 */
+			'rgba(245, 158, 11, 0.85)',  /* #F59E0B amber-500   — dataset 2 / 2026 */
 			'rgba(139, 92, 246, 0.85)',  /* violet-500   */
 			'rgba(14, 165, 233, 0.85)', /* sky-500      */
 			'rgba(16, 185, 129, 0.85)', /* emerald-500  */
@@ -265,7 +267,7 @@ $(window).on('load',function(){
 			'rgba(165, 180, 252, 0.80)',/* indigo-300   */
 			'rgba(109, 118, 209, 0.85)' /* slate-indigo */
 		];
-		var rpPaletteSolid = [
+		var PS = [
 			'rgb(79, 70, 229)',  'rgb(99, 102, 241)', 'rgb(245, 158, 11)',
 			'rgb(139, 92, 246)','rgb(14, 165, 233)','rgb(16, 185, 129)',
 			'rgb(244, 63, 94)', 'rgb(59, 130, 246)', 'rgb(168, 162, 255)',
@@ -273,7 +275,57 @@ $(window).on('load',function(){
 			'rgb(165, 180, 252)','rgb(109, 118, 209)'
 		];
 
-		/* ── Apply Chart.js global defaults ── */
+		/* ── Apply theme to a single chart ── */
+		function rpTheme(ch) {
+			if (!ch || !ch.config || !ch.data) return;
+			var type = ch.config.type;
+
+			if (type === 'doughnut' || type === 'pie') {
+				ch.options.cutout = '70%';
+				ch.options.spacing = 3;
+				if (ch.data.datasets) {
+					ch.data.datasets.forEach(function(ds) {
+						ds.borderWidth = 2;
+						ds.borderColor = '#ffffff';
+						ds.hoverOffset = 8;
+						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
+							for (var c = 0; c < ds.backgroundColor.length; c++) {
+								ds.backgroundColor[c] = P[c % P.length];
+							}
+						}
+					});
+				}
+			}
+
+			if (type === 'bar') {
+				if (ch.data.datasets) {
+					ch.data.datasets.forEach(function(ds, idx) {
+						ds.borderRadius = 8;
+						ds.borderSkipped = false;
+						ds.borderWidth = 0;
+						ds.maxBarThickness = 32;
+						ds.backgroundColor = P[idx % P.length];
+						ds.borderColor = PS[idx % PS.length];
+					});
+				}
+				if (ch.options && ch.options.scales) {
+					Object.keys(ch.options.scales).forEach(function(sk) {
+						var sc = ch.options.scales[sk];
+						if (sc) {
+							sc.grid = sc.grid || {};
+							sc.grid.color = 'rgba(148, 163, 184, 0.12)';
+							sc.grid.drawBorder = false;
+							sc.ticks = sc.ticks || {};
+							sc.ticks.padding = 8;
+						}
+					});
+				}
+			}
+
+			ch._rpDone = true;
+		}
+
+		/* ── 1. Set global defaults (affects newly created charts) ── */
 		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 		Chart.defaults.font.size = 12;
 		Chart.defaults.font.weight = '500';
@@ -314,76 +366,32 @@ $(window).on('load',function(){
 			Chart.defaults.plugins.tooltip.boxPadding = 4;
 		}
 
-		/* ── Theme a single chart instance ── */
-		function rpThemeChart(ch) {
-			if (!ch || !ch.config || ch._rpModernized) return;
-			if (ch.config.type === 'doughnut' || ch.config.type === 'pie') {
-				ch.options.cutout = '70%';
-				ch.options.spacing = 3;
-				if (ch.data && ch.data.datasets) {
-					ch.data.datasets.forEach(function(ds) {
-						ds.borderWidth = 2;
-						ds.borderColor = '#ffffff';
-						ds.hoverOffset = 8;
-						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
-							for (var c = 0; c < ds.backgroundColor.length; c++) {
-								ds.backgroundColor[c] = rpPalette[c % rpPalette.length];
-							}
-						}
-					});
-				}
-			}
-			if (ch.config.type === 'bar') {
-				if (ch.data && ch.data.datasets) {
-					ch.data.datasets.forEach(function(ds, idx) {
-						ds.borderRadius = 8;
-						ds.borderSkipped = false;
-						ds.borderWidth = 0;
-						ds.maxBarThickness = 32;
-						ds.backgroundColor = rpPalette[idx % rpPalette.length];
-						ds.borderColor = rpPaletteSolid[idx % rpPaletteSolid.length];
-					});
-				}
-				if (ch.options.scales) {
-					Object.keys(ch.options.scales).forEach(function(sk) {
-						var sc = ch.options.scales[sk];
-						if (sc) {
-							sc.grid = sc.grid || {};
-							sc.grid.color = 'rgba(148, 163, 184, 0.12)';
-							sc.grid.drawBorder = false;
-							sc.ticks = sc.ticks || {};
-							sc.ticks.padding = 8;
-						}
-					});
-				}
-			}
-			ch._rpModernized = true;
-		}
+		/* ── 2. Monkey-patch Chart.prototype.update to intercept EVERY render ── */
+		var origUpdate = Chart.prototype.update;
+		Chart.prototype.update = function(mode) {
+			rpTheme(this);
+			return origUpdate.call(this, mode);
+		};
 
-		/* ── Register global plugin — fires BEFORE every render ── */
-		Chart.register({
-			id: 'rpNovaDXTheme',
-			beforeUpdate: function(chart) {
-				rpThemeChart(chart);
-				/* No update() call needed — chart will render with our modified data */
-			}
-		});
-
-		/* ── Also sweep any charts already created before plugin registered ── */
-		setTimeout(function() {
+		/* ── 3. Long-running sweep for already-existing charts ── */
+		var rpSweepCount = 0;
+		var rpSweep = setInterval(function() {
+			rpSweepCount++;
 			var ci = Chart.instances;
 			if (ci) {
-				var keys = Object.keys(ci);
-				keys.forEach(function(key) {
-					if (ci[key] && !ci[key]._rpModernized) {
-						rpThemeChart(ci[key]);
-						ci[key].update('none');
+				Object.keys(ci).forEach(function(key) {
+					var ch = ci[key];
+					if (ch && !ch._rpDone) {
+						rpTheme(ch);
+						origUpdate.call(ch, 'none');
 					}
 				});
 			}
-		}, 500);
-	}, 200);
+			if (rpSweepCount >= 100) clearInterval(rpSweep); /* stop after ~60s */
+		}, 600);
+	}, 150);
 })();
+
 
 
 <?php
