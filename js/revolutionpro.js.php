@@ -360,24 +360,28 @@ $(window).on('load',function(){
 			ch._rpModernized = true;
 		}
 
-		/* ── Register global plugin — fires on EVERY chart init ── */
+		/* ── Register global plugin — fires BEFORE every render ── */
 		Chart.register({
 			id: 'rpNovaDXTheme',
-			afterInit: function(chart) {
+			beforeUpdate: function(chart) {
 				rpThemeChart(chart);
-				chart.update('none');
+				/* No update() call needed — chart will render with our modified data */
 			}
 		});
 
-		/* ── Also theme any charts already created before plugin registered ── */
-		var ci = Chart.instances;
-		if (ci) {
-			var keys = Object.keys(ci);
-			keys.forEach(function(key) {
-				rpThemeChart(ci[key]);
-				if (ci[key]) ci[key].update('none');
-			});
-		}
+		/* ── Also sweep any charts already created before plugin registered ── */
+		setTimeout(function() {
+			var ci = Chart.instances;
+			if (ci) {
+				var keys = Object.keys(ci);
+				keys.forEach(function(key) {
+					if (ci[key] && !ci[key]._rpModernized) {
+						rpThemeChart(ci[key]);
+						ci[key].update('none');
+					}
+				});
+			}
+		}, 500);
 	}, 200);
 })();
 
