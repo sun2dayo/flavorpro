@@ -52,11 +52,11 @@ class modRevolutionpro extends DolibarrModules
 		$this->editor_url = 'https://www.novadx.pt';
 		$this->module_position = '100';
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
-		$this->description = "Theme Dolisys - Affichage responsive";
-		$this->version = '18.9';
+		$this->description = "Flavor Pro Theme Dolisys - Dolisys Theme";
+		$this->version = '1.1.0';
 		$this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
 		$this->special = 0;
-		$this->picto = 'thumb@revolutionpro';
+		$this->picto = 'fa-palette';
 
 		$this->module_parts = array(
 			'menus' => 1,
@@ -218,8 +218,16 @@ class modRevolutionpro extends DolibarrModules
 	 */
 	public function remove($options = '')
 	{
-		global $conf;
+		global $conf, $langs;
 		$sql = array();
+
+		// Block deactivation when flavorpro.lock exists
+		$lockFile = dirname(__FILE__).'/../../admin/flavorpro.lock';
+		if (file_exists($lockFile)) {
+			$langs->load('revolutionpro@revolutionpro');
+			$this->error = 'FlavorPro is locked and cannot be deactivated. Delete admin/flavorpro.lock to unlock.';
+			return 0;
+		}
 
 
 		dolibarr_del_const($this->db,'MAIN_MENU_STANDARD_FORCED',$conf->entity);

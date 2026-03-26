@@ -49,6 +49,8 @@ git clone https://github.com/sun2dayo/flavorpro.git revolutionpro
 | **Menus** | Show/hide 15 Setup submenu items |
 | **Icons** | Per-menu Font Awesome icon customization |
 | **Admin Tools** | Quick links to Module, User, Security pages |
+| **Security Lock** | `flavorpro.lock` prevents module deactivation |
+
 
 ## 🏗️ Project Structure
 

@@ -2,7 +2,25 @@
 
 All notable changes to FlavorPro are documented in this file.
 
+## [1.1.0] — 2026-03-26
+
+### 🛒 TakePOS Improvements
+- **Top Bar Visibility**: Fixed invisible "Customer", "Currency" labels by adding `a:link/a:visited/a:active` pseudo-class selectors to override Dolibarr core CSS specificity
+- **Icons Fixed**: Backspace (cancel), Fullscreen, Shopping Cart icons now render correctly — fixed `font-weight: 900` override for Font Awesome Solid icons
+- **Payment Popup**: Fixed overlap between payment amount bars and numpad — container height now `auto` with `min-height`
+
+### 🔧 Module Configuration
+- **Icon**: Replaced static image (`thumb.png`) with Font Awesome `fa-palette` icon in module list
+- **Version**: Corrected module version from `18.9` to `1.1.0` (aligned with CHANGELOG)
+- **Description**: Updated module description to "Flavor Pro Theme Dolisys - Dolisys Theme"
+- **Deactivation Lock**: When `admin/flavorpro.lock` exists, module cannot be deactivated — shows error message
+
+### 🐛 Bug Fixes
+- Fixed `Undefined property: stdClass::$REVOLUTIONPRO_PARAMETRES_VALUEX` warning on public proposal approval pages
+- Eliminated persistent indigo loading screen between page navigations (animsition neutered)
+
 ## [1.0.0] — 2026-03-24
+
 
 ### 🎨 NovaDX Design System
 - **Design Tokens**: Indigo palette (`#6366F1` primary, `#312E81` sidebar), Inter font, consistent radii/shadows/transitions
