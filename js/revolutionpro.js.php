@@ -308,18 +308,7 @@ $(window).on('load',function(){
 						ds.borderColor = PS[idx % PS.length];
 					});
 				}
-				if (ch.options && ch.options.scales) {
-					Object.keys(ch.options.scales).forEach(function(sk) {
-						var sc = ch.options.scales[sk];
-						if (sc) {
-							sc.grid = sc.grid || {};
-							sc.grid.color = 'rgba(148, 163, 184, 0.12)';
-							sc.grid.drawBorder = false;
-							sc.ticks = sc.ticks || {};
-							sc.ticks.padding = 8;
-						}
-					});
-				}
+				/* scales/grid handled via Chart.defaults.scale — NOT per-chart to avoid _scriptable crash */
 			}
 
 			ch._rpDone = true;
