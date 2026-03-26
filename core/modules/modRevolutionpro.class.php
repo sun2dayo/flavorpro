@@ -225,7 +225,7 @@ class modRevolutionpro extends DolibarrModules
 		$lockFile = dirname(__FILE__).'/../../admin/flavorpro.lock';
 		if (file_exists($lockFile)) {
 			$langs->load('revolutionpro@revolutionpro');
-			$this->error = 'FlavorPro is locked and cannot be deactivated. Delete admin/flavorpro.lock to unlock.';
+			$this->error = 'FlavorPro is locked and cannot be deactivated';
 			return 0;
 		}
 
