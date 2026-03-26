@@ -64,9 +64,9 @@ All notable changes to FlavorPro are documented in this file.
 
 ### 🏷️ White-Label
 - Company name, logo, and URL replacement engine
-- `dolibarr.org` → configurable domain (default: `novadx.pt`)
-- Version string: `Dolisys {version}` instead of `Dolibarr {version}`
-- Help button (`?`) hidden (pointed to wiki.dolibarr.org)
+- Configurable domain (default: `novadx.pt`)
+- Version string: `Dolisys {version}` instead of `NovaDX {version}`
+- Update Help button (`?`) hidden
 
 ### 🛠️ Admin Panel
 - **Icon Manager**: Per-menu Font Awesome icon customisation with live preview
