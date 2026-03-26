@@ -13,17 +13,9 @@
  */
 
 // ──────────────────────────────────────────────────────────────────────────────
-// SECURITY LOCK CHECK
+// SECURITY LOCK CHECK (flag only — rendered inside page layout below)
 // ──────────────────────────────────────────────────────────────────────────────
-if (file_exists(__DIR__ . '/flavorpro.lock')) {
-    die('<div style="font-family: \'Inter\', -apple-system, sans-serif; background: #F8FAFC; height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0;">
-            <div style="background: #FFF; padding: 48px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); text-align: center; max-width: 420px;">
-                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #FEE2E2, #FECACA); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 28px;">🔒</div>
-                <h2 style="color: #1E293B; margin-top: 0; font-size: 1.25rem;">Setup Locked</h2>
-                <p style="color: #64748B; line-height: 1.6; margin-bottom: 0;">Configuration is locked. Delete <code>flavorpro.lock</code> from the admin directory to unlock.</p>
-            </div>
-         </div>');
-}
+$flavorpro_locked = file_exists(__DIR__ . '/flavorpro.lock');
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Dolibarr Bootstrap
@@ -420,6 +412,18 @@ llxHeader('', $langs->trans($pagen),'','','','', array(),'' );
 
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans("BackToModuleList") . '</a>';
 print_fiche_titre($langs->trans($pagen), $linkback);
+
+// ── If locked, show message inside the layout and stop ──
+if ($flavorpro_locked) {
+    print '<div style="margin-top:20px;padding:40px;background:#FFF;border-radius:12px;border:1px solid #E2E8F0;text-align:center;max-width:480px;margin-left:auto;margin-right:auto;">';
+    print '<div style="width:56px;height:56px;background:linear-gradient(135deg,#FEE2E2,#FECACA);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px;">🔒</div>';
+    print '<h3 style="color:#1E293B;margin-top:0;font-size:1.1rem;">Setup Locked</h3>';
+    print '<p style="color:#64748B;line-height:1.6;margin-bottom:0;">Configuration is locked and cannot be modified.</p>';
+    print '</div>';
+    llxFooter();
+    $db->close();
+    exit;
+}
 
 $head = revolutionpro_admin_prepare_head();
 dol_fiche_head($head, 'settings', $langs->trans("Module940326081Name"), 0, "revolutionpro@revolutionpro");
