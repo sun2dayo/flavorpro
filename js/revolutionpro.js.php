@@ -239,6 +239,8 @@ $(window).on('load',function(){
 /* ═══════════════════════════════════════════════════════════════════
    Chart Typography & Grid — safe string-only defaults.
    Colors come from flavor theme PHP ($theme_datacolor).
+   NOTE: Home dashboard bar widgets have a pre-existing _scriptable
+         crash in Chart.js v3.7.1 that is unrelated to this code.
    ═══════════════════════════════════════════════════════════════════ */
 (function() {
 	var wa = 0;
@@ -247,12 +249,11 @@ $(window).on('load',function(){
 		if (typeof Chart === 'undefined') { if (wa >= 80) clearInterval(wi); return; }
 		clearInterval(wi);
 
-		/* Only set STRING values — never booleans/numbers to avoid _scriptable crash in Chart.js v3.7.1 */
+		/* Only set STRING values — never booleans/numbers to avoid _scriptable crash */
 		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 		Chart.defaults.font.weight = '500';
 		Chart.defaults.color = '#64748B';
-		if (Chart.defaults.scale) {
-			Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
+		if (Chart.defaults.scale && Chart.defaults.scale.grid) {
 			Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
 		}
 		if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
