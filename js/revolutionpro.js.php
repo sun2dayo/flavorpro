@@ -316,14 +316,8 @@ $(window).on('load',function(){
 			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif" };
 		}
 
-		/* ── 2. Monkey-patch Chart.prototype.update to intercept EVERY render ── */
-		var origUpdate = Chart.prototype.update;
-		Chart.prototype.update = function(mode) {
-			rpTheme(this);
-			return origUpdate.call(this, mode);
-		};
-
-		/* ── 3. Long-running sweep for already-existing charts ── */
+		/* ── 2. Polling sweep — modifies datasets OUTSIDE update cycle then calls update ── */
+		/* Must NOT modify datasets inside Chart.prototype.update to avoid _scriptable crash */
 		var rpSweepCount = 0;
 		var rpSweep = setInterval(function() {
 			rpSweepCount++;
@@ -333,11 +327,11 @@ $(window).on('load',function(){
 					var ch = ci[key];
 					if (ch && !ch._rpDone) {
 						rpTheme(ch);
-						origUpdate.call(ch, 'none');
+						ch.update('none');
 					}
 				});
 			}
-			if (rpSweepCount >= 100) clearInterval(rpSweep); /* stop after ~60s */
+			if (rpSweepCount >= 120) clearInterval(rpSweep); /* stop after ~72s */
 		}, 600);
 	}, 150);
 })();
