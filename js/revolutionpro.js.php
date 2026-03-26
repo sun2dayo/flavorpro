@@ -316,22 +316,52 @@ $(window).on('load',function(){
 			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif" };
 		}
 
-		/* ── 2. Polling sweep — modifies datasets OUTSIDE update cycle then calls update ── */
-		/* Must NOT modify datasets inside Chart.prototype.update to avoid _scriptable crash */
+		/* ── 2. Polling sweep — destroy and recreate charts with themed colors ── */
 		var rpSweepCount = 0;
 		var rpSweep = setInterval(function() {
 			rpSweepCount++;
 			var ci = Chart.instances;
-			if (ci) {
-				Object.keys(ci).forEach(function(key) {
-					var ch = ci[key];
-					if (ch && !ch._rpDone) {
-						rpTheme(ch);
-						ch.update('none');
-					}
+			if (!ci) return;
+			Object.keys(ci).forEach(function(key) {
+				var ch = ci[key];
+				if (!ch || ch._rpDone || !ch.data || !ch.data.datasets) return;
+
+				var type = ch.config.type;
+				var canvas = ch.canvas;
+				if (!canvas) return;
+
+				/* Read raw config before destroying */
+				var rawData = JSON.parse(JSON.stringify(ch.config._config.data || ch.data));
+				var rawOpts = {};
+				try { rawOpts = JSON.parse(JSON.stringify(ch.config._config.options || {})); } catch(e) {}
+
+				/* Apply palette to the raw data copy */
+				if (type === 'bar') {
+					rawData.datasets.forEach(function(ds, idx) {
+						ds.backgroundColor = P[idx % P.length];
+						ds.borderColor = PS[idx % PS.length];
+					});
+				}
+				if (type === 'doughnut' || type === 'pie') {
+					rawData.datasets.forEach(function(ds) {
+						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
+							for (var c = 0; c < ds.backgroundColor.length; c++) {
+								ds.backgroundColor[c] = P[c % P.length];
+							}
+						}
+					});
+				}
+
+				/* Destroy old chart and create new one */
+				ch.destroy();
+				var newChart = new Chart(canvas, {
+					type: type,
+					data: rawData,
+					options: rawOpts
 				});
-			}
-			if (rpSweepCount >= 120) clearInterval(rpSweep); /* stop after ~72s */
+				newChart._rpDone = true;
+			});
+			if (rpSweepCount >= 120) clearInterval(rpSweep);
 		}, 600);
 	}, 150);
 })();
