@@ -237,132 +237,27 @@ $(window).on('load',function(){
 });
 
 /* ═══════════════════════════════════════════════════════════════════
-   Modernize Dashboard Charts — Monkey-Patch + Polling Sweep
-   Guaranteed to work with Chart.js v3.x regardless of load order.
+   Chart Typography & Grid — safe string-only defaults.
+   Colors come from flavor theme PHP ($theme_datacolor).
    ═══════════════════════════════════════════════════════════════════ */
 (function() {
-	var rpWaitAttempts = 0;
-	var rpWaitInterval = setInterval(function() {
-		rpWaitAttempts++;
-		if (typeof Chart === 'undefined') {
-			if (rpWaitAttempts >= 80) clearInterval(rpWaitInterval);
-			return;
-		}
-		clearInterval(rpWaitInterval);
+	var wa = 0;
+	var wi = setInterval(function() {
+		wa++;
+		if (typeof Chart === 'undefined') { if (wa >= 80) clearInterval(wi); return; }
+		clearInterval(wi);
 
-		/* ── NovaDX Indigo palette ── */
-		var P = [
-			'rgba(79, 70, 229, 0.85)',   /* #4F46E5 indigo-600  — dataset 0 / 2024 */
-			'rgba(99, 102, 241, 0.80)',  /* #6366F1 indigo-500  — dataset 1 / 2025 */
-			'rgba(245, 158, 11, 0.85)',  /* #F59E0B amber-500   — dataset 2 / 2026 */
-			'rgba(139, 92, 246, 0.85)',  /* violet-500   */
-			'rgba(14, 165, 233, 0.85)', /* sky-500      */
-			'rgba(16, 185, 129, 0.85)', /* emerald-500  */
-			'rgba(244, 63, 94, 0.80)',  /* rose-500     */
-			'rgba(59, 130, 246, 0.85)', /* blue-500     */
-			'rgba(168, 162, 255, 0.80)',/* lavender     */
-			'rgba(6, 182, 212, 0.85)',  /* cyan-500     */
-			'rgba(129, 140, 248, 0.80)',/* indigo-400   */
-			'rgba(34, 197, 94, 0.85)',  /* green-500    */
-			'rgba(165, 180, 252, 0.80)',/* indigo-300   */
-			'rgba(109, 118, 209, 0.85)' /* slate-indigo */
-		];
-		var PS = [
-			'rgb(79, 70, 229)',  'rgb(99, 102, 241)', 'rgb(245, 158, 11)',
-			'rgb(139, 92, 246)','rgb(14, 165, 233)','rgb(16, 185, 129)',
-			'rgb(244, 63, 94)', 'rgb(59, 130, 246)', 'rgb(168, 162, 255)',
-			'rgb(6, 182, 212)', 'rgb(129, 140, 248)','rgb(34, 197, 94)',
-			'rgb(165, 180, 252)','rgb(109, 118, 209)'
-		];
-
-		/* ── Apply theme to a single chart (ONLY color changes — no other props to avoid _scriptable crash) ── */
-		function rpTheme(ch) {
-			if (!ch || !ch.config || !ch.data || !ch.data.datasets) return;
-			var type = ch.config.type;
-
-			if (type === 'doughnut' || type === 'pie') {
-				ch.data.datasets.forEach(function(ds) {
-					if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
-						for (var c = 0; c < ds.backgroundColor.length; c++) {
-							ds.backgroundColor[c] = P[c % P.length];
-						}
-					}
-				});
-			}
-
-			if (type === 'bar') {
-				ch.data.datasets.forEach(function(ds, idx) {
-					ds.backgroundColor = P[idx % P.length];
-					ds.borderColor = PS[idx % PS.length];
-				});
-			}
-
-			ch._rpDone = true;
-		}
-
-		/* ── 1. Set global defaults (ONLY string-safe values to avoid _scriptable crash) ── */
+		/* Only set STRING values — never booleans/numbers to avoid _scriptable crash in Chart.js v3.7.1 */
 		Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 		Chart.defaults.font.weight = '500';
 		Chart.defaults.color = '#64748B';
-		Chart.defaults.elements.point.backgroundColor = '#4F46E5';
-		Chart.defaults.elements.arc.borderColor = '#ffffff';
 		if (Chart.defaults.scale) {
 			Chart.defaults.scale.grid = Chart.defaults.scale.grid || {};
 			Chart.defaults.scale.grid.color = 'rgba(148, 163, 184, 0.12)';
 		}
 		if (Chart.defaults.plugins && Chart.defaults.plugins.tooltip) {
 			Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B4B';
-			Chart.defaults.plugins.tooltip.titleFont = { family: "'Inter', sans-serif", weight: '600' };
-			Chart.defaults.plugins.tooltip.bodyFont = { family: "'Inter', sans-serif" };
 		}
-
-		/* ── 2. Polling sweep — destroy and recreate charts with themed colors ── */
-		var rpSweepCount = 0;
-		var rpSweep = setInterval(function() {
-			rpSweepCount++;
-			var ci = Chart.instances;
-			if (!ci) return;
-			Object.keys(ci).forEach(function(key) {
-				var ch = ci[key];
-				if (!ch || ch._rpDone || !ch.data || !ch.data.datasets) return;
-
-				var type = ch.config.type;
-				var canvas = ch.canvas;
-				if (!canvas) return;
-
-				/* Read raw config before destroying */
-				var rawData = JSON.parse(JSON.stringify(ch.config._config.data || ch.data));
-				var rawOpts = {};
-				try { rawOpts = JSON.parse(JSON.stringify(ch.config._config.options || {})); } catch(e) {}
-
-				/* Apply palette to the raw data copy */
-				if (type === 'bar') {
-					rawData.datasets.forEach(function(ds, idx) {
-						ds.backgroundColor = P[idx % P.length];
-						ds.borderColor = PS[idx % PS.length];
-					});
-				}
-				if (type === 'doughnut' || type === 'pie') {
-					rawData.datasets.forEach(function(ds) {
-						if (ds.backgroundColor && Array.isArray(ds.backgroundColor)) {
-							for (var c = 0; c < ds.backgroundColor.length; c++) {
-								ds.backgroundColor[c] = P[c % P.length];
-							}
-						}
-					});
-				}
-
-				/* Destroy old chart and create new one */
-				ch.destroy();
-				var newChart = new Chart(canvas, {
-					type: type,
-					data: rawData,
-					options: rawOpts
-				});
-				newChart._rpDone = true;
-			});
-			if (rpSweepCount >= 120) clearInterval(rpSweep);
-		}, 600);
 	}, 150);
 })();
 
