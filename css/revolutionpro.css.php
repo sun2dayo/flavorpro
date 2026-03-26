@@ -2017,33 +2017,18 @@ body.site-menubar-unfold li.site-menu-item.metrovmenu a {
    NovaDX Pro — Phase 4.6: RIGHT BORDER, GLOBAL VIEW, BADGE FIX
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Global View (Weather) — FA icon via ::before ── */
+/* ── 1. Global View (Weather) — style Dolibarr's native icon ── */
 .info-box-weather .info-box-icon,
 .info-box-weather span.info-box-icon {
     background-color: rgba(99, 102, 241, 0.1) !important;
     background: rgba(99, 102, 241, 0.1) !important;
     position: relative !important;
 }
-/* Hide the weather img that doesn't render properly */
-.info-box-weather .info-box-icon img {
-    display: none !important;
-}
-/* Inject a FA icon via pseudo-element */
-.info-box-weather .info-box-icon::before {
-    content: "\f200" !important; /* fa-chart-pie */
-    font-family: "Font Awesome 5 Free" !important;
-    font-weight: 900 !important;
-    font-size: 1.8rem !important;
+/* Style the native Dolibarr weather FA icon */
+.info-box-weather .info-box-icon > i {
     color: var(--ndx-primary-500) !important;
     -webkit-text-fill-color: var(--ndx-primary-500) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: 100% !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+    font-size: 1.6rem !important;
 }
 
 /* ── 2. Left side shadow for contour depth ── */
